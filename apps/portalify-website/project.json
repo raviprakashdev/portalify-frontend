@@ -1,0 +1,84 @@
+{
+  "name": "portalify-website",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/portalify-website/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/portalify-website",
+        "index": "apps/portalify-website/src/index.html",
+        "baseHref": "/",
+        "main": "apps/portalify-website/src/main.js",
+        "polyfills": "apps/portalify-website/src/polyfills.js",
+        "tsConfig": "apps/portalify-website/tsconfig.app.json",
+        "assets": [
+          "apps/portalify-website/src/favicon.ico",
+          "apps/portalify-website/src/assets"
+        ],
+        "styles": ["apps/portalify-website/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/portalify-website/src/environments/environment.js",
+              "with": "apps/portalify-website/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "portalify-website:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "portalify-website:build:development"
+        },
+        "production": {
+          "buildTarget": "portalify-website:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/portalify-website/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/portalify-website/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

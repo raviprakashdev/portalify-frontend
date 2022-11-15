@@ -14,7 +14,16 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@portalify/portalify/assets": ["libs/portalify/assets/src/index.js"],
+      "@portalify/portalify/constants": [
+        "libs/portalify/constants/src/index.js"
+      ],
+      "@portalify/portalify/data-access": [
+        "libs/portalify/data-access/src/index.js"
+      ],
+      "@portalify/portalify/utils": ["libs/portalify/utils/src/index.js"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
