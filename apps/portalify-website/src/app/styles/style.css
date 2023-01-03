@@ -9,6 +9,8 @@
 /*---------- SigninScreen Styling starts ----------*/
 .signin-screen .container{
     margin-left:0;
+    min-width: 100%;
+    height: 100%;
     background-color: #FAFAFA;
 }
 
@@ -17,16 +19,16 @@
   
 }
 
-.signin-screen .left-side .logo{
+.signin-screen .left-side .logo img{
     max-height: 4rem;
 }
-.signin-screen .left-side .logo-parent{
+.signin-screen .left-side .logo{
     height: 10%;   
 }
 
 .signin-screen .left-side .signin-image-parent .signin-image-all{
 
-    max-height: 20rem;
+    max-height: 15rem;
 }
 .signin-screen .left-side .signin-image-parent{
     height: 90%;
@@ -37,11 +39,9 @@
 }
 
 .signin-screen .right-side {
-   
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
 }
 
 

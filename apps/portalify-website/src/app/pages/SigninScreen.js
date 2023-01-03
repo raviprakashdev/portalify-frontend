@@ -13,7 +13,7 @@ const SigninScreen = ({form:SignInForm}) => {
 
                 <div className="col-md-8 left-side">
 
-                  <div className='logo-parent'> <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="logo img-fluid"/> </div>
+                  <div className='logo'> <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="img-fluid"/> </div>
 
                     <div className='signin-image-parent'><img src={require('../assets/sample-image.jpg')} alt="sampleimage" className="signin-image-child1 signin-image-all img-fluid justify-centre"/></div>
                     
