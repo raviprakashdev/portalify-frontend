@@ -11,7 +11,7 @@ const SigninScreen = ({form:SignInForm}) => {
         <div className='container'>
             <div className='row'>
 
-                <div className="col-md-8 left-side">
+                <div className="col-lg-8 left-side">
 
                   <div className='logo'> <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="img-fluid"/> </div>
 
@@ -23,7 +23,7 @@ const SigninScreen = ({form:SignInForm}) => {
 
 
 
-                <div className='col-md-4 right-side'>
+                <div className='col-lg-4 right-side'>
                         <SignInForm/>
                      
                 </div>
