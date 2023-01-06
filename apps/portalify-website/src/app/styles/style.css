@@ -16,27 +16,52 @@
 
 .signin-screen .container .row .left-side{
     background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
+    position: relative;
   
 }
 
 .signin-screen .left-side .logo img{
-    max-height: 4rem;
-}
-.signin-screen .left-side .logo{
-    height: 10%;   
+    padding: 20px;
+    max-height: 6rem;
 }
 
-.signin-screen .left-side .signin-image-parent .signin-image-all{
 
-    max-height: 15rem;
+.signin-screen .left-side .signin-image-all{
+
+    max-height: 20%;
 }
-.signin-screen .left-side .signin-image-parent{
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+
+@media screen and (max-width: 992px) {
+    .signin-screen .left-side .signin-image-all{
+        display: none;
+    }
+  }
+  
+.signin-screen .left-side .signin-image-child1{
+
+    position: absolute;
+    top: 30%;
+    left: 40%;
 }
+
+.signin-screen .left-side .signin-image-child2{
+
+    position: absolute;
+    top: 44%;
+    left: 30%;
+}
+.signin-screen .left-side .signin-image-child3{
+
+    position: absolute;
+    top: 48%;
+    left: 50%;
+}
+
+.signin-screen .left-side .signin-image-child1:hover, .signin-screen .left-side .signin-image-child2:hover, .signin-screen .left-side .signin-image-child3:hover
+{
+    z-index: 100;
+}
+
 
 .signin-screen .right-side {
     display: flex;
