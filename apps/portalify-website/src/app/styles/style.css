@@ -6,6 +6,65 @@
 }
 
 
+
+/*----------- WelcomingScreen Styling Starts -----------*/
+
+.welcome-screen .container{
+    margin-left:0;
+    min-width: 100vw;
+    height: 100vh;
+    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-screen .container .logo{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+}
+
+.welcome-screen .container .logo img{
+    padding: 20px;
+    max-height: 15vh;
+}
+
+.welcome-screen .container .row .welcome-content{
+    font-size: 5vw;
+    color: #FAFAFA;
+    text-align: center;
+
+}
+
+.welcome-screen .container .row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.welcome-screen .container .row .confetti{
+    height: 20vh; 
+    width: 20vw; 
+    margin:0px;
+
+}
+.welcome-screen .container .row .confetti_1 {
+    position: absolute;
+    top: 20%;
+    left: 0%;
+  }
+
+  .welcome-screen .container .row .confetti_3 {
+    position: absolute;
+    top: 20%;
+    right: 0%;
+  }
+
+
+
 /*---------- SigninScreen Styling starts ----------*/
 .signin-screen .container{
     margin-left:0;

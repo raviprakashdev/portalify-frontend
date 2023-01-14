@@ -6,6 +6,7 @@ import SigninScreen from './pages/SigninScreen';
 import SignInForm from './components/forms/SignInForm';
 import RegisterForm1 from './components/forms/RegisterForm1';
 import RegisterForm2 from './components/forms/RegisterForm2';
+import WelcomeScreen from './pages/WelcomeScreen';
 export function App() {
   return (
     <div>
@@ -16,7 +17,8 @@ export function App() {
       
     {/* <SigninScreen form={SignInForm}/> */}
     {/* <SigninScreen form={RegisterForm1}/> */}
-    <SigninScreen form={RegisterForm2}/>
+    {/* <SigninScreen form={RegisterForm2}/> */}
+    <WelcomeScreen/>
     </div>
   )
 }
