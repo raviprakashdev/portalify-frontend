@@ -17,8 +17,8 @@ export function App() {
       
     {/* <SigninScreen form={SignInForm}/> */}
     {/* <SigninScreen form={RegisterForm1}/> */}
-    {/* <SigninScreen form={RegisterForm2}/> */}
-    <WelcomeScreen/>
+    <SigninScreen form={RegisterForm2}/>
+    {/* <WelcomeScreen/> */}
     </div>
   )
 }
