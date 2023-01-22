@@ -50,12 +50,12 @@ const RegisterForm1 = () => {
                             </div>
 
                             <div className="input-text">
-                            Organisation Name
-                                <input type="text" placeholder="Organisation Name" value={inputtext.orgname} onChange={inputEvent} name="orgname" required/>
+                            Email ID
+                                <input type="text" placeholder="Email ID" value={inputtext.orgname} onChange={inputEvent} name="email" required/>
                             </div>
 
                             <div className="buttons">
-                                <button type="submit">Sign up</button>
+                                <button type="submit">Next</button>
                             </div>
                             
                         </form>

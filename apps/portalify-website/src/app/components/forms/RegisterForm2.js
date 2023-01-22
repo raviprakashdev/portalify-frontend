@@ -28,6 +28,7 @@ const RegisterForm2 = () => {
         { value: 'company', label: 'Use it in my company' },
         { value: 'student', label: 'I am a student' },
         { value: 'teacher', label: 'I am a teacher' },
+        { value: 'others', label: 'Others' },
     ];
 
     //select company size
@@ -49,18 +50,41 @@ const RegisterForm2 = () => {
             setRType(value);
         }
         const rTypeList = [
-            { value: 'PartnershipFirm', label: 'Partnership Firm' },
-            { value: 'sample2', label: 'Sample 2' },
-            { value: 'sample3', label: 'Sample 3' },
+            { value: 'PartnershipFirm', label: 'Organisation / Company' },
+            { value: 'sample2', label: 'Individual' },
+            { value: 'sample3', label: 'Student' },
+            { value: 'sample3', label: 'Other' },
         ];
 
 
 
     //password visibility eye
-    const [eye, seteye] = useState(true);
-    const [password, setpassword] = useState("password");
-    const [ceye, setceye] = useState(true);
-    const [cpassword, setcpassword] = useState("password");
+    // const [eye, seteye] = useState(true);
+    // const [password, setpassword] = useState("password");
+    // const [ceye, setceye] = useState(true);
+    // const [cpassword, setcpassword] = useState("password");
+
+    // const Eye = () => {
+    //     if (password === "password") {
+    //         setpassword("text");
+    //         seteye(false);
+    //     }
+    //     else {
+    //         setpassword("password");
+    //         seteye(true);
+    //     }
+    // }
+
+    // const CEye = () => {
+    //     if (cpassword === "password") {
+    //         setcpassword("text");
+    //         setceye(false);
+    //     }
+    //     else {
+    //         setcpassword("password");
+    //         setceye(true);
+    //     }
+    // }
 
     const inputEvent = (event) => {
         const name = event.target.name;
@@ -74,32 +98,8 @@ const RegisterForm2 = () => {
 
     }
 
-
-
     const submitForm = (e) => {
         alert("form submitted");
-    }
-
-    const Eye = () => {
-        if (password === "password") {
-            setpassword("text");
-            seteye(false);
-        }
-        else {
-            setpassword("password");
-            seteye(true);
-        }
-    }
-
-    const CEye = () => {
-        if (cpassword === "password") {
-            setcpassword("text");
-            setceye(false);
-        }
-        else {
-            setcpassword("password");
-            setceye(true);
-        }
     }
 
 
@@ -114,16 +114,21 @@ const RegisterForm2 = () => {
             <form onSubmit={submitForm}>
                 <div className="input-text">
                     Company Name
-                    <input type="text" placeholder="Company Name" value={inputtext.orgname} onChange={inputEvent} name="campanyname" required />
+                    <input type="text" placeholder="Company Name" value={inputtext.campanyname} onChange={inputEvent} name="campanyname" required />
                 </div>
-              
+
+                <div className="input-text">
+                    Registration Type *
+                    <Select options={rTypeList} value={rType} onChange={changeHandlerRType} />
+                </div>
 
                 <div className="input-text">
                     Company Size
                     <Select options={companySizeList} value={companySize} onChange={changeHandlerCompanySize} />
                 </div>
 
-                <div className="input-text">
+
+                {/* <div className="input-text">
                     Password
                     <input type={password} placeholder="Password" value={inputtext.password} onChange={inputEvent} name="password" required />
 
@@ -135,12 +140,9 @@ const RegisterForm2 = () => {
                     <input type={cpassword} placeholder="Confirm Password" value={inputtext.cpassword} onChange={inputEvent} name="cpassword" required />
 
                     <i onClick={CEye} className={`fa ${ceye ? "fa-eye-slash" : "fa-eye"}`}></i>
-                </div>
+                </div> */}
 
-                <div className="input-text">
-                    Registration Type *
-                    <Select options={rTypeList} value={rType} onChange={changeHandlerRType} />
-                </div>
+               
 
 
                 <div className="input-text">
