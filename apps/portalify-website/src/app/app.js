@@ -7,6 +7,8 @@ import SignInForm from './components/forms/SignInForm';
 import RegisterForm1 from './components/forms/RegisterForm1';
 import RegisterForm2 from './components/forms/RegisterForm2';
 import WelcomeScreen from './pages/WelcomeScreen';
+import ConfirmAuthScreen from './pages/ConfirmAuthScreen';
+import ForgotPassword from './components/forms/ForgotPassword';
 export function App() {
   return (
     <div>
@@ -16,9 +18,13 @@ export function App() {
       </div> */}
       
     {/* <SigninScreen form={SignInForm}/> */}
-    <SigninScreen form={RegisterForm1}/>
+    {/* <SigninScreen form={RegisterForm1}/> */}
     {/* <SigninScreen form={RegisterForm2}/> */}
     {/* <WelcomeScreen/> */}
+    {/* <ConfirmAuthScreen/> */}
+    {/* <ForgotPassword/> */}
+     <SigninScreen form={ForgotPassword}/>
+
     </div>
   )
 }

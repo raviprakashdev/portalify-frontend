@@ -68,14 +68,15 @@
 /*---------- SigninScreen Styling starts ----------*/
 .signin-screen .container{
     margin-left:0;
-    min-width: 100%;
-    height: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
     background-color: #FAFAFA;
 }
 
 .signin-screen .container .row .left-side{
     background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
     position: relative;
+    min-height: 100vh;
   
 }
 
@@ -93,6 +94,9 @@
 @media screen and (max-width: 992px) {
     .signin-screen .left-side .signin-image-all{
         display: none;
+    }
+    .signin-screen .container .row .left-side{
+        min-height: 10vh;
     }
   }
   
@@ -126,6 +130,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 
@@ -133,14 +138,13 @@
 /*------------------ Signin and Register(1-2) Form Styling Starts ------------*/
 .signin-screen .right-side p{
     color: #447CBF;
-    margin: 50px 0;
+    margin: 20px 0;
     text-align: center;
 }
 
 .signin-card{
     background-color: #FFFFFF;
     position: relative;
-    margin: 50px 0;
     box-shadow: 2px 6px 25px rgba(89, 89, 89, 0.08);
     border-radius: 10px;
     padding: 54px}
