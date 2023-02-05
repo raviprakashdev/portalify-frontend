@@ -170,3 +170,56 @@
     .signin-card .buttons button:hover{background-image: linear-gradient(94.43deg,#111111  -18.98%, #447CBF 113.48%);}
     .signin-card .forgot{font-size:14px;font-weight: 500;color: #2D5380;}
     .forgot a{text-decoration: none;}
+
+
+    /*---------- DashboardScreen Styling starts ----------*/
+.dashboard-screen .container{
+    margin-left:0;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: #FAFAFA;
+}
+
+.dashboard-screen .container .row .left-side{
+    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
+    position: relative;
+    min-height: 100vh;
+    color: #E0E0E0;
+  
+}
+
+.dashboard-screen .left-side .logo img{
+    padding: 10px;
+    max-height: 6rem;
+}
+
+.dashboard-screen .left-side .sidebar .dashboard-buttons{
+    margin: 10px;
+}
+
+.dashboard-screen .left-side .sidebar{
+    margin-top: 8vh;
+}
+.dashboard-screen .left-side .sidebar .dashboard-buttons i,span{
+    padding-right: 10px;
+    color: #E0E0E0;
+    font-size: 2vw;
+
+}
+
+.dashboard-screen .left-side .sidebar .logout-dashboard{
+   display: flex;
+   margin: 10px;
+   font-size: 2vw;
+   position: fixed;
+   bottom: 0 ;
+
+}
+
+.dashboard-screen .right-side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
