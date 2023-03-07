@@ -6,7 +6,7 @@ import countryList from 'react-select-country-list';
 const RegisterForm2 = () => {
 
 
-    
+
     const [inputtext, setinputtext] = useState({
         email: "",
         password: ""
@@ -44,17 +44,17 @@ const RegisterForm2 = () => {
         { value: 'moreThan250', label: '> 250 employees' },
     ];
 
-        //select registration Type
-        const [rType, setRType] = useState('');
-        const changeHandlerRType = value => {
-            setRType(value);
-        }
-        const rTypeList = [
-            { value: 'PartnershipFirm', label: 'Organisation / Company' },
-            { value: 'sample2', label: 'Individual' },
-            { value: 'sample3', label: 'Student' },
-            { value: 'sample3', label: 'Other' },
-        ];
+    //select registration Type
+    const [rType, setRType] = useState('');
+    const changeHandlerRType = value => {
+        setRType(value);
+    }
+    const rTypeList = [
+        { value: 'PartnershipFirm', label: 'Organisation / Company' },
+        { value: 'sample2', label: 'Individual' },
+        { value: 'sample3', label: 'Student' },
+        { value: 'sample3', label: 'Other' },
+    ];
 
 
 
@@ -142,7 +142,7 @@ const RegisterForm2 = () => {
                     <i onClick={CEye} className={`fa ${ceye ? "fa-eye-slash" : "fa-eye"}`}></i>
                 </div> */}
 
-               
+
 
 
                 <div className="input-text">

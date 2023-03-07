@@ -11,9 +11,9 @@ const ConfirmAuthScreen = () => {
         <div className='logo'> <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="img-fluid" /> </div>
 
         <div className='row'>
-          
+
           <div className="welcome-content">
-            
+
             Please Check Your Inbox For Login Credentials
 
           </div>

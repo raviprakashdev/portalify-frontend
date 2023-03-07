@@ -14,6 +14,7 @@ import ForgotPassword from './components/forms/ForgotPassword';
 import DashboardScreen from './pages/DashboardScreen';
 import Leads from './components/dashboard/leads';
 import Mail from './components/dashboard/mail';
+import FormBuilderScreen from './pages/FormBuilderScreen';
 
 export function App() {
   return (
@@ -30,14 +31,15 @@ export function App() {
      
 
      
-      <DashboardScreen>
+      {/* <DashboardScreen>
         <Routes>
           <Route path="/" element={<Leads/>} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/mail" element={<Mail />} />
-          
         </Routes>
-      </DashboardScreen>
+      </DashboardScreen> */}
+
+      <FormBuilderScreen/>
 
     </div>
   )

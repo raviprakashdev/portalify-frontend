@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import Leads from '../components/dashboard/leads';
-import Mail from '../components/dashboard/mail';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import dashboard_icon from '../assets/icons/dashboard_icon.png';
 import leads_icon from '../assets/icons/leads_icon.png';
@@ -48,8 +46,8 @@ const DashboardScreen = ({ children }) => {
                             {
                                 menuItem.map((item, index) => (
                                     <div className='dashboard-buttons'>
-                                        <NavLink to={item.path} key={index} className="link d-flex align-items-center" style={{textDecoration:"none"}}>
-                                            <div className="icon"> <img src={item.icon} alt="icon"/></div>
+                                        <NavLink to={item.path} key={index} className="link d-flex align-items-center" style={{ textDecoration: "none" }}>
+                                            <div className="icon"> <img src={item.icon} alt="icon" /></div>
                                             <div className="link_text"><span>{item.name}</span></div>
                                         </NavLink>
 
@@ -63,8 +61,8 @@ const DashboardScreen = ({ children }) => {
                             }
 
                             <div className='logout-dashboard'>
-                            <div className="icon"><img src={require("../assets/icons/logout_icon.png")} alt="icon"/></div>
-                            <div className="link_text"><span>Logout</span></div>
+                                <div className="icon"><img src={require("../assets/icons/logout_icon.png")} alt="icon" /></div>
+                                <div className="link_text"><span>Logout</span></div>
                             </div>
                         </div>
 
