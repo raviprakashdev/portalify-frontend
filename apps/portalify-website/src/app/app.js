@@ -27,15 +27,15 @@ export function App() {
       {/* <ForgotPassword/> */}
       {/* <SigninScreen form={ForgotPassword}/> */}
 
-      <DashboardScreen>
+      {/* <DashboardScreen>
         <Routes>
           <Route path="/" element={<Leads />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/mail" element={<Mail />} />
         </Routes>
-      </DashboardScreen>
+      </DashboardScreen> */}
 
-      {/* <FormBuilderScreen/> */}
+      <FormBuilderScreen/>
     </div>
   )
 }
