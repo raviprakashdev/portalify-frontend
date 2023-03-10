@@ -1,310 +1,289 @@
 * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
 }
-
-
 
 /*---------------------------- WelcomingScreen Styling Starts ----------------------------*/
 
 .welcome-screen .container {
-    margin-left: 0;
-    min-width: 100vw;
-    height: 100vh;
-    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-left: 0;
+  min-width: 100vw;
+  height: 100vh;
+  background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .welcome-screen .container .logo {
-    position: fixed;
-    top: 0;
-    left: 0;
-
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .welcome-screen .container .logo img {
-    padding: 20px;
-    max-height: 15vh;
+  padding: 20px;
+  max-height: 15vh;
 }
 
 .welcome-screen .container .row .welcome-content {
-    font-size: 5vw;
-    color: #FAFAFA;
-    text-align: center;
-
+  font-size: 5vw;
+  color: #fafafa;
+  text-align: center;
 }
 
 .welcome-screen .container .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .welcome-screen .container .row .confetti {
-    height: 20vh;
-    width: 20vw;
-    margin: 0px;
-
+  height: 20vh;
+  width: 20vw;
+  margin: 0px;
 }
 
 .welcome-screen .container .row .confetti_1 {
-    position: absolute;
-    top: 20%;
-    left: 0%;
+  position: absolute;
+  top: 20%;
+  left: 0%;
 }
 
 .welcome-screen .container .row .confetti_3 {
-    position: absolute;
-    top: 20%;
-    right: 0%;
+  position: absolute;
+  top: 20%;
+  right: 0%;
 }
-
-
 
 /*---------------------------- SigninScreen Styling starts ----------------------------*/
 .signin-screen .container {
-    margin-left: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    background-color: #FAFAFA;
+  margin-left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #fafafa;
 }
 
 .signin-screen .container .row .left-side {
-    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
-    position: relative;
-    min-height: 100vh;
-
+  background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  position: relative;
+  min-height: 100vh;
 }
 
 .signin-screen .left-side .logo img {
-    padding: 20px;
-    max-height: 6rem;
+  padding: 20px;
+  max-height: 6rem;
 }
 
-
 .signin-screen .left-side .signin-image-all {
-
-    max-height: 20%;
+  max-height: 20%;
 }
 
 @media screen and (max-width: 992px) {
-    .signin-screen .left-side .signin-image-all {
-        display: none;
-    }
+  .signin-screen .left-side .signin-image-all {
+    display: none;
+  }
 
-    .signin-screen .container .row .left-side {
-        min-height: 10vh;
-    }
+  .signin-screen .container .row .left-side {
+    min-height: 10vh;
+  }
 }
 
 .signin-screen .left-side .signin-image-child1 {
-
-    position: absolute;
-    top: 30%;
-    left: 40%;
+  position: absolute;
+  top: 30%;
+  left: 40%;
 }
 
 .signin-screen .left-side .signin-image-child2 {
-
-    position: absolute;
-    top: 44%;
-    left: 30%;
+  position: absolute;
+  top: 44%;
+  left: 30%;
 }
 
 .signin-screen .left-side .signin-image-child3 {
-
-    position: absolute;
-    top: 48%;
-    left: 50%;
+  position: absolute;
+  top: 48%;
+  left: 50%;
 }
 
 .signin-screen .left-side .signin-image-child1:hover,
 .signin-screen .left-side .signin-image-child2:hover,
 .signin-screen .left-side .signin-image-child3:hover {
-    z-index: 100;
+  z-index: 100;
 }
-
 
 .signin-screen .right-side {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
-
 
 /*---------------------------- Signin and Register(1-2) Form Styling Starts ----------------------------*/
 .signin-screen .right-side p {
-    color: #447CBF;
-    margin: 20px 0;
-    text-align: center;
+  color: #447cbf;
+  margin: 20px 0;
+  text-align: center;
 }
 
 .signin-card {
-    background-color: #FFFFFF;
-    position: relative;
-    box-shadow: 2px 6px 25px rgba(89, 89, 89, 0.08);
-    border-radius: 10px;
-    padding: 54px
+  background-color: #ffffff;
+  position: relative;
+  box-shadow: 2px 6px 25px rgba(89, 89, 89, 0.08);
+  border-radius: 10px;
+  padding: 54px;
 }
 
 .signin-card .text {
-    font-size: 28px;
-    font-weight: 600;
-    color: #447CBF;
-    text-align: center
+  font-size: 28px;
+  font-weight: 600;
+  color: #447cbf;
+  text-align: center;
 }
 
 .signin-card .input-text {
-    position: relative;
-    margin-top: 19px;
-    font-weight: 500;
-    color: #595959;
-    font-size: 18px;
+  position: relative;
+  margin-top: 19px;
+  font-weight: 500;
+  color: #595959;
+  font-size: 18px;
 }
-
 
 .signin-card .input-text input,
 select {
-    height: 45px;
-    width: 100%;
-    border-radius: 9px;
-    border: 1px solid #e0e3e9;
-    padding: 0 14px;
-    font-size: 16px;
-    color: #BFBFBF;
-    margin: 5px 0;
+  height: 45px;
+  width: 100%;
+  border-radius: 9px;
+  border: 1px solid #e0e3e9;
+  padding: 0 14px;
+  font-size: 16px;
+  color: #bfbfbf;
+  margin: 5px 0;
 }
 
 .signin-card .input-text i {
-    position: absolute;
-    right: 10px;
-    top: 45px;
-    font-size: 15px;
-    cursor: pointer
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .signin-card .buttons {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signin-card .buttons button {
-    height: 45px;
-    width: 100%;
-    border: none;
-    background-image: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
-    border-radius: 9px;
-    font-size: 12px;
-    outline: 0;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.5s
+  height: 45px;
+  width: 100%;
+  border: none;
+  background-image: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  border-radius: 9px;
+  font-size: 12px;
+  outline: 0;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.5s;
 }
 
 .signin-card .buttons button:hover {
-    background-image: linear-gradient(94.43deg, #111111 -18.98%, #447CBF 113.48%);
+  background-image: linear-gradient(94.43deg, #111111 -18.98%, #447cbf 113.48%);
 }
 
 .signin-card .forgot {
-    font-size: 14px;
-    font-weight: 500;
-    color: #2D5380;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2d5380;
 }
 
 .forgot a {
-    text-decoration: none;
+  text-decoration: none;
 }
-
 
 /*---------------------------- DashboardScreen Styling starts ----------------------------*/
 .dashboard-screen .container {
-    margin-left: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    background-color: #FAFAFA;
+  margin-left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #fafafa;
 }
 
 .dashboard-screen .container .row .left-side {
-    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 250%);
-    position: relative;
-    min-height: 100vh;
-    color: #E0E0E0;
-
+  background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 250%);
+  position: relative;
+  min-height: 100vh;
+  color: #e0e0e0;
 }
 
 .dashboard-screen .left-side .logo img {
-    padding: 10px;
-    align-self: center;
-    max-height: 7rem;
+  padding: 10px;
+  align-self: center;
+  max-height: 7rem;
 }
 
 .dashboard-screen .left-side .logo {
-    text-align: center;
+  text-align: center;
 }
 
 .dashboard-screen .left-side .sidebar .dashboard-buttons {
-    margin: 20px;
-    padding: 10px;
+  margin: 20px;
+  padding: 10px;
 }
 
 .dashboard-screen .left-side .sidebar .dashboard-buttons:hover {
-    background-color: #447CBF;
-    border-radius: 10px;
+  background-color: #447cbf;
+  border-radius: 10px;
 }
 
 .dashboard-screen .left-side .sidebar {
-    margin-top: 10vh;
+  margin-top: 10vh;
 }
 
 .dashboard-screen .left-side .sidebar .dashboard-buttons img,
 span {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .dashboard-screen .left-side .sidebar .logout-dashboard {
-    display: flex;
-    align-items: center;
-    margin: 20px;
-    position: fixed;
-    padding: 10px;
-    bottom: 0;
-
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
 }
 
 .dashboard-screen .left-side .sidebar .logout-dashboard img,
 span {
-    padding-right: 10px;
-    /* padding-left: 10px; */
-    color: #E0E0E0;
-    font-size: 2.5vh;
-
+  padding-right: 10px;
+  /* padding-left: 10px; */
+  color: #e0e0e0;
+  font-size: 2.5vh;
 }
 
 .dashboard-screen .left-side .sidebar .logout-dashboard:hover {
-    background-color: #447CBF;
-    border-radius: 10px;
+  background-color: #447cbf;
+  border-radius: 10px;
 }
 
 .dashboard-screen .right-side {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 /*---------------------------- FormBuilderScreen Styling starts ----------------------------*/
 
 .top-bar {
-    background: linear-gradient(94.43deg, #447CBF -18.98%, #111111 113.48%);
-    color: #E0E0E0;
-    padding: 1%;
+  background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  color: #e0e0e0;
+  padding: 1%;
 }
