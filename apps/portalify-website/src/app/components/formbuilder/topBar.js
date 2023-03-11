@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import dashboard_icon from 'C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/icons/dashboard_icon.png'
-import leads_icon from 'C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/icons/leads_icon.png'
-import mail_icon from 'C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/icons/mail_icon.png'
-import builder_icon from 'C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/icons/builder_icon.png'
+import dashboard_icon from '../../assets/icons/dashboard_icon.png'
+import leads_icon from '../../assets/icons/leads_icon.png'
+import mail_icon from '../../assets/icons/mail_icon.png'
+import builder_icon from '../../assets/icons/builder_icon.png'
 
 const TopBar = () => {
   const menuItem = [

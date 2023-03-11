@@ -35,7 +35,7 @@ export function App() {
         </Routes>
       </DashboardScreen> */}
 
-      <FormBuilderScreen/>
+      <FormBuilderScreen />
     </div>
   )
 }
