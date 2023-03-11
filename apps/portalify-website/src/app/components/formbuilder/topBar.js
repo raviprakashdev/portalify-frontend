@@ -35,7 +35,7 @@ const TopBar = () => {
         <div className="logo">
           {' '}
           <img
-            src={require('C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/logos/Logo-white.png')}
+            src={require('../../assets/logos/Logo-white.png')}
             alt="logo"
             className="img-fluid"
           />{' '}
@@ -69,13 +69,13 @@ const TopBar = () => {
         <div className="logout-dashboard d-flex justify-content-evenly align-items-center">
           <div className="icon">
             <img
-              src={require('C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/icons/logout_icon.png')}
+              src={require('../../assets/icons/logout_icon.png')}
               alt="icon"
             />
           </div>
           <div className="user-image">
             <img
-              src={require('C:/Users/Khushi/Desktop/portalify-frontend/apps/portalify-website/src/app/assets/sample-user-image.png')}
+              src={require('../../assets/sample-user-image.png')}
               alt="icon"
             />
           </div>

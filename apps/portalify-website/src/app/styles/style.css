@@ -16,19 +16,17 @@
   border: 1px solid #447cbf;
 }
 
-.primary-blue-text-white-button{
-  
-border-radius: 8px;
+.primary-blue-text-white-button {
+  border-radius: 8px;
 
-padding: 16px 24px;
-background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-font-weight: 600;
-font-size: 16px;
+  padding: 16px 24px;
+  background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  font-size: 16px;
 
-border: 1px solid #447cbf;
-
+  border: 1px solid #447cbf;
 }
 
 /*---------------------------- WelcomingScreen Styling Starts ----------------------------*/
@@ -325,6 +323,7 @@ span {
 .formbuilder-screen .container .inputProperties p {
   font-size: 25px;
   font-weight: 600;
+  margin-bottom: 28px;
 }
 
 .inputProperties {
@@ -345,9 +344,6 @@ span {
   margin-top: 16px;
 }
 
-.inputProperties div:nth-child(1) {
-  margin-bottom: 37px;
-}
 .inputProperties div:nth-last-child(2) input {
   width: auto;
   margin: 0px 0px 0px 8px;
@@ -365,6 +361,6 @@ span {
   justify-content: center;
 }
 
-.inputProperties .buttons button:first-child{
+.inputProperties .buttons button:first-child {
   margin-right: 19px;
 }
