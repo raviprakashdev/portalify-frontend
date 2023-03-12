@@ -26,7 +26,7 @@ const SingleLineInputProperty = () => {
     <div className="InputProperties">
       <form>
         <div className="input-text">
-        LABEL VALUE
+          LABEL VALUE
           <input type="text" placeholder="Enter Label" value={inputtext.label} onChange={inputEvent} name="label" />
         </div>
         <div className="input-text">
