@@ -23,7 +23,7 @@ const SingleLineInputProperty = () => {
   }
 
   return (
-    <div className="InputProperties">
+    <div>
       <form>
         <div className="input-text">
           LABEL VALUE

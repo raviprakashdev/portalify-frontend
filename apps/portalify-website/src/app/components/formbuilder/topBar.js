@@ -34,11 +34,7 @@ const TopBar = () => {
       <div className="col-2">
         <div className="logo">
           {' '}
-          <img
-            src={require('../../assets/logos/Logo-white.png')}
-            alt="logo"
-            className="img-fluid"
-          />{' '}
+          <img src={require('../../assets/logos/Logo-white.png')} alt="logo" className="img-fluid" />{' '}
         </div>
       </div>
 
@@ -68,16 +64,10 @@ const TopBar = () => {
       <div className="col-2">
         <div className="logout-dashboard d-flex justify-content-evenly align-items-center">
           <div className="icon">
-            <img
-              src={require('../../assets/icons/logout_icon.png')}
-              alt="icon"
-            />
+            <img src={require('../../assets/icons/logout_icon.png')} alt="icon" />
           </div>
           <div className="user-image">
-            <img
-              src={require('../../assets/sample-user-image.png')}
-              alt="icon"
-            />
+            <img src={require('../../assets/sample-user-image.png')} alt="icon" />
           </div>
           <div className="user-name">John Doe</div>
         </div>

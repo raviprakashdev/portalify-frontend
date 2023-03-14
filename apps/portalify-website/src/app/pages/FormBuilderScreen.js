@@ -9,9 +9,13 @@ const FormBuilderScreen = () => {
       <div className="container">
         <TopBar />
         <div className="row ">
-          <div className="col-3"><Elements/></div>
+          <div className="col-3 elementList">
+            <Elements />
+          </div>
           <div className="col-6">Main Area</div>
-          <div className="col-3 inputProperties"> <p>INPUT PROPERTIES</p> <SingleLineInputProperty/></div>
+          <div className="col-3 inputProperties">
+            <p>INPUT PROPERTIES</p> <SingleLineInputProperty />
+          </div>
         </div>
       </div>
     </section>

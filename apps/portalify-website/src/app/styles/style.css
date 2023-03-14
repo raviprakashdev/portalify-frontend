@@ -320,6 +320,8 @@ span {
   font-size: 20px;
 }
 
+/*---------- FormBuilderScreen RightSide: InputProperties Styling starts ----------*/
+
 .formbuilder-screen .container .inputProperties p {
   font-size: 25px;
   font-weight: 600;
@@ -363,4 +365,40 @@ span {
 
 .inputProperties .buttons button:first-child {
   margin-right: 19px;
+}
+
+/*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
+
+.elementList {
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
+  min-height: 100vh;
+  padding: 34px 43px 34px 45px;
+}
+
+.elementList .element_heading {
+  color: #828282;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin: 15px 0px 31.44px 0px;
+}
+
+.elementList .element_group .element_name {
+  color: #000000;
+  letter-spacing: 0.85px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.elementList .element_group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 148px;
+  padding: 7px 10px;
+  gap: 10px;
+  background: #f2f2f2;
+  border-radius: 5px;
+  margin: 0px 22px 29px 0px;
 }
