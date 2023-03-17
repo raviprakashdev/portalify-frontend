@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from "react"
 import attachment_icon from '../../assets/icons/elements_icon/attachment.png'
 import checkbox_icon from '../../assets/icons/elements_icon/checkbox.png'
 import date_icon from '../../assets/icons/elements_icon/date.png'
@@ -20,6 +20,7 @@ const Elements = () => {
         {
           name: 'Single Line',
           icon: singleLine_icon,
+          //html content
         },
         {
           name: 'Text Area',
@@ -91,23 +92,66 @@ const Elements = () => {
     },
   ]
 
-  return (
-    <div>
-      {elementList.map((item, index) => (
-        <div key={index}>
-          <div className="element_heading">{item.type}</div>
-          <div className="element_list d-flex"> 
-          {item.elements.map((i) => (
-            <div key={index} className="element_group">
-              <div className="element_icon">
-                <img src={i.icon} alt="icon" />
+
+
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredElements, setFilteredElements] = useState(elementList);
+
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    const filtered = elementList.filter((category) => {
+      return category.elements.filter((element) => {
+        return (
+          element.name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+          category.type.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+      }).length > 0;
+    });
+    setFilteredElements(filtered);
+  };
+
+
+  const filteredElementList = filteredElements.map((category) => {
+    return (
+
+      
+        <div key={category.type}>
+          <div className="element_heading">{category.type}</div>
+          <div className="element_list row">
+            {category.elements.filter((element) => {
+          return (
+            element.name.toLowerCase().includes(searchQuery.toLowerCase())  ||
+            category.type.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        }).map((element) => (
+              <div className="col-md-6 col-sm-12">
+              <div key={element.name} className="element_group">
+                <div className="element_icon">
+                  <img src={element.icon} alt={element.name} />
+                </div>
+                <div className="element_name">{element.name}</div>
               </div>
-              <div className="element_name">{i.name}</div>
-            </div>
-          ))}
+              </div>
+            ))}
           </div>
         </div>
-      ))}
+      
+    );
+  });
+  
+
+
+  return (
+    <div>
+ <div className="search-header">
+       
+        <input type="text" value={searchQuery} placeholder="Search" onChange={handleSearchInputChange} />
+
+      </div>
+
+      
+      {filteredElementList}
     </div>
   )
 }
