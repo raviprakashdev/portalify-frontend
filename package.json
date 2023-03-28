@@ -22,7 +22,13 @@
     "react-typed": "^1.2.0",
     "reactstrap": "^9.1.5",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "react-beautiful-dnd": "13.1.0",
+    "styled-components": "5.3.0",
+    "generate-avatar": "1.4.10",
+    "lorem-ipsum": "2.0.3",
+    "uuid": "3.3.2"
+    
   },
   "devDependencies": {
     "@nrwl/cli": "15.0.13",
