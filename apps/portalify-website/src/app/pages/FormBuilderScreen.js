@@ -2,7 +2,6 @@ import React,{useState} from 'react'
 import TopBar from '../components/formbuilder/topBar'
 import Elements from '../components/formbuilder/elements'
 import SingleLineInputProperty from '../components/formbuilder/singleLineInputProperty'
-import DragList from "./DragList";
 import uuid from 'uuid/v4';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
