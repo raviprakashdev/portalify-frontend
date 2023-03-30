@@ -279,7 +279,7 @@ const FormBuilderScreen = () => {
         })
         break
       case 'allElements':
-        setState({
+        setState({ ...state,
           [destination.droppableId]: copy(allElements, state[destination.droppableId], source, destination),
         })
         break
