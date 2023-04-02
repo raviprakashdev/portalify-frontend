@@ -18,6 +18,8 @@ import uuid from 'uuid/v4'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 // a little function to help us with reordering the result
+
+
 const elementList = [
   {
     type: 'Text Elements',
@@ -27,19 +29,21 @@ const elementList = [
         id: uuid(),
         name: 'Single Line',
         icon: singleLine_icon,
-        //html content
+        htmlContent:`<input type='text'></type>`,
       },
       {
         index:2,
         id: uuid(),
         name: 'Text Area',
         icon: textArea_icon,
+        htmlContent:`<input type='textarea'></type>`,
       },
       {
         index:3,
         id: uuid(),
         name: 'Number',
         icon: number_icon,
+        htmlContent:`<input type='number'></type>`,
       },
     ],
   },
@@ -51,12 +55,14 @@ const elementList = [
         id: uuid(),
         name: 'Date',
         icon: date_icon,
+        htmlContent:`<input type='date'></type>`,
       },
       {
         index:5,
         id: uuid(),
         name: 'Date & Time',
         icon: dateAndTime_icon,
+        htmlContent:`<input type='datetime-local'></type>`,
       },
     ],
   },
@@ -68,24 +74,31 @@ const elementList = [
         id: uuid(),
         name: 'Dropdown',
         icon: dropdown_icon,
+        htmlContent:`<select name='Sample'><option value='Sample'>Sample</option></select>`,
       },
       {
         index:7,
         id: uuid(),
         name: 'Radio Button',
         icon: radioButton_icon,
+        htmlContent:`<label><input type='radio' value='sample'></type> Sample </label>`,
       },
       {
         index:8,
         id: uuid(),
         name: 'Checkbox',
         icon: checkbox_icon,
+        htmlContent:`<label><input type='checkbox' value='sample'></type> Sample </label>`,
       },
       {
         index:9,
         id: uuid(),
         name: 'Switch',
         icon: switch_icon,
+        htmlContent:`<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
+        <input type="checkbox" id="toggle-switch" style="display: none;">
+        <span class="slider" style="position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background-color: white; border-radius: 50%; transition: 0.2s;"></span>
+      </label>`,
       },
     ],
   },
@@ -98,12 +111,14 @@ const elementList = [
         id: uuid(),
         name: 'Image',
         icon: image_icon,
+        htmlContent:`<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
       },
       {
         index:11,
         id: uuid(),
         name: 'Attachment',
         icon: attachment_icon,
+        htmlContent:`<label >Upload An Attachment:<input type='file'></type></label>`,
       },
     ],
   },
@@ -115,6 +130,7 @@ const elementList = [
         id: uuid(),
         name: 'Divider',
         icon: divider_icon,
+        htmlContent:`<hr style="height:2px;border-width:10;color:black;background-color:black">`,
       },
     ],
   },
@@ -178,28 +194,7 @@ const Item = styled.div`
   background: #fff;
   border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
 `
-const ITEMS = [
-  {
-    id: uuid(),
-    content: 'Headline',
-  },
-  {
-    id: uuid(),
-    content: 'Copy',
-  },
-  {
-    id: uuid(),
-    content: 'Image',
-  },
-  {
-    id: uuid(),
-    content: 'Slideshow',
-  },
-  {
-    id: uuid(),
-    content: 'Quote',
-  },
-]
+
 const Clone = styled(Item)`
   + div {
     display: none !important;
@@ -339,7 +334,8 @@ const FormBuilderScreen = () => {
                                         </svg>
                                       </Handle>
                                       {console.log(item)}
-                                      {item.name}
+                                      <div dangerouslySetInnerHTML={ { __html: item.htmlContent } }></div>
+                                     
                                     </Item>
                                   )}
                                 </Draggable>

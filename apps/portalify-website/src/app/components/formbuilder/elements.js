@@ -13,6 +13,7 @@ import radioButton_icon from '../../assets/icons/elements_icon/radioButton.png'
 import image_icon from '../../assets/icons/elements_icon/image.png'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import uuid from 'uuid/v4'
+
 import styled from 'styled-components'
 
 const Elements = (props) => {
@@ -21,20 +22,19 @@ const Elements = (props) => {
       type: 'Text Elements',
       elements: [
         {
-          index:1,
+          index: 1,
           id: uuid(),
           name: 'Single Line',
           icon: singleLine_icon,
-          //html content
         },
         {
-          index:2,
+          index: 2,
           id: uuid(),
           name: 'Text Area',
           icon: textArea_icon,
         },
         {
-          index:3,
+          index: 3,
           id: uuid(),
           name: 'Number',
           icon: number_icon,
@@ -45,60 +45,56 @@ const Elements = (props) => {
       type: 'Date Elements',
       elements: [
         {
-          index:4,
+          index: 4,
           id: uuid(),
           name: 'Date',
           icon: date_icon,
         },
         {
-          index:5,
+          index: 5,
           id: uuid(),
           name: 'Date & Time',
           icon: dateAndTime_icon,
         },
       ],
     },
-  
+
     {
       type: 'Multi Elements',
       elements: [
-        {index:6,
-          id: uuid(),
-          name: 'Dropdown',
-          icon: dropdown_icon,
-        },
+        { index: 6, id: uuid(), name: 'Dropdown', icon: dropdown_icon },
         {
-          index:7,
+          index: 7,
           id: uuid(),
           name: 'Radio Button',
           icon: radioButton_icon,
         },
         {
-          index:8,
+          index: 8,
           id: uuid(),
           name: 'Checkbox',
           icon: checkbox_icon,
         },
         {
-          index:9,
+          index: 9,
           id: uuid(),
           name: 'Switch',
           icon: switch_icon,
         },
       ],
     },
-  
+
     {
       type: 'Media Elements',
       elements: [
         {
-          index:10,
+          index: 10,
           id: uuid(),
           name: 'Image',
           icon: image_icon,
         },
         {
-          index:11,
+          index: 11,
           id: uuid(),
           name: 'Attachment',
           icon: attachment_icon,
@@ -109,7 +105,7 @@ const Elements = (props) => {
       type: 'Other Elements',
       elements: [
         {
-          index:12,
+          index: 12,
           id: uuid(),
           name: 'Divider',
           icon: divider_icon,
@@ -124,7 +120,7 @@ const Elements = (props) => {
   //     allElements.push(element)
   //   })
   // })
-  console.log({allElements})
+  console.log({ allElements })
   const Item = styled.div``
   const List = styled.div``
 
@@ -136,28 +132,7 @@ const Elements = (props) => {
       display: none !important;
     }
   `
-  const ITEMS = [
-    {
-        id: uuid(),
-        content: 'Headline'
-    },
-    {
-        id: uuid(),
-        content: 'Copy'
-    },
-    {
-        id: uuid(),
-        content: 'Image'
-    },
-    {
-        id: uuid(),
-        content: 'Slideshow'
-    },
-    {
-        id: uuid(),
-        content: 'Quote'
-    }
-];
+
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredElements, setFilteredElements] = useState(elementList)
 
@@ -188,14 +163,11 @@ const Elements = (props) => {
                 category.type.toLowerCase().includes(searchQuery.toLowerCase())
               )
             })
-            .map((element,index) => (
-              
+            .map((element, index) => (
               <div className="col-md-6 col-sm-12">
-                {console.log("keyyy",element.id,index,indexOut,element.index)}
-                
-                
-                <Draggable key={element.id} draggableId={element.id} index={element.index-1}>
-                  
+                {console.log('keyyy', element.id, index, indexOut, element.index)}
+
+                <Draggable key={element.id} draggableId={element.id} index={element.index - 1}>
                   {(provided, snapshot) => (
                     <React.Fragment>
                       <Item
@@ -204,7 +176,9 @@ const Elements = (props) => {
                         {...provided.dragHandleProps}
                         isDragging={snapshot.isDragging}
                         style={provided.draggableProps.style}
-                      > {console.log(element)}
+                      >
+                        {' '}
+                        {console.log(element)}
                         <div key={element.id} className="element_group">
                           <div className="element_icon">
                             <img src={element.icon} alt={element.name} />
@@ -212,7 +186,16 @@ const Elements = (props) => {
                           <div className="element_name">{element.name}</div>
                         </div>
                       </Item>
-                      {snapshot.isDragging && <Clone>{element.name}</Clone>}
+                      {snapshot.isDragging && (
+                        <Clone>
+                          <div key={element.id} className="element_group">
+                            <div className="element_icon">
+                              <img src={element.icon} alt={element.name} />
+                            </div>
+                            <div className="element_name">{element.name}</div>
+                          </div>
+                        </Clone>
+                      )}
                     </React.Fragment>
                   )}
                 </Draggable>
