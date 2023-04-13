@@ -1,40 +1,53 @@
 import React from 'react'
-import { useState } from 'react'
+//import { useState } from 'react'
+import { useContext } from 'react';
+import {UserContext} from '../../context/formbuilder-context';
 
-const SingleLineInputProperty = () => {
-  const [inputtext, setinputtext] = useState({
-    label: '',
-    min_length: '',
-    max_length: '',
-    default_value: '',
-    placeholder: '',
-    required: true,
-  })
+
+const SingleLineInputProperty = (handleClick) => {
+  // const [inputtext, setinputtext] = useState({
+  //   label: '',
+  //   min_length: '',
+  //   max_length: '',
+  //   default_value: '',
+  //   placeholder: '',
+  //   required: true,
+  // })
+
+  // const inputEventt = (event) => {
+  //   const name = event.target.name
+  //   const value = event.target.value
+  //   setinputtext((lastValue) => {
+  //     return {
+  //       ...lastValue,
+  //       [name]: value,
+  //     }
+  //   })
+  // }
+
+
+  const { label, min_length, max_length,default_value,placeholder,required, updateUserData } = useContext(UserContext);
 
   const inputEvent = (event) => {
-    const name = event.target.name
-    const value = event.target.value
-    setinputtext((lastValue) => {
-      return {
-        ...lastValue,
-        [name]: value,
-      }
-    })
-  }
+    const { name, value } = event.target;
+    updateUserData({ [name]: value });
+  };
+
+
 
   return (
     <div>
       <form>
         <div className="input-text">
           LABEL VALUE
-          <input type="text" placeholder="Enter Label" value={inputtext.label} onChange={inputEvent} name="label" />
+          <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
         </div>
         <div className="input-text">
           MIN LENGTH
           <input
             type="text"
             placeholder="Enter Minimum Length"
-            value={inputtext.min_length}
+            value={min_length}
             onChange={inputEvent}
             name="min_length"
           />
@@ -45,7 +58,7 @@ const SingleLineInputProperty = () => {
           <input
             type="text"
             placeholder="Enter Maximum Length"
-            value={inputtext.max_length}
+            value={max_length}
             onChange={inputEvent}
             name="max_length"
           />
@@ -56,7 +69,7 @@ const SingleLineInputProperty = () => {
           <input
             type="text"
             placeholder="Enter Default Value"
-            value={inputtext.default_value}
+            value={default_value}
             onChange={inputEvent}
             name="default_value"
           />
@@ -67,7 +80,7 @@ const SingleLineInputProperty = () => {
           <input
             type="text"
             placeholder="Enter Placeholder Value"
-            value={inputtext.placeholder}
+            value={placeholder}
             onChange={inputEvent}
             name="placeholder"
           />
@@ -75,14 +88,14 @@ const SingleLineInputProperty = () => {
 
         <div className="input-text d-flex align-items-center">
           Required:
-          <input type="checkbox" value={inputtext.required} onChange={inputEvent} name="required" />
+          <input type="checkbox" value={required} onChange={inputEvent} name="required" />
         </div>
 
         <div className="buttons">
           <button className="primary-blue-text-white-button" type="clear">
             Clear
           </button>
-          <button className="primary-white-text-gray-button" type="submit">
+          <button className="primary-white-text-gray-button" type="submit" onClick={handleClick}>
             Done
           </button>
         </div>

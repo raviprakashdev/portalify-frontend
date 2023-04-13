@@ -14,6 +14,7 @@ import image_icon from '../../assets/icons/elements_icon/image.png'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import uuid from 'uuid/v4'
 
+
 import styled from 'styled-components'
 
 const Elements = (props) => {
@@ -120,7 +121,7 @@ const Elements = (props) => {
   //     allElements.push(element)
   //   })
   // })
-  console.log({ allElements })
+  //console.log({ allElements })
   const Item = styled.div``
   const List = styled.div``
 
@@ -207,7 +208,9 @@ const Elements = (props) => {
   })
 
   return (
-    <div>
+    
+
+      <div>
       <div className="search-header">
         <input type="text" value={searchQuery} placeholder="Search" onChange={handleSearchInputChange} />
       </div>
@@ -218,7 +221,9 @@ const Elements = (props) => {
           </Kiosk>
         )}
       </Droppable>
-    </div>
+      </div>
+      
+    
   )
 }
 

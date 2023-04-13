@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import TopBar from '../components/formbuilder/topBar'
 import Elements from '../components/formbuilder/elements'
 import SingleLineInputProperty from '../components/formbuilder/singleLineInputProperty'
@@ -17,33 +17,35 @@ import image_icon from '../assets/icons/elements_icon/image.png'
 import uuid from 'uuid/v4'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import UserProvider from '../context/formbuilder-context'
+import { UserContext } from '../context/formbuilder-context'
 // a little function to help us with reordering the result
-
 
 const elementList = [
   {
     type: 'Text Elements',
     elements: [
       {
-        index:1,
+        index: 1,
         id: uuid(),
         name: 'Single Line',
         icon: singleLine_icon,
-        htmlContent:`<input type='text'></type>`,
+        htmlContent: `<label> <input type='text' value=''/></label>`,
+        label:'',
       },
       {
-        index:2,
+        index: 2,
         id: uuid(),
         name: 'Text Area',
         icon: textArea_icon,
-        htmlContent:`<input type='textarea'></type>`,
+        htmlContent: `<input type='textarea'/>`,
       },
       {
-        index:3,
+        index: 3,
         id: uuid(),
         name: 'Number',
         icon: number_icon,
-        htmlContent:`<input type='number'></type>`,
+        htmlContent: `<input type='number'/>`,
       },
     ],
   },
@@ -51,18 +53,18 @@ const elementList = [
     type: 'Date Elements',
     elements: [
       {
-        index:4,
+        index: 4,
         id: uuid(),
         name: 'Date',
         icon: date_icon,
-        htmlContent:`<input type='date'></type>`,
+        htmlContent: `<input type='date'/>`,
       },
       {
-        index:5,
+        index: 5,
         id: uuid(),
         name: 'Date & Time',
         icon: dateAndTime_icon,
-        htmlContent:`<input type='datetime-local'></type>`,
+        htmlContent: `<input type='datetime-local'/>`,
       },
     ],
   },
@@ -70,32 +72,33 @@ const elementList = [
   {
     type: 'Multi Elements',
     elements: [
-      {index:6,
+      {
+        index: 6,
         id: uuid(),
         name: 'Dropdown',
         icon: dropdown_icon,
-        htmlContent:`<select name='Sample'><option value='Sample'>Sample</option></select>`,
+        htmlContent: `<select name='Sample'><option value='Sample'>Sample</option></select>`,
       },
       {
-        index:7,
+        index: 7,
         id: uuid(),
         name: 'Radio Button',
         icon: radioButton_icon,
-        htmlContent:`<label><input type='radio' value='sample'></type> Sample </label>`,
+        htmlContent: `<label><input type='radio' value='sample'/> Sample </label>`,
       },
       {
-        index:8,
+        index: 8,
         id: uuid(),
         name: 'Checkbox',
         icon: checkbox_icon,
-        htmlContent:`<label><input type='checkbox' value='sample'></type> Sample </label>`,
+        htmlContent: `<label><input type='checkbox' value='sample'/> Sample </label>`,
       },
       {
-        index:9,
+        index: 9,
         id: uuid(),
         name: 'Switch',
         icon: switch_icon,
-        htmlContent:`<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
+        htmlContent: `<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
         <input type="checkbox" id="toggle-switch" style="display: none;">
         <span class="slider" style="position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background-color: white; border-radius: 50%; transition: 0.2s;"></span>
       </label>`,
@@ -107,18 +110,18 @@ const elementList = [
     type: 'Media Elements',
     elements: [
       {
-        index:10,
+        index: 10,
         id: uuid(),
         name: 'Image',
         icon: image_icon,
-        htmlContent:`<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
+        htmlContent: `<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
       },
       {
-        index:11,
+        index: 11,
         id: uuid(),
         name: 'Attachment',
         icon: attachment_icon,
-        htmlContent:`<label >Upload An Attachment:<input type='file'></type></label>`,
+        htmlContent: `<label >Upload An Attachment:<input type='file'></type></label>`,
       },
     ],
   },
@@ -126,11 +129,11 @@ const elementList = [
     type: 'Other Elements',
     elements: [
       {
-        index:12,
+        index: 12,
         id: uuid(),
         name: 'Divider',
         icon: divider_icon,
-        htmlContent:`<hr style="height:2px;border-width:10;color:black;background-color:black">`,
+        htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black">`,
       },
     ],
   },
@@ -142,7 +145,7 @@ elementList.forEach((category) => {
     allElements.push(element)
   })
 })
-console.log(allElements)
+//console.log(allElements)
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
   const [removed] = result.splice(startIndex, 1)
@@ -154,29 +157,29 @@ const reorder = (list, startIndex, endIndex) => {
  * Moves an item from one list to another list.
  */
 const copy = (source, destination, droppableSource, droppableDestination) => {
-  console.log('==> dest', destination);
+  console.log('==> dest', destination)
 
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const item = sourceClone[droppableSource.index];
+  const sourceClone = Array.from(source)
+  const destClone = Array.from(destination)
+  const item = sourceClone[droppableSource.index]
 
-  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() });
-  return destClone;
-};
+  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() })
+  return destClone
+}
 
 const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
+  const sourceClone = Array.from(source)
+  const destClone = Array.from(destination)
+  const [removed] = sourceClone.splice(droppableSource.index, 1)
 
-  destClone.splice(droppableDestination.index, 0, removed);
+  destClone.splice(droppableDestination.index, 0, removed)
 
-  const result = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
+  const result = {}
+  result[droppableSource.droppableId] = sourceClone
+  result[droppableDestination.droppableId] = destClone
 
-  return result;
-};
+  return result
+}
 
 const Content = styled.div`
   margin-right: 200px;
@@ -258,7 +261,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    console.log("state",state)
+    console.log('state check', state)
 
     console.log('==> result', result)
 
@@ -274,7 +277,8 @@ const FormBuilderScreen = () => {
         })
         break
       case 'allElements':
-        setState({ ...state,
+        setState({
+          ...state,
           [destination.droppableId]: copy(allElements, state[destination.droppableId], source, destination),
         })
         break
@@ -290,72 +294,169 @@ const FormBuilderScreen = () => {
       [uuid()]: [],
     })
   }
-  return (
-    <section className="formbuilder-screen">
-      <div className="container">
-        <TopBar />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <div className="row ">
-            <div className="col-3 elementList">
-              <Elements dataElement = {allElements}/>
-            </div>
-            <div className="col-6">
-              Main Area
-              <Content>
-                <Button onClick={addList}>
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                  </svg>
-                  <ButtonText>Add List</ButtonText>
-                </Button>
 
-                {Object.keys(state).map((list, i) => {
-                  console.log('==> list', list)
-                  return (
-                    <Droppable key="allElements" droppableId={list}>
-                      {(provided, snapshot) => (
-                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-                          {state[list].length
-                            ? state[list].map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id} index={index}>
-                                  {(provided, snapshot) => (
-                                    <Item
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      isDragging={snapshot.isDragging}
-                                      style={provided.draggableProps.style}
-                                    >
-                                      <Handle {...provided.dragHandleProps}>
-                                        <svg width="24" height="24" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                          />
-                                        </svg>
-                                      </Handle>
-                                      {console.log(item)}
-                                      <div dangerouslySetInnerHTML={ { __html: item.htmlContent } }></div>
-                                     
-                                    </Item>
-                                  )}
-                                </Draggable>
-                              ))
-                            : !provided.placeholder && <Notice>Drop items here</Notice>}
-                          {provided.placeholder}
-                        </Container>
-                      )}
-                    </Droppable>
-                  )
-                })}
-              </Content>
+
+  
+  //----selecting element by ID and updating the value---
+  const [selectedElement, setSelectedElement] = useState([]) //selected element data store in form [list id, element id]
+  // const [inputValue, setInputValue] = useState('')
+  // const [elementValue, setElementValue] = useState(elementList[0].elements)
+
+
+ 
+
+
+  const handleElementClick = (elementid,listid) => {
+    setSelectedElement([listid, elementid]);
+    
+    
+    console.log('id on click:'+ selectedElement[0],listid);
+  }
+
+
+  const updateValueOnClick=()=>{
+
+
+    //======testing==========
+
+const key = selectedElement[0];
+const idToFind = selectedElement[1];
+const newHtmlContent = `<label> <input type='text' value='new value' /></label>`;
+
+// Find the index of the object with the given ID
+const dataArray = state[key];
+if (key in state && Array.isArray(state[key])) {
+const index = dataArray.findIndex( obj => obj.id === idToFind);
+
+if (index !== -1) {
+    // Update the htmlContent property of the object with the given ID
+    setState(prevState => {
+        const updatedArray = [...prevState[key]];
+        updatedArray[index] = {...updatedArray[index], htmlContent: newHtmlContent};
+        return {...prevState, [key]: updatedArray};
+    });
+} else {
+    console.log(`Object with id '${idToFind}' not found in data.`);
+}
+}
+else {
+  console.log(`Invalid key '${key}' or array not found.`);
+}
+
+
+  }
+    
+
+  
+
+  useEffect(() => {
+    updateValueOnClick();
+    console.log('selectedElement:', selectedElement);
+  }, [selectedElement]);
+
+  
+
+
+  // const handleInputChange = (id, label, value) => {
+  //   const updatedElementData = elementValue.map((element) => {
+  //     if (element.id === id) {
+  //       return { ...element, [label]: value };
+  //     } else {
+  //       return element;
+  //     }
+  //   });
+  //   setElementValue(updatedElementData);
+  // };
+
+ 
+
+  const handleUpdateElement = () => {
+    setElementValue((prevElementValue) => ({
+      ...prevElementValue,
+      [selectedElement]: inputValue,
+    }))
+  }
+
+  return (
+    <UserProvider>
+      <UserContext.Consumer>
+        {({ label, min_length, max_length, default_value, placeholder, required }) => (
+          <section className="formbuilder-screen">
+            <div className="container">
+              <TopBar />
+              <DragDropContext onDragEnd={onDragEnd}>
+                <div className="row ">
+                  <div className="col-3 elementList">
+                    <Elements dataElement={allElements} />
+                  </div>
+                  <div className="col-6">
+                    Main Area
+                    <Content>
+                      <Button onClick={addList}>
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                          <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                        </svg>
+                        <ButtonText>Add List</ButtonText>
+                      </Button>
+
+                      {Object.keys(state).map((list, i) => {
+                        console.log('==> list', list)
+                        return (
+                          <Droppable key="allElements" droppableId={list}>
+                            {(provided, snapshot) => (
+                              <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                                {state[list].length
+                                  ? state[list].map((item, index) => (
+                                      <Draggable key={item.id} draggableId={item.id} index={index}>
+                                        {(provided, snapshot) => (
+                                          <Item
+                                            ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                            isDragging={snapshot.isDragging}
+                                            style={provided.draggableProps.style}
+                                          >
+                                            <Handle {...provided.dragHandleProps}>
+                                              <svg width="24" height="24" viewBox="0 0 24 24">
+                                                <path
+                                                  fill="currentColor"
+                                                  d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                                />
+                                              </svg>
+                                            </Handle>
+                                            {console.log('item: ' + item.id)}
+                                            <div
+                                              key={item.id}
+                                              onClick={() => handleElementClick(item.id,list)}
+                                              style={{
+                                                backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                              }}
+                                              dangerouslySetInnerHTML={{
+                                                __html: item.htmlContent,
+                                              }}
+                                            ></div>
+                                          </Item>
+                                        )}
+                                      </Draggable>
+                                    ))
+                                  : !provided.placeholder && <Notice>Drop items here</Notice>}
+                                {provided.placeholder}
+                              </Container>
+                            )}
+                          </Droppable>
+                        )
+                      })}
+                    </Content>
+                  </div>
+                  <div className="col-3 inputProperties">
+                    <p>INPUT PROPERTIES</p> <SingleLineInputProperty handleClick={handleUpdateElement}/>
+                  </div>
+                </div>
+              </DragDropContext>
             </div>
-            <div className="col-3 inputProperties">
-              <p>INPUT PROPERTIES</p> <SingleLineInputProperty />
-            </div>
-          </div>
-        </DragDropContext>
-      </div>
-    </section>
+          </section>
+        )}
+      </UserContext.Consumer>
+    </UserProvider>
   )
 }
 
