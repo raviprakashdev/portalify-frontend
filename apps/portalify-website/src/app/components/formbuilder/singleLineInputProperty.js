@@ -1,8 +1,7 @@
 import React from 'react'
 //import { useState } from 'react'
-import { useContext } from 'react';
-import {UserContext} from '../../context/formbuilder-context';
-
+import { useContext } from 'react'
+import { UserContext } from '../../context/formbuilder-context'
 
 const SingleLineInputProperty = (handleClick) => {
   // const [inputtext, setinputtext] = useState({
@@ -25,15 +24,33 @@ const SingleLineInputProperty = (handleClick) => {
   //   })
   // }
 
-
-  const { label, min_length, max_length,default_value,placeholder,required, updateUserData } = useContext(UserContext);
+  const { label, min_length, max_length, default_value, placeholder, required, updateUserData } =
+    useContext(UserContext)
+  const oldHtmlContent = `<label> <input id='htmlContent' type='text' value='value' /></label>`
+  const parser = new DOMParser();
+  const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html');
 
   const inputEvent = (event) => {
-    const { name, value } = event.target;
-    updateUserData({ [name]: value });
-  };
-
-
+    const { name, value } = event.target
+    updateUserData({ [name]: value })
+    switch (name) {
+      case 'default_value':
+        {
+          const myInput = newHtmlContent.getElementById('htmlContent');
+          myInput.setAttribute('value', value);
+          console.log('switch case active label', newHtmlContent.documentElement.innerHTML);
+        }
+        break
+      case 'label':
+        console.log('switch case active new val', value)
+        break
+      case 'placeholder':
+        console.log('switch case active placeholder', value)
+        break
+      default:
+        break
+    }
+  }
 
   return (
     <div>
@@ -95,7 +112,7 @@ const SingleLineInputProperty = (handleClick) => {
           <button className="primary-blue-text-white-button" type="clear">
             Clear
           </button>
-          <button className="primary-white-text-gray-button" type="submit" onClick={handleClick}>
+          <button className="primary-white-text-gray-button" type="submit">
             Done
           </button>
         </div>

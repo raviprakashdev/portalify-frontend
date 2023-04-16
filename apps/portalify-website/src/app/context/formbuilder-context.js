@@ -12,6 +12,9 @@ const FormBuilderContext=(props)=> {
     // default_value: '',
   });
 
+  // const [newHtmlContent, setNewHtmlContent] = useState("");
+
+
   const updateUserData = (newData) => {
     setUserData((prevState) => ({
       ...prevState,
@@ -29,7 +32,28 @@ const FormBuilderContext=(props)=> {
   const initialUserData = initializeUserData(['label', 'default_value']);
 
 
-  console.log(userData);
+  // const handleChange=(event)=>{
+  //   const { name, value } = event.target;
+  //   updateUserData({ [name]: value });
+  //   switch (name) {
+  //     case "label":
+  //       console.log("switch case actove:"+userData);
+        
+  //       break;
+  //     // case "new":
+  //     //   setNewValue(value);
+  //     //   break;
+  //     // case "placeholder":
+  //     //   setPlaceholderValue(value);
+  //     //   break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
+  console.log("user data: ",userData);
+
+ 
 
   return (
     <UserContext.Provider value={{ ...initialUserData, ...userData, updateUserData }}>
