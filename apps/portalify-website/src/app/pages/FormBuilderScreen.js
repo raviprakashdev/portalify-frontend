@@ -30,7 +30,7 @@ const elementList = [
         id: uuid(),
         name: 'Single Line',
         icon: singleLine_icon,
-        htmlContent: `<label> <input type='text' value=''/></label>`,
+        htmlContent: `<label> <input id='htmlContent' type='text' value=''/></label>`,
         label: '',
       },
       {
@@ -297,64 +297,46 @@ const FormBuilderScreen = () => {
 
   //----selecting element by ID and updating the value---
   const [selectedElement, setSelectedElement] = useState([]) //selected element data store in form [list id, element id]
-  // const [inputValue, setInputValue] = useState('')
-  // const [elementValue, setElementValue] = useState(elementList[0].elements)
-
+  
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
     console.log('id on click:' + selectedElement[0], listid)
   }
 
-  const newHtmlContent = `<label> <input type='text' value='new value' /></label>`
 
-  const updateValueOnClick = () => {
-    //======testing==========
+  // const updateValueOnClick = () => {
+  //   //======testing==========
+  // const newHtmlContent = `<label> <input type='text' value='new value' /></label>`
 
-    const key = selectedElement[0]
-    const idToFind = selectedElement[1]
+  //   const key = selectedElement[0]
+  //   const idToFind = selectedElement[1]
 
-    // Find the index of the object with the given ID
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
-      const index = dataArray.findIndex((obj) => obj.id === idToFind)
+  //   // Find the index of the object with the given ID
+  //   const dataArray = state[key]
+  //   if (key in state && Array.isArray(state[key])) {
+  //     const index = dataArray.findIndex((obj) => obj.id === idToFind)
 
-      if (index !== -1) {
-        // Update the htmlContent property of the object with the given ID
-        setState((prevState) => {
-          const updatedArray = [...prevState[key]]
-          updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent }
-          return { ...prevState, [key]: updatedArray }
-        })
-      } else {
-        console.log(`Object with id '${idToFind}' not found in data.`)
-      }
-    } else {
-      console.log(`Invalid key '${key}' or array not found.`)
-    }
-  }
-
-  useEffect(() => {
-    updateValueOnClick()
-    console.log('selectedElement:', selectedElement)
-  }, [selectedElement])
-
-  // const handleInputChange = (id, label, value) => {
-  //   const updatedElementData = elementValue.map((element) => {
-  //     if (element.id === id) {
-  //       return { ...element, [label]: value };
+  //     if (index !== -1) {
+  //       // Update the htmlContent property of the object with the given ID
+  //       setState((prevState) => {
+  //         const updatedArray = [...prevState[key]]
+  //         updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent }
+  //         return { ...prevState, [key]: updatedArray }
+  //       })
   //     } else {
-  //       return element;
+  //       console.log(`Object with id '${idToFind}' not found in data.`)
   //     }
-  //   });
-  //   setElementValue(updatedElementData);
-  // };
-
-  // const handleUpdateElement = () => {
-  //   setElementValue((prevElementValue) => ({
-  //     ...prevElementValue,
-  //     [selectedElement]: inputValue,
-  //   }))
+  //   } else {
+  //     console.log(`Invalid key '${key}' or array not found.`)
+  //   }
   // }
+
+  // useEffect(() => {
+  //  // updateValueOnClick()
+  //   console.log('selectedElement:', selectedElement)
+  // }, [selectedElement])
+
+
 
   return (
     <UserProvider>
@@ -424,7 +406,7 @@ const FormBuilderScreen = () => {
                     </Content>
                   </div>
                   <div className="col-3 inputProperties">
-                    <p>INPUT PROPERTIES</p> <SingleLineInputProperty/>
+                    <p>INPUT PROPERTIES</p> <SingleLineInputProperty state={state} setState={setState} selectedElement={selectedElement}/>
                   </div>
                 </div>
               </DragDropContext>
