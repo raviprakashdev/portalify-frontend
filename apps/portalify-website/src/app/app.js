@@ -15,6 +15,7 @@ import DashboardScreen from './pages/DashboardScreen'
 import Leads from './components/dashboard/leads'
 import Mail from './components/dashboard/mail'
 import FormBuilderScreen from './pages/FormBuilderScreen'
+import FormBuilderContext from './context/formbuilder-context'
 
 export function App() {
   return (
@@ -35,7 +36,11 @@ export function App() {
         </Routes>
       </DashboardScreen> */}
 
-      <FormBuilderScreen />
+
+
+      <FormBuilderContext><FormBuilderScreen /></FormBuilderContext>
+      
+     
     </div>
   )
 }

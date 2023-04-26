@@ -19,242 +19,136 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import UserProvider from '../context/formbuilder-context'
 import { UserContext } from '../context/formbuilder-context'
+import { useContext } from 'react'
 // a little function to help us with reordering the result
 
-const elementList = [
-  {
-    type: 'Text Elements',
-    elements: [
-      {
-        index: 1,
-        id: uuid(),
-        name: 'Single Line',
-        icon: singleLine_icon,
-        htmlContent: `<label> <input id='htmlContent' type='text' value=''/></label>`,
-        label: '',
-      },
-      {
-        index: 2,
-        id: uuid(),
-        name: 'Text Area',
-        icon: textArea_icon,
-        htmlContent: `<input type='textarea'/>`,
-      },
-      {
-        index: 3,
-        id: uuid(),
-        name: 'Number',
-        icon: number_icon,
-        htmlContent: `<input type='number'/>`,
-      },
-    ],
-  },
-  {
-    type: 'Date Elements',
-    elements: [
-      {
-        index: 4,
-        id: uuid(),
-        name: 'Date',
-        icon: date_icon,
-        htmlContent: `<input type='date'/>`,
-      },
-      {
-        index: 5,
-        id: uuid(),
-        name: 'Date & Time',
-        icon: dateAndTime_icon,
-        htmlContent: `<input type='datetime-local'/>`,
-      },
-    ],
-  },
-
-  {
-    type: 'Multi Elements',
-    elements: [
-      {
-        index: 6,
-        id: uuid(),
-        name: 'Dropdown',
-        icon: dropdown_icon,
-        htmlContent: `<select name='Sample'><option value='Sample'>Sample</option></select>`,
-      },
-      {
-        index: 7,
-        id: uuid(),
-        name: 'Radio Button',
-        icon: radioButton_icon,
-        htmlContent: `<label><input type='radio' value='sample'/> Sample </label>`,
-      },
-      {
-        index: 8,
-        id: uuid(),
-        name: 'Checkbox',
-        icon: checkbox_icon,
-        htmlContent: `<label><input type='checkbox' value='sample'/> Sample </label>`,
-      },
-      {
-        index: 9,
-        id: uuid(),
-        name: 'Switch',
-        icon: switch_icon,
-        htmlContent: `<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
-        <input type="checkbox" id="toggle-switch" style="display: none;">
-        <span class="slider" style="position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background-color: white; border-radius: 50%; transition: 0.2s;"></span>
-      </label>`,
-      },
-    ],
-  },
-
-  {
-    type: 'Media Elements',
-    elements: [
-      {
-        index: 10,
-        id: uuid(),
-        name: 'Image',
-        icon: image_icon,
-        htmlContent: `<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
-      },
-      {
-        index: 11,
-        id: uuid(),
-        name: 'Attachment',
-        icon: attachment_icon,
-        htmlContent: `<label >Upload An Attachment:<input type='file'></type></label>`,
-      },
-    ],
-  },
-  {
-    type: 'Other Elements',
-    elements: [
-      {
-        index: 12,
-        id: uuid(),
-        name: 'Divider',
-        icon: divider_icon,
-        htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black">`,
-      },
-    ],
-  },
-]
-const allElements = []
-
-elementList.forEach((category) => {
-  category.elements.forEach((element) => {
-    allElements.push(element)
-  })
-})
-//console.log(allElements)
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
-  return result
-}
-/**
- * Moves an item from one list to another list.
- */
-const copy = (source, destination, droppableSource, droppableDestination) => {
-  console.log('==> dest', destination)
-
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-  const item = sourceClone[droppableSource.index]
-
-  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() })
-  return destClone
-}
-
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-  const [removed] = sourceClone.splice(droppableSource.index, 1)
-
-  destClone.splice(droppableDestination.index, 0, removed)
-
-  const result = {}
-  result[droppableSource.droppableId] = sourceClone
-  result[droppableDestination.droppableId] = destClone
-
-  return result
-}
-
-const Content = styled.div`
-  margin-right: 200px;
-`
-
-const Item = styled.div`
-  display: flex;
-  user-select: none;
-  padding: 0.5rem;
-  margin: 0 0 0.5rem 0;
-  align-items: flex-start;
-  align-content: flex-start;
-  line-height: 1.5;
-  border-radius: 3px;
-  background: #fff;
-  border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
-`
-
-const Clone = styled(Item)`
-  + div {
-    display: none !important;
-  }
-`
-
-const Handle = styled.div``
-
-const List = styled.div`
-  border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
-  background: #fff;
-  padding: 0.5rem 0.5rem 0;
-  border-radius: 3px;
-  flex: 0 0 150px;
-  font-family: sans-serif;
-`
-
-const Container = styled(List)`
-  margin: 0.5rem 0.5rem 1.5rem;
-  background: #ccc;
-`
-
-const Notice = styled.div`
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  padding: 0.5rem;
-  margin: 0 0.5rem 0.5rem;
-  border: 1px solid transparent;
-  line-height: 1.5;
-  color: #aaa;
-`
-
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  color: #000;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 3px;
-  font-size: 1rem;
-  cursor: pointer;
-`
-
-const ButtonText = styled.div`
-  margin: 0 1rem;
-`
-
 const FormBuilderScreen = () => {
-  const [state, setState] = useState({
-    [uuid()]: [],
+  const {
+    label,
+    min_length,
+    max_length,
+    default_value,
+    placeholder,
+    required,
+    elementList,
+    allElements,
+    selectedElement,
+    setSelectedElement,
+    state,
+    setState,
+  } = useContext(UserContext)
+
+  elementList.forEach((category) => {
+    category.elements.forEach((element) => {
+      allElements.push(element)
+    })
   })
+  //console.log(allElements)
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+
+    return result
+  }
+  /**
+   * Moves an item from one list to another list.
+   */
+  const copy = (source, destination, droppableSource, droppableDestination) => {
+    console.log('==> dest', destination)
+
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
+    const item = sourceClone[droppableSource.index]
+
+    destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() })
+    return destClone
+  }
+
+  const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
+    const [removed] = sourceClone.splice(droppableSource.index, 1)
+
+    destClone.splice(droppableDestination.index, 0, removed)
+
+    const result = {}
+    result[droppableSource.droppableId] = sourceClone
+    result[droppableDestination.droppableId] = destClone
+
+    return result
+  }
+
+  const Content = styled.div`
+    margin-right: 200px;
+  `
+
+  const Item = styled.div`
+    display: flex;
+    user-select: none;
+    padding: 0.5rem;
+    margin: 0 0 0.5rem 0;
+    align-items: flex-start;
+    align-content: flex-start;
+    line-height: 1.5;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
+  `
+
+  const Clone = styled(Item)`
+    + div {
+      display: none !important;
+    }
+  `
+
+  const Handle = styled.div``
+
+  const List = styled.div`
+    border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
+    background: #fff;
+    padding: 0.5rem 0.5rem 0;
+    border-radius: 3px;
+    flex: 0 0 150px;
+    font-family: sans-serif;
+  `
+
+  const Container = styled(List)`
+    margin: 0.5rem 0.5rem 1.5rem;
+    background: #ccc;
+  `
+
+  const Notice = styled.div`
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin: 0 0.5rem 0.5rem;
+    border: 1px solid transparent;
+    line-height: 1.5;
+    color: #aaa;
+  `
+
+  const Button = styled.button`
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    color: #000;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 3px;
+    font-size: 1rem;
+    cursor: pointer;
+  `
+
+  const ButtonText = styled.div`
+    margin: 0 1rem;
+  `
+
   const [stateData, setStateData] = useState({
     [uuid()]: [],
   })
@@ -296,13 +190,11 @@ const FormBuilderScreen = () => {
   }
 
   //----selecting element by ID and updating the value---
-  const [selectedElement, setSelectedElement] = useState([]) //selected element data store in form [list id, element id]
-  
+
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
     console.log('id on click:' + selectedElement[0], listid)
   }
-
 
   // const updateValueOnClick = () => {
   //   //======testing==========
@@ -336,85 +228,87 @@ const FormBuilderScreen = () => {
   //   console.log('selectedElement:', selectedElement)
   // }, [selectedElement])
 
-
-
   return (
-    <UserProvider>
-      <UserContext.Consumer>
-        {({ label, min_length, max_length, default_value, placeholder, required }) => (
-          <section className="formbuilder-screen">
-            <div className="container">
-              <TopBar />
-              <DragDropContext onDragEnd={onDragEnd}>
-                <div className="row ">
-                  <div className="col-3 elementList">
-                    <Elements dataElement={allElements} />
-                  </div>
-                  <div className="col-6">
-                    Main Area
-                    <Content>
-                      <Button onClick={addList}>
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                          <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                        </svg>
-                        <ButtonText>Add List</ButtonText>
-                      </Button>
-
-                      {Object.keys(state).map((list, i) => {
-                        console.log('==> list', list)
-                        return (
-                          <Droppable key="allElements" droppableId={list}>
-                            {(provided, snapshot) => (
-                              <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
-                                {state[list].length
-                                  ? state[list].map((item, index) => (
-                                      <Draggable key={item.id} draggableId={item.id} index={index}>
-                                        {(provided, snapshot) => (
-                                          <Item
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            isDragging={snapshot.isDragging}
-                                            style={provided.draggableProps.style}
-                                          >
-                                            <Handle {...provided.dragHandleProps}>
-                                              <svg width="24" height="24" viewBox="0 0 24 24">
-                                                <path
-                                                  fill="currentColor"
-                                                  d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                                />
-                                              </svg>
-                                            </Handle>
-                                            {console.log('item: ' + item.id)}
-                                            <div
-                                              key={item.id}
-                                              onClick={() => handleElementClick(item.id, list)}
-                                              dangerouslySetInnerHTML={{
-                                                __html: item.htmlContent,
-                                              }}
-                                            ></div>
-                                          </Item>
-                                        )}
-                                      </Draggable>
-                                    ))
-                                  : !provided.placeholder && <Notice>Drop items here</Notice>}
-                                {provided.placeholder}
-                              </Container>
-                            )}
-                          </Droppable>
-                        )
-                      })}
-                    </Content>
-                  </div>
-                  <div className="col-3 inputProperties">
-                    <p>INPUT PROPERTIES</p> <SingleLineInputProperty state={state} setState={setState} selectedElement={selectedElement}/>
-                  </div>
-                </div>
-              </DragDropContext>
+    <section className="formbuilder-screen">
+      <div className="container">
+        <TopBar />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="row ">
+            <div className="col-3 elementList">
+              <Elements dataElement={allElements} />
             </div>
-          </section>
-        )}
-      </UserContext.Consumer>
-    </UserProvider>
+            <div className="col-6">
+              Main Area
+              <Content>
+                <Button onClick={addList}>
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                  </svg>
+                  <ButtonText>Add List</ButtonText>
+                </Button>
+
+                {Object.keys(state).map((list, i) => {
+                  console.log('==> list', list)
+                  return (
+                    <Droppable key="allElements" droppableId={list}>
+                      {(provided, snapshot) => (
+                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                          {state[list].length
+                            ? state[list].map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                  {(provided, snapshot) => (
+                                    <Item
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      isDragging={snapshot.isDragging}
+                                      style={provided.draggableProps.style}
+                                    >
+                                      <Handle {...provided.dragHandleProps}>
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                          <path
+                                            fill="currentColor"
+                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                          />
+                                        </svg>
+                                      </Handle>
+                                      {console.log('item: ' + item.id)}
+                                      <div
+                                        key={item.id}
+                                        style={{
+                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                        }}
+                                        onClick={() => handleElementClick(item.id, list)}
+                                        dangerouslySetInnerHTML={{
+                                          __html: item.htmlContent,
+                                        }}
+                                      ></div>
+                                    </Item>
+                                  )}
+                                </Draggable>
+                              ))
+                            : !provided.placeholder && <Notice>Drop items here</Notice>}
+                          {provided.placeholder}
+                        </Container>
+                      )}
+                    </Droppable>
+                  )
+                })}
+              </Content>
+            </div>
+            <div className="col-3 inputProperties">
+              <p>INPUT PROPERTIES</p> <SingleLineInputProperty />
+            </div>
+          </div>
+        </DragDropContext>
+      </div>
+    </section>
+    // <UserProvider>
+    //   <UserContext.Consumer>
+    //     {({ label, min_length, max_length, default_value, placeholder, required }) => (
+
+    //     )}
+    //   </UserContext.Consumer>
+    // </UserProvider>
   )
 }
 
