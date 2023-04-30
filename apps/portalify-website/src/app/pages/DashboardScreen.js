@@ -4,6 +4,11 @@ import dashboard_icon from '../assets/icons/dashboard_icon.png'
 import leads_icon from '../assets/icons/leads_icon.png'
 import mail_icon from '../assets/icons/mail_icon.png'
 import builder_icon from '../assets/icons/builder_icon.png'
+import TopBar from '../components/dashboard/topBar'
+import Metrics from '../components/dashboard/metrics'
+import LeadsList from '../components/dashboard/leadsList'
+import MeetingsList from '../components/dashboard/todayMeetingsList'
+
 
 const DashboardScreen = ({ children }) => {
   const menuItem = [
@@ -36,7 +41,7 @@ const DashboardScreen = ({ children }) => {
           <div className="col-2 left-side">
             <div className="logo">
               {' '}
-              <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="img-fluid" />{' '}
+              <img src={require('../assets/logos/Logo-white.png')} alt="logo" className="img-fluid" />
             </div>
             <div className="sidebar">
               {menuItem.map((item, index) => (
@@ -69,8 +74,22 @@ const DashboardScreen = ({ children }) => {
             </div>
           </div>
 
-          <div className="col-10 right-side">
-            <main>{children}</main>
+          <div className="col-10">
+            <div><TopBar/></div>
+            <div className='row'>
+                <div className='col-8' style={{height:"400px"}}>
+                  <div style={{display:"flex",justifyContent:"space-between"}}>
+                    <Metrics/>
+                    <Metrics/>
+                    <Metrics/>
+                  </div>
+                  <LeadsList/>
+                </div>
+                <div className='col-4'>
+                  <MeetingsList/>
+                </div>
+            </div>
+            {/* <main className='right-side' style={{height:"100%"}}>{children}</main> */}
           </div>
         </div>
       </div>

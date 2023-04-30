@@ -288,12 +288,44 @@ span {
   color: #e0e0e0;
   font-size: 20px;
 }
+.meeting-title {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
 
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* letter-spacing: 0.85px; */
+
+  color: #000000;
+}
+.meeting-attendee {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.85px;
+
+  color: #000000;
+}
 .dashboard-screen .left-side .sidebar .logout-dashboard:hover {
   background-color: #447cbf;
   border-radius: 10px;
 }
-
+.meeting-card-content-outer {
+  display: flex;
+  align-items: center;
+}
 .dashboard-screen .right-side {
   display: flex;
   justify-content: center;
@@ -405,4 +437,230 @@ span {
 .elementList .element_list {
   display: flex;
   flex-wrap: wrap;
+}
+/* topbar */
+.topbar {
+  /* background-color: red; */
+  height: 100px;
+}
+
+.topbar-head {
+  /* font-family: 'Poppins'; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 153.34%;
+  /* identical to box height, or 86px */
+  color: #000000;
+}
+
+.metrics-box {
+  /* width: 267px; */
+  /* height: 178px; */
+  /* left: 334px; */
+  /* top: 168px; */
+
+  /* Primary */
+  padding: 20px 30px;
+
+  border-width: 0px 3px;
+  border-style: solid;
+  border-color: #447cbf;
+  border-radius: 35px;
+}
+.metrics-number {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 144.84%;
+  /* identical to box height, or 70px */
+
+  text-align: center;
+
+  color: #000000;
+}
+.metrics-text {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 27.8735px;
+  line-height: 42px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #000000;
+}
+
+.leadslist-box {
+  box-sizing: border-box;
+
+  /* position: absolute; */
+  /* width: 936px; */
+  /* height: 658px; */
+  /* left: 334px; */
+  /* top: 381px; */
+  width: 98%;
+  margin: 20px auto;
+  height: 100%;
+
+  /* Gray 5 */
+
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 15px;
+}
+.meetinglist-box {
+  box-sizing: border-box;
+
+  /* position: absolute; */
+  /* width: 936px; */
+  /* height: 658px; */
+  /* left: 334px; */
+  /* top: 381px; */
+  width: 98%;
+  margin: 20px auto;
+  height: 100%;
+
+  /* Gray 5 */
+
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 15px;
+}
+.meeting-head {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.85px;
+
+  color: #000000;
+}
+
+.leadslist-head {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height, or 125% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.85px;
+
+  color: #000000;
+}
+.leadslist-head-outer {
+  display: flex;
+  justify-content: space-between;
+}
+.leadlist-view-more {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  margin-right: 30px;
+  /* identical to box height, or 167% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.85px;
+
+  /* Primary */
+
+  color: #447cbf;
+  cursor: pointer;
+}
+.leadlist-view-more:hover {
+  text-decoration: underline;
+}
+.lead-name-col {
+  /* font-family: 'Poppins'; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.85px;
+
+  /* Gray 3 */
+
+  color: #828282;
+}
+.lead-table {
+  border-bottom: 1px solid #bdbdbd;
+  padding: 12px 0;
+}
+.meeting-card-box {
+  /* width: 364px; */
+  /* height: 64px; */
+
+  /* Gray 5 */
+  padding: 8px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+.meeting-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* font-family: 'Poppins'; */
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  /* line-height: 20px; */
+  /* or 125% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+  /* letter-spacing: 0.85px; */
+
+  color: #000000;
+}
+/* dot line */
+.bar {
+  list-style: none;
+  margin: -22px 0;
+  padding-left: 1rem;
+}
+.bar > li {
+  position: relative;
+}
+.bar > li:before {
+  content: '\25CF';
+  margin-right: 10px;
+  font-size: 20px;
+  color: #bdbdbd;
+}
+.bar > li:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  border-left: 2px solid #bdbdbd;
+  margin-left: 5px;
+  height: 100%;
+}
+.bar > li:first-of-type:after {
+  top: 50%;
+}
+.bar > li:last-of-type:after {
+  top: -50%;
 }

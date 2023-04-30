@@ -14,6 +14,7 @@ import ForgotPassword from './components/forms/ForgotPassword'
 import DashboardScreen from './pages/DashboardScreen'
 import Leads from './components/dashboard/leads'
 import Mail from './components/dashboard/mail'
+import Dashboard from './components/dashboard/dashboard'
 import FormBuilderScreen from './pages/FormBuilderScreen'
 
 export function App() {
@@ -22,7 +23,7 @@ export function App() {
       {/* <SigninScreen form={SignInForm}/> */}
       {/* <SigninScreen form={RegisterForm1}/> */}
       {/* <SigninScreen form={RegisterForm2}/> */}
-      {/* <WelcomeScreen/> */}
+      <WelcomeScreen/>
       {/* <ConfirmAuthScreen/> */}
       {/* <ForgotPassword/> */}
       {/* <SigninScreen form={ForgotPassword}/> */}
@@ -30,12 +31,13 @@ export function App() {
       {/* <DashboardScreen>
         <Routes>
           <Route path="/" element={<Leads />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/mail" element={<Mail />} />
         </Routes>
       </DashboardScreen> */}
 
-      <FormBuilderScreen />
+      {/* <FormBuilderScreen /> */}
     </div>
   )
 }
