@@ -1,42 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import TopBar from '../components/formbuilder/topBar'
 import Elements from '../components/formbuilder/elements'
 import SingleLineInputProperty from '../components/formbuilder/singleLineInputProperty'
-import attachment_icon from '../assets/icons/elements_icon/attachment.png'
-import checkbox_icon from '../assets/icons/elements_icon/checkbox.png'
-import date_icon from '../assets/icons/elements_icon/date.png'
-import dateAndTime_icon from '../assets/icons/elements_icon/dateAndTime.png'
-import divider_icon from '../assets/icons/elements_icon/divider.png'
-import dropdown_icon from '../assets/icons/elements_icon/dropdown.png'
-import number_icon from '../assets/icons/elements_icon/number.png'
-import singleLine_icon from '../assets/icons/elements_icon/singleLine.png'
-import switch_icon from '../assets/icons/elements_icon/switch.png'
-import textArea_icon from '../assets/icons/elements_icon/textArea.png'
-import radioButton_icon from '../assets/icons/elements_icon/radioButton.png'
-import image_icon from '../assets/icons/elements_icon/image.png'
 import uuid from 'uuid/v4'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import UserProvider from '../context/formbuilder-context'
 import { UserContext } from '../context/formbuilder-context'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+
 // a little function to help us with reordering the result
 
 const FormBuilderScreen = () => {
-  const {
-    label,
-    min_length,
-    max_length,
-    default_value,
-    placeholder,
-    required,
-    elementList,
-    allElements,
-    selectedElement,
-    setSelectedElement,
-    state,
-    setState,
-  } = useContext(UserContext)
+  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, elementType,setElementType } = useContext(UserContext)
 
   elementList.forEach((category) => {
     category.elements.forEach((element) => {
@@ -193,40 +168,19 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
-    console.log('id on click:' + selectedElement[0], listid)
+
+    //getting selected element type
+    var index = -1
+    const key = selectedElement[0]
+    const idToFind = selectedElement[1]
+    const dataArray = state[key]
+    if (key in state && Array.isArray(state[key])) {
+      index = dataArray.findIndex((obj) => obj.id === idToFind)
+      setElementType(state[key][index].index)
+    }
   }
 
-  // const updateValueOnClick = () => {
-  //   //======testing==========
-  // const newHtmlContent = `<label> <input type='text' value='new value' /></label>`
 
-  //   const key = selectedElement[0]
-  //   const idToFind = selectedElement[1]
-
-  //   // Find the index of the object with the given ID
-  //   const dataArray = state[key]
-  //   if (key in state && Array.isArray(state[key])) {
-  //     const index = dataArray.findIndex((obj) => obj.id === idToFind)
-
-  //     if (index !== -1) {
-  //       // Update the htmlContent property of the object with the given ID
-  //       setState((prevState) => {
-  //         const updatedArray = [...prevState[key]]
-  //         updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent }
-  //         return { ...prevState, [key]: updatedArray }
-  //       })
-  //     } else {
-  //       console.log(`Object with id '${idToFind}' not found in data.`)
-  //     }
-  //   } else {
-  //     console.log(`Invalid key '${key}' or array not found.`)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //  // updateValueOnClick()
-  //   console.log('selectedElement:', selectedElement)
-  // }, [selectedElement])
 
   return (
     <section className="formbuilder-screen">

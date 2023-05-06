@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext } from 'react'
 //import {inputtext} from '../components/formbuilder/singleLineInputProperty';
 import attachment_icon from '../assets/icons/elements_icon/attachment.png'
 import checkbox_icon from '../assets/icons/elements_icon/checkbox.png'
@@ -14,36 +14,33 @@ import radioButton_icon from '../assets/icons/elements_icon/radioButton.png'
 import image_icon from '../assets/icons/elements_icon/image.png'
 import uuid from 'uuid/v4'
 
-export const UserContext = createContext();
+export const UserContext = createContext()
 
-const FormBuilderContext=(props)=> {
+const FormBuilderContext = (props) => {
   const [userData, setUserData] = useState({
     // label: '',
     // default_value: '',
-  });
-
-
+  })
 
   const updateUserData = (newData) => {
     setUserData((prevState) => ({
       ...prevState,
       ...newData,
-    }));
-  };
+    }))
+  }
 
   const initializeUserData = (attributes) => {
     return attributes.reduce((acc, curr) => {
-      acc[curr] = '';
-      return acc;
-    }, {});
-  };
+      acc[curr] = ''
+      return acc
+    }, {})
+  }
 
-  const initialUserData = initializeUserData(['label', 'default_value']);
+  const initialUserData = initializeUserData(['label', 'default_value'])
 
+  console.log('user data: ', userData)
 
-  console.log("user data: ",userData);
-
-  //------------1--------------
+  //--------------------------
   const elementList = [
     {
       type: 'Text Elements',
@@ -53,7 +50,7 @@ const FormBuilderContext=(props)=> {
           id: uuid(),
           name: 'Single Line',
           icon: singleLine_icon,
-          htmlContent: `<label> <input id='htmlContent' type='text' value=''/></label>`,
+          htmlContent: `<label for='htmlContent'>Sample Label </label><input id='htmlContent' type='text'/>`,
           label: '',
         },
         {
@@ -61,14 +58,14 @@ const FormBuilderContext=(props)=> {
           id: uuid(),
           name: 'Text Area',
           icon: textArea_icon,
-          htmlContent: `<input type='textarea'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label </label> <input id='htmlContent' type='textarea'/>`,
         },
         {
           index: 3,
           id: uuid(),
           name: 'Number',
           icon: number_icon,
-          htmlContent: `<input type='number'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label </label> <input id='htmlContent' type='number'/>`,
         },
       ],
     },
@@ -91,7 +88,7 @@ const FormBuilderContext=(props)=> {
         },
       ],
     },
-  
+
     {
       type: 'Multi Elements',
       elements: [
@@ -128,7 +125,7 @@ const FormBuilderContext=(props)=> {
         },
       ],
     },
-  
+
     {
       type: 'Media Elements',
       elements: [
@@ -161,24 +158,40 @@ const FormBuilderContext=(props)=> {
       ],
     },
   ]
-//------------2--------------
+  //--------------------------
   const [state, setState] = useState({
     [uuid()]: [],
   })
 
-//------------3--------------
+  //--------------------------
   const allElements = []
 
-
-//------------4--------------
+  //--------------------------
   const [selectedElement, setSelectedElement] = useState([])
 
-//---------------------------
+  //--------------------------
+  const [elementType, setElementType] = useState(-1)
+
+  //---------------------------
   return (
-    <UserContext.Provider value={{ ...initialUserData, ...userData, updateUserData,elementList,allElements,selectedElement,setSelectedElement,state,setState }}>
+    <UserContext.Provider
+      value={{
+        ...initialUserData,
+        ...userData,
+        updateUserData,
+        elementList,
+        allElements,
+        selectedElement,
+        setSelectedElement,
+        state,
+        setState,
+        elementType,
+        setElementType
+      }}
+    >
       {props.children}
     </UserContext.Provider>
-  );
+  )
 }
 
-export default FormBuilderContext;
+export default FormBuilderContext
