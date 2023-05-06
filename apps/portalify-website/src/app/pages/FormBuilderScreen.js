@@ -203,10 +203,11 @@ const FormBuilderScreen = () => {
 
                 {Object.keys(state).map((list, i) => {
                   console.log('==> list', list)
+                  console.log('==> state', state)
                   return (
-                    <Droppable key="allElements" droppableId={list}>
+                    <Droppable key="allElements" droppableId={list} >
                       {(provided, snapshot) => (
-                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} className="dropable-box">
                           {state[list].length
                             ? state[list].map((item, index) => (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -240,7 +241,7 @@ const FormBuilderScreen = () => {
                                   )}
                                 </Draggable>
                               ))
-                            : !provided.placeholder && <Notice>Drop items here</Notice>}
+                            : <Notice>Drop items here</Notice>}
                           {provided.placeholder}
                         </Container>
                       )}

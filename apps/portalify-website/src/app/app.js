@@ -14,6 +14,7 @@ import ForgotPassword from './components/forms/ForgotPassword'
 import DashboardScreen from './pages/DashboardScreen'
 import Leads from './components/dashboard/leads'
 import Mail from './components/dashboard/mail'
+import Dashboard from './components/dashboard/dashboard'
 import FormBuilderScreen from './pages/FormBuilderScreen'
 import FormBuilderContext from './context/formbuilder-context'
 
@@ -31,6 +32,7 @@ export function App() {
       {/* <DashboardScreen>
         <Routes>
           <Route path="/" element={<Leads />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/mail" element={<Mail />} />
         </Routes>
@@ -38,7 +40,9 @@ export function App() {
 
 
 
-      <FormBuilderContext><FormBuilderScreen /></FormBuilderContext>
+      <FormBuilderContext>
+        <FormBuilderScreen />
+        </FormBuilderContext>
       
      
     </div>
