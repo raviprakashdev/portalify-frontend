@@ -16,6 +16,7 @@ import Leads from './components/dashboard/leads'
 import Mail from './components/dashboard/mail'
 import Dashboard from './components/dashboard/dashboard'
 import FormBuilderScreen from './pages/FormBuilderScreen'
+import FormBuilderContext from './context/formbuilder-context'
 
 export function App() {
   return (
@@ -23,7 +24,7 @@ export function App() {
       {/* <SigninScreen form={SignInForm}/> */}
       {/* <SigninScreen form={RegisterForm1}/> */}
       {/* <SigninScreen form={RegisterForm2}/> */}
-      <WelcomeScreen/>
+      {/* <WelcomeScreen/> */}
       {/* <ConfirmAuthScreen/> */}
       {/* <ForgotPassword/> */}
       {/* <SigninScreen form={ForgotPassword}/> */}
@@ -37,7 +38,13 @@ export function App() {
         </Routes>
       </DashboardScreen> */}
 
-      {/* <FormBuilderScreen /> */}
+
+
+      <FormBuilderContext>
+        <FormBuilderScreen />
+        </FormBuilderContext>
+      
+     
     </div>
   )
 }

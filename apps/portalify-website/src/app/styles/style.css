@@ -664,3 +664,7 @@ span {
 .bar > li:last-of-type:after {
   top: -50%;
 }
+.dropable-box{
+  min-height: 50px;
+  border: 1px dashed black;
+}

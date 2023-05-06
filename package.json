@@ -12,9 +12,13 @@
     "@lottiefiles/react-lottie-player": "^3.5.0",
     "bootstrap": "^5.3.0-alpha1",
     "core-js": "^3.6.5",
+    "dompurify": "^3.0.2",
     "font-awesome": "^4.7.0",
+    "generate-avatar": "1.4.10",
     "lint-staged": "^13.0.3",
+    "lorem-ipsum": "2.0.3",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "13.1.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.1",
     "react-select": "^5.7.0",
@@ -22,13 +26,9 @@
     "react-typed": "^1.2.0",
     "reactstrap": "^9.1.5",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.3.0",
-    "react-beautiful-dnd": "13.1.0",
     "styled-components": "5.3.0",
-    "generate-avatar": "1.4.10",
-    "lorem-ipsum": "2.0.3",
+    "tslib": "^2.3.0",
     "uuid": "3.3.2"
-    
   },
   "devDependencies": {
     "@nrwl/cli": "15.0.13",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TopBar from '../components/formbuilder/topBar'
 import Elements from '../components/formbuilder/elements'
 import SingleLineInputProperty from '../components/formbuilder/singleLineInputProperty'
@@ -17,248 +17,145 @@ import image_icon from '../assets/icons/elements_icon/image.png'
 import uuid from 'uuid/v4'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import UserProvider from '../context/formbuilder-context'
+import { UserContext } from '../context/formbuilder-context'
+import { useContext } from 'react'
 // a little function to help us with reordering the result
 
-const elementList = [
-  {
-    type: 'Text Elements',
-    elements: [
-      {
-        index: 1,
-        id: uuid(),
-        name: 'Single Line',
-        icon: singleLine_icon,
-        htmlContent: `<input type='text'></type>`,
-      },
-      {
-        index: 2,
-        id: uuid(),
-        name: 'Text Area',
-        icon: textArea_icon,
-        htmlContent: `<input type='textarea'></type>`,
-      },
-      {
-        index: 3,
-        id: uuid(),
-        name: 'Number',
-        icon: number_icon,
-        htmlContent: `<input type='number'></type>`,
-      },
-    ],
-  },
-  {
-    type: 'Date Elements',
-    elements: [
-      {
-        index: 4,
-        id: uuid(),
-        name: 'Date',
-        icon: date_icon,
-        htmlContent: `<input type='date'></type>`,
-      },
-      {
-        index: 5,
-        id: uuid(),
-        name: 'Date & Time',
-        icon: dateAndTime_icon,
-        htmlContent: `<input type='datetime-local'></type>`,
-      },
-    ],
-  },
-
-  {
-    type: 'Multi Elements',
-    elements: [
-      {
-        index: 6,
-        id: uuid(),
-        name: 'Dropdown',
-        icon: dropdown_icon,
-        htmlContent: `<select name='Sample'><option value='Sample'>Sample</option></select>`,
-      },
-      {
-        index: 7,
-        id: uuid(),
-        name: 'Radio Button',
-        icon: radioButton_icon,
-        htmlContent: `<label><input type='radio' value='sample'></type> Sample </label>`,
-      },
-      {
-        index: 8,
-        id: uuid(),
-        name: 'Checkbox',
-        icon: checkbox_icon,
-        htmlContent: `<label><input type='checkbox' value='sample'></type> Sample </label>`,
-      },
-      {
-        index: 9,
-        id: uuid(),
-        name: 'Switch',
-        icon: switch_icon,
-        htmlContent: `<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
-        <input type="checkbox" id="toggle-switch" style="display: none;">
-        <span class="slider" style="position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background-color: white; border-radius: 50%; transition: 0.2s;"></span>
-      </label>`,
-      },
-    ],
-  },
-
-  {
-    type: 'Media Elements',
-    elements: [
-      {
-        index: 10,
-        id: uuid(),
-        name: 'Image',
-        icon: image_icon,
-        htmlContent: `<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
-      },
-      {
-        index: 11,
-        id: uuid(),
-        name: 'Attachment',
-        icon: attachment_icon,
-        htmlContent: `<label >Upload An Attachment:<input type='file'></type></label>`,
-      },
-    ],
-  },
-  {
-    type: 'Other Elements',
-    elements: [
-      {
-        index: 12,
-        id: uuid(),
-        name: 'Divider',
-        icon: divider_icon,
-        htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black">`,
-      },
-    ],
-  },
-]
-const allElements = []
-
-elementList.forEach((category) => {
-  category.elements.forEach((element) => {
-    allElements.push(element)
-  })
-})
-console.log(allElements)
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
-  return result
-}
-/**
- * Moves an item from one list to another list.
- */
-const copy = (source, destination, droppableSource, droppableDestination) => {
-  console.log('==> dest', destination)
-
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-  const item = sourceClone[droppableSource.index]
-
-  destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() })
-  return destClone
-}
-
-const move = (source, destination, droppableSource, droppableDestination) => {
-  const sourceClone = Array.from(source)
-  const destClone = Array.from(destination)
-  const [removed] = sourceClone.splice(droppableSource.index, 1)
-
-  destClone.splice(droppableDestination.index, 0, removed)
-
-  const result = {}
-  result[droppableSource.droppableId] = sourceClone
-  result[droppableDestination.droppableId] = destClone
-
-  return result
-}
-
-const Content = styled.div`
-  margin-right: 200px;
-`
-
-const Item = styled.div`
-  display: flex;
-  user-select: none;
-  padding: 0.5rem;
-  margin: 0 0 0.5rem 0;
-  align-items: flex-start;
-  align-content: flex-start;
-  line-height: 1.5;
-  border-radius: 3px;
-  background: #fff;
-  border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
-`
-
-const Clone = styled(Item)`
-  + div {
-    display: none !important;
-  }
-`
-
-const Handle = styled.div``
-
-const List = styled.div`
-  border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
-  background: #fff;
-  padding: 0.5rem 0.5rem 0;
-  border-radius: 3px;
-  flex: 0 0 150px;
-  font-family: sans-serif;
-`
-
-const Container = styled(List)`
-  margin: 0.5rem 0.5rem 1.5rem;
-  background: #ccc;
-`
-
-const Notice = styled.div`
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  padding: 0.5rem;
-  margin: 0 0.5rem 0.5rem;
-  border: 1px solid transparent;
-  line-height: 1.5;
-  color: #aaa;
-`
-
-const Button = styled.button`
-  display: flex;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  color: #000;
-  border: 1px solid #ddd;
-  background: #fff;
-  border-radius: 3px;
-  font-size: 1rem;
-  cursor: pointer;
-`
-
-const ButtonText = styled.div`
-  margin: 0 1rem;
-`
-
 const FormBuilderScreen = () => {
-  const [state, setState] = useState({
-    [uuid()]: [],
+  const {
+    label,
+    min_length,
+    max_length,
+    default_value,
+    placeholder,
+    required,
+    elementList,
+    allElements,
+    selectedElement,
+    setSelectedElement,
+    state,
+    setState,
+  } = useContext(UserContext)
+
+  elementList.forEach((category) => {
+    category.elements.forEach((element) => {
+      allElements.push(element)
+    })
   })
+  //console.log(allElements)
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+
+    return result
+  }
+  /**
+   * Moves an item from one list to another list.
+   */
+  const copy = (source, destination, droppableSource, droppableDestination) => {
+    console.log('==> dest', destination)
+
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
+    const item = sourceClone[droppableSource.index]
+
+    destClone.splice(droppableDestination.index, 0, { ...item, id: uuid() })
+    return destClone
+  }
+
+  const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source)
+    const destClone = Array.from(destination)
+    const [removed] = sourceClone.splice(droppableSource.index, 1)
+
+    destClone.splice(droppableDestination.index, 0, removed)
+
+    const result = {}
+    result[droppableSource.droppableId] = sourceClone
+    result[droppableDestination.droppableId] = destClone
+
+    return result
+  }
+
+  const Content = styled.div`
+    margin-right: 200px;
+  `
+
+  const Item = styled.div`
+    display: flex;
+    user-select: none;
+    padding: 0.5rem;
+    margin: 0 0 0.5rem 0;
+    align-items: flex-start;
+    align-content: flex-start;
+    line-height: 1.5;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
+  `
+
+  const Clone = styled(Item)`
+    + div {
+      display: none !important;
+    }
+  `
+
+  const Handle = styled.div``
+
+  const List = styled.div`
+    border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
+    background: #fff;
+    padding: 0.5rem 0.5rem 0;
+    border-radius: 3px;
+    flex: 0 0 150px;
+    font-family: sans-serif;
+  `
+
+  const Container = styled(List)`
+    margin: 0.5rem 0.5rem 1.5rem;
+    background: #ccc;
+  `
+
+  const Notice = styled.div`
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin: 0 0.5rem 0.5rem;
+    border: 1px solid transparent;
+    line-height: 1.5;
+    color: #aaa;
+  `
+
+  const Button = styled.button`
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    color: #000;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 3px;
+    font-size: 1rem;
+    cursor: pointer;
+  `
+
+  const ButtonText = styled.div`
+    margin: 0 1rem;
+  `
+
   const [stateData, setStateData] = useState({
     [uuid()]: [],
   })
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    console.log('state', state)
+    console.log('state check', state)
 
     console.log('==> result', result)
 
@@ -291,6 +188,46 @@ const FormBuilderScreen = () => {
       [uuid()]: [],
     })
   }
+
+  //----selecting element by ID and updating the value---
+
+  const handleElementClick = (elementid, listid) => {
+    setSelectedElement([listid, elementid])
+    console.log('id on click:' + selectedElement[0], listid)
+  }
+
+  // const updateValueOnClick = () => {
+  //   //======testing==========
+  // const newHtmlContent = `<label> <input type='text' value='new value' /></label>`
+
+  //   const key = selectedElement[0]
+  //   const idToFind = selectedElement[1]
+
+  //   // Find the index of the object with the given ID
+  //   const dataArray = state[key]
+  //   if (key in state && Array.isArray(state[key])) {
+  //     const index = dataArray.findIndex((obj) => obj.id === idToFind)
+
+  //     if (index !== -1) {
+  //       // Update the htmlContent property of the object with the given ID
+  //       setState((prevState) => {
+  //         const updatedArray = [...prevState[key]]
+  //         updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent }
+  //         return { ...prevState, [key]: updatedArray }
+  //       })
+  //     } else {
+  //       console.log(`Object with id '${idToFind}' not found in data.`)
+  //     }
+  //   } else {
+  //     console.log(`Invalid key '${key}' or array not found.`)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //  // updateValueOnClick()
+  //   console.log('selectedElement:', selectedElement)
+  // }, [selectedElement])
+
   return (
     <section className="formbuilder-screen">
       <div className="container">
@@ -314,9 +251,9 @@ const FormBuilderScreen = () => {
                   console.log('==> list', list)
                   console.log('==> state', state)
                   return (
-                    <Droppable key="allElements" droppableId={list}>
+                    <Droppable key="allElements" droppableId={list} >
                       {(provided, snapshot) => (
-                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver}>
+                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} className="dropable-box">
                           {state[list].length
                             ? state[list].map((item, index) => (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -335,13 +272,22 @@ const FormBuilderScreen = () => {
                                           />
                                         </svg>
                                       </Handle>
-                                      {console.log(item)}
-                                      <div dangerouslySetInnerHTML={{ __html: item.htmlContent }}></div>
+                                      {console.log('item: ' + item.id)}
+                                      <div
+                                        key={item.id}
+                                        style={{
+                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                        }}
+                                        onClick={() => handleElementClick(item.id, list)}
+                                        dangerouslySetInnerHTML={{
+                                          __html: item.htmlContent,
+                                        }}
+                                      ></div>
                                     </Item>
                                   )}
                                 </Draggable>
                               ))
-                            : !provided.placeholder && <Notice>Drop items here</Notice>}
+                            : <Notice>Drop items here</Notice>}
                           {provided.placeholder}
                         </Container>
                       )}
@@ -357,6 +303,13 @@ const FormBuilderScreen = () => {
         </DragDropContext>
       </div>
     </section>
+    // <UserProvider>
+    //   <UserContext.Consumer>
+    //     {({ label, min_length, max_length, default_value, placeholder, required }) => (
+
+    //     )}
+    //   </UserContext.Consumer>
+    // </UserProvider>
   )
 }
 
