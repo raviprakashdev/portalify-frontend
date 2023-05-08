@@ -7,6 +7,8 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { UserContext } from '../context/formbuilder-context'
 import { useContext, useEffect } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 // a little function to help us with reordering the result
 
@@ -64,7 +66,7 @@ const FormBuilderScreen = () => {
   }
 
   const Content = styled.div`
-    margin-right: 200px;
+    // margin-right: 200px;
   `
 
   const Item = styled.div`
@@ -194,6 +196,11 @@ const FormBuilderScreen = () => {
   useEffect(() => {
     getElementType()
   }, [selectedElement])
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
+
 
   return (
     <section className="formbuilder-screen">
@@ -219,47 +226,42 @@ const FormBuilderScreen = () => {
                   return (
                     <Droppable key="allElements" droppableId={list}>
                       {(provided, snapshot) => (
-                        <Container
-                          ref={provided.innerRef}
-                          isDraggingOver={snapshot.isDraggingOver}
-                          className="dropable-box"
-                        >
-                          {state[list].length ? (
-                            state[list].map((item, index) => (
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
-                                {(provided, snapshot) => (
-                                  <Item
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    isDragging={snapshot.isDragging}
-                                    style={provided.draggableProps.style}
-                                  >
-                                    <Handle {...provided.dragHandleProps}>
-                                      <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <path
-                                          fill="currentColor"
-                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                        />
-                                      </svg>
-                                    </Handle>
-                                    {console.log('item: ' + item.id)}
-                                    <div
-                                      key={item.id}
-                                      style={{
-                                        backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
-                                      }}
-                                      onClick={() => handleElementClick(item.id, list)}
-                                      dangerouslySetInnerHTML={{
-                                        __html: item.htmlContent,
-                                      }}
-                                    ></div>
-                                  </Item>
-                                )}
-                              </Draggable>
-                            ))
-                          ) : (
-                            <Notice>Drop items here</Notice>
-                          )}
+                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} className="dropable-box">
+                          {state[list].length
+                            ? state[list].map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                  {(provided, snapshot) => (
+                                    <Item
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      isDragging={snapshot.isDragging}
+                                      style={provided.draggableProps.style}
+                                    >
+                                      <Handle {...provided.dragHandleProps}>
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                          <path
+                                            fill="currentColor"
+                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                          />
+                                        </svg>
+                                      </Handle>
+                                      {console.log('item: ' + item.id)}
+                                      <div
+                                        key={item.id}
+                                        style={{
+                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                          width:"100%"
+                                        }}
+                                        onClick={() => handleElementClick(item.id, list)}
+                                        dangerouslySetInnerHTML={{
+                                          __html: item.htmlContent,
+                                        }}
+                                      ></div>
+                                    </Item>
+                                  )}
+                                </Draggable>
+                              ))
+                            : <Notice>Drop items here</Notice>}
                           {provided.placeholder}
                         </Container>
                       )}
@@ -274,6 +276,31 @@ const FormBuilderScreen = () => {
           </div>
         </DragDropContext>
       </div>
+      <div>
+      <Button color="danger" onClick={toggle}>
+        Click Me
+      </Button>
+      <Modal isOpen={modal} toggle={toggle} >
+        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <ModalBody>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>
+            Do Something
+          </Button>{' '}
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div> 
     </section>
   )
 }

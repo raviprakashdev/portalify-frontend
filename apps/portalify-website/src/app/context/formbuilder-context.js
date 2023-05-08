@@ -131,7 +131,7 @@ const FormBuilderContext = (props) => {
         {
           index: 10,
           id: uuid(),
-          name: 'Image',
+          name: 'Image Selector',
           icon: image_icon,
           htmlContent: `<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
         },
@@ -152,7 +152,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Divider',
           icon: divider_icon,
-          htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black">`,
+          htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black;width:100%">`,
         },
       ],
     },
