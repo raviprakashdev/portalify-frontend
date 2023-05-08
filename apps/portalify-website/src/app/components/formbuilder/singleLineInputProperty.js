@@ -2,7 +2,7 @@ import React from 'react'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../context/formbuilder-context'
 
-const SingleLineInputProperty = () => {
+const SingleLineInputProperty = ({ Notice }) => {
   const {
     label,
     min_length,
@@ -20,6 +20,7 @@ const SingleLineInputProperty = () => {
     elementType,
     setElementType,
   } = useContext(UserContext)
+
 
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
@@ -99,11 +100,13 @@ const SingleLineInputProperty = () => {
     <div>
       <form>
         {elementType === -1 ? (
-          <div>Select An Element</div>
+  
+          <Notice>Select An Element</Notice>
+
         ) : (
           <>
             <div className="input-text">
-              LABEL VALUE
+              LABEL VALUE <div>{elementType}</div>
               <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
             </div>
 
@@ -132,16 +135,40 @@ const SingleLineInputProperty = () => {
               </>
             ) : null}
 
-            <div className="input-text">
-              DEFAULT VALUE
-              <input
-                type="text"
-                placeholder="Enter Default Value"
-                value={default_value}
-                onChange={inputEvent}
-                name="default_value"
-              />
-            </div>
+            {elementType === 3 ? (
+              <div className="input-text">
+                DEFAULT VALUE
+                <input
+                  type="number"
+                  placeholder="Enter Default Value"
+                  value={default_value}
+                  onChange={inputEvent}
+                  name="default_value"
+                />
+              </div>
+            ) : elementType === 4 || elementType === 5 ? (
+              <div className="input-text">
+                DEFAULT VALUE
+                <input
+                  type="date"
+                  placeholder="Enter Default Value"
+                  value={default_value}
+                  onChange={inputEvent}
+                  name="default_value"
+                />
+              </div>
+            ) : (
+              <div className="input-text">
+                DEFAULT VALUE
+                <input
+                  type="text"
+                  placeholder="Enter Default Value"
+                  value={default_value}
+                  onChange={inputEvent}
+                  name="default_value"
+                />
+              </div>
+            )}
 
             <div className="input-text">
               PLACEHOLDER

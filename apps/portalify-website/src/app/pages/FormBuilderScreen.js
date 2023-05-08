@@ -11,7 +11,16 @@ import { useContext, useEffect } from 'react'
 // a little function to help us with reordering the result
 
 const FormBuilderScreen = () => {
-  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, elementType,setElementType } = useContext(UserContext)
+  const {
+    elementList,
+    allElements,
+    selectedElement,
+    setSelectedElement,
+    state,
+    setState,
+    elementType,
+    setElementType,
+  } = useContext(UserContext)
 
   elementList.forEach((category) => {
     category.elements.forEach((element) => {
@@ -168,7 +177,9 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
+  }
 
+  const getElementType = () => {
     //getting selected element type
     var index = -1
     const key = selectedElement[0]
@@ -180,7 +191,9 @@ const FormBuilderScreen = () => {
     }
   }
 
-
+  useEffect(() => {
+    getElementType()
+  }, [selectedElement])
 
   return (
     <section className="formbuilder-screen">
@@ -192,7 +205,6 @@ const FormBuilderScreen = () => {
               <Elements dataElement={allElements} />
             </div>
             <div className="col-6">
-              Main Area
               <Content>
                 <Button onClick={addList}>
                   <svg width="24" height="24" viewBox="0 0 24 24">
@@ -205,43 +217,49 @@ const FormBuilderScreen = () => {
                   console.log('==> list', list)
                   console.log('==> state', state)
                   return (
-                    <Droppable key="allElements" droppableId={list} >
+                    <Droppable key="allElements" droppableId={list}>
                       {(provided, snapshot) => (
-                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} className="dropable-box">
-                          {state[list].length
-                            ? state[list].map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id} index={index}>
-                                  {(provided, snapshot) => (
-                                    <Item
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      isDragging={snapshot.isDragging}
-                                      style={provided.draggableProps.style}
-                                    >
-                                      <Handle {...provided.dragHandleProps}>
-                                        <svg width="24" height="24" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                          />
-                                        </svg>
-                                      </Handle>
-                                      {console.log('item: ' + item.id)}
-                                      <div
-                                        key={item.id}
-                                        style={{
-                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
-                                        }}
-                                        onClick={() => handleElementClick(item.id, list)}
-                                        dangerouslySetInnerHTML={{
-                                          __html: item.htmlContent,
-                                        }}
-                                      ></div>
-                                    </Item>
-                                  )}
-                                </Draggable>
-                              ))
-                            : <Notice>Drop items here</Notice>}
+                        <Container
+                          ref={provided.innerRef}
+                          isDraggingOver={snapshot.isDraggingOver}
+                          className="dropable-box"
+                        >
+                          {state[list].length ? (
+                            state[list].map((item, index) => (
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <Item
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    isDragging={snapshot.isDragging}
+                                    style={provided.draggableProps.style}
+                                  >
+                                    <Handle {...provided.dragHandleProps}>
+                                      <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <path
+                                          fill="currentColor"
+                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                        />
+                                      </svg>
+                                    </Handle>
+                                    {console.log('item: ' + item.id)}
+                                    <div
+                                      key={item.id}
+                                      style={{
+                                        backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                      }}
+                                      onClick={() => handleElementClick(item.id, list)}
+                                      dangerouslySetInnerHTML={{
+                                        __html: item.htmlContent,
+                                      }}
+                                    ></div>
+                                  </Item>
+                                )}
+                              </Draggable>
+                            ))
+                          ) : (
+                            <Notice>Drop items here</Notice>
+                          )}
                           {provided.placeholder}
                         </Container>
                       )}
@@ -251,19 +269,12 @@ const FormBuilderScreen = () => {
               </Content>
             </div>
             <div className="col-3 inputProperties">
-              <p>INPUT PROPERTIES</p> <SingleLineInputProperty />
+              <p>INPUT PROPERTIES</p> <SingleLineInputProperty Notice={Notice} />
             </div>
           </div>
         </DragDropContext>
       </div>
     </section>
-    // <UserProvider>
-    //   <UserContext.Consumer>
-    //     {({ label, min_length, max_length, default_value, placeholder, required }) => (
-
-    //     )}
-    //   </UserContext.Consumer>
-    // </UserProvider>
   )
 }
 
