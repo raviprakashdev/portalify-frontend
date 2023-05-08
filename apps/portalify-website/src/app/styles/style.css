@@ -21,6 +21,7 @@
 
   padding: 16px 24px;
   background: linear-gradient(94.43deg, #447cbf -18.98%, #111111 113.48%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 600;
