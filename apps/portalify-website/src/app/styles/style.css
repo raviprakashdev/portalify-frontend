@@ -669,3 +669,7 @@ span {
   min-height: 50px;
   border: 1px dashed black;
 }
+.elementList{
+  height: 70vh;
+    overflow: auto;
+}

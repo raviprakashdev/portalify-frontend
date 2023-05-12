@@ -19,7 +19,7 @@ export const UserContext = createContext()
 const FormBuilderContext = (props) => {
   //--------------------------
   const [elementType, setElementType] = useState(-1)
-  console.log('elementTypeValue===> in contect API:', elementType)
+  // console.log('elementTypeValue===> in contect API:', elementType)
   const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : '')
 
   const [userData, setUserData] = useState({
@@ -34,7 +34,7 @@ const FormBuilderContext = (props) => {
     }))
   }
 
-  console.log('user data: ', userData)
+  // console.log('user data: ', userData)
 
   //--------------------------
   const elementList = [

@@ -53,7 +53,7 @@ const Elements = (props) => {
             })
             .map((element, index) => (
               <div className="col-md-6 col-sm-12">
-                {console.log('keyyy', element.id, index, indexOut, element.index)}
+                {/* {console.log('keyyy', element.id, index, indexOut, element.index)} */}
 
                 <Draggable key={element.id} draggableId={element.id} index={element.index - 1}>
                   {(provided, snapshot) => (
@@ -66,7 +66,7 @@ const Elements = (props) => {
                         style={provided.draggableProps.style}
                       >
                         {' '}
-                        {console.log(element)}
+                        {/* {console.log(element)} */}
                         <div key={element.id} className="element_group">
                           <div className="element_icon">
                             <img src={element.icon} alt={element.name} />
