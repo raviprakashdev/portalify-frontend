@@ -7,13 +7,15 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { UserContext } from '../context/formbuilder-context'
 import { useContext, useEffect } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import cross_icon from '../assets/icons/cross_icon.png'
 
 // a little function to help us with reordering the result
 
 const FormBuilderScreen = () => {
-  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, elementType,setElementType } = useContext(UserContext)
+  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, setElementType } =
+    useContext(UserContext)
 
   elementList.forEach((category) => {
     category.elements.forEach((element) => {
@@ -70,6 +72,8 @@ const FormBuilderScreen = () => {
     line-height: 1.5;
     border-radius: 3px;
     background: #fff;
+    position: relative;
+    width: 100%;
     border: 1px ${(props) => (props.isDragging ? 'dashed #4099ff' : 'solid #ddd')};
   `
 
@@ -134,8 +138,6 @@ const FormBuilderScreen = () => {
     const { source, destination } = result
     console.log('state check', state)
 
-    console.log('==> result', result)
-
     // dropped outside the list
     if (!destination) {
       return
@@ -170,7 +172,9 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
+  }
 
+  const getElementType = () => {
     //getting selected element type
     var index = -1
     const key = selectedElement[0]
@@ -182,11 +186,33 @@ const FormBuilderScreen = () => {
     }
   }
 
-  const [modal, setModal] = useState(false);
+  const handleElementDelete = (elementId, parentId) => {
+    //getting selected element type
+    var indexToDelete = -1
+    const key = parentId
+    const idToFind = elementId
+    const dataArray = [...state[key]]
+    var newState = state
+    if (key in state && Array.isArray(state[key])) {
+      indexToDelete = dataArray.findIndex((obj) => obj.id === idToFind)
+      console.log('INDEX ON DELETE===>', indexToDelete)
+    }
 
-  const toggle = () => setModal(!modal);
+    if (indexToDelete !== -1) {
+      dataArray.splice(indexToDelete, 1)
+      //newState[key]=dataArray;
+      console.log('data after DELETE===>', dataArray)
+      //setState(newState);
+    }
+  }
 
+  useEffect(() => {
+    getElementType()
+  }, [selectedElement])
 
+  const [modal, setModal] = useState(false)
+
+  const toggle = () => setModal(!modal)
 
   return (
     <section className="formbuilder-screen">
@@ -198,7 +224,6 @@ const FormBuilderScreen = () => {
               <Elements dataElement={allElements} />
             </div>
             <div className="col-6">
-              Main Area
               <Content>
                 <Button onClick={addList}>
                   <svg width="24" height="24" viewBox="0 0 24 24">
@@ -211,44 +236,57 @@ const FormBuilderScreen = () => {
                   console.log('==> list', list)
                   console.log('==> state', state)
                   return (
-                    <Droppable key="allElements" droppableId={list} >
+                    <Droppable key="allElements" droppableId={list}>
                       {(provided, snapshot) => (
-                        <Container ref={provided.innerRef} isDraggingOver={snapshot.isDraggingOver} className="dropable-box">
-                          {state[list].length
-                            ? state[list].map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id} index={index}>
-                                  {(provided, snapshot) => (
-                                    <Item
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      isDragging={snapshot.isDragging}
-                                      style={provided.draggableProps.style}
+                        <Container
+                          ref={provided.innerRef}
+                          isDraggingOver={snapshot.isDraggingOver}
+                          className="dropable-box"
+                        >
+                          {state[list].length ? (
+                            state[list].map((item, index) => (
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                                {(provided, snapshot) => (
+                                  <Item
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    isDragging={snapshot.isDragging}
+                                    style={provided.draggableProps.style}
+                                    onClick={() => handleElementClick(item.id, list)}
+                                  >
+                                    <div
+                                      className="cross_icon"
+                                      onClick={() => handleElementDelete(item.id, list)}
+                                      style={{ position: 'absolute', top: -10, right: -5 }}
                                     >
-                                      <Handle {...provided.dragHandleProps}>
-                                        <svg width="24" height="24" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                          />
-                                        </svg>
-                                      </Handle>
-                                      {console.log('item: ' + item.id)}
-                                      <div
-                                        key={item.id}
-                                        style={{
-                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
-                                          width:"100%"
-                                        }}
-                                        onClick={() => handleElementClick(item.id, list)}
-                                        dangerouslySetInnerHTML={{
-                                          __html: item.htmlContent,
-                                        }}
-                                      ></div>
-                                    </Item>
-                                  )}
-                                </Draggable>
-                              ))
-                            : <Notice>Drop items here</Notice>}
+                                      <img src={cross_icon} alt={cross_icon} width="13" height="13" />
+                                    </div>
+                                    <Handle {...provided.dragHandleProps}>
+                                      <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <path
+                                          fill="currentColor"
+                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                        />
+                                      </svg>
+                                    </Handle>
+                                    {console.log('item: ' + item.id)}
+                                    <div
+                                      key={item.id}
+                                      style={{
+                                        backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                        width: '100%',
+                                      }}
+                                      dangerouslySetInnerHTML={{
+                                        __html: item.htmlContent,
+                                      }}
+                                    ></div>
+                                  </Item>
+                                )}
+                              </Draggable>
+                            ))
+                          ) : (
+                            <Notice>Drop items here</Notice>
+                          )}
                           {provided.placeholder}
                         </Container>
                       )}
@@ -258,44 +296,35 @@ const FormBuilderScreen = () => {
               </Content>
             </div>
             <div className="col-3 inputProperties">
-              <p>INPUT PROPERTIES</p> <SingleLineInputProperty />
+              <p>INPUT PROPERTIES</p> <SingleLineInputProperty Notice={Notice} />
             </div>
           </div>
         </DragDropContext>
       </div>
       <div>
-      <Button color="danger" onClick={toggle}>
-        Click Me
-      </Button>
-      <Modal isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-        <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-            Do Something
-          </Button>{' '}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
-    </div> 
+        <Button color="danger" onClick={toggle}>
+          Click Me
+        </Button>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+          <ModalBody>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
+            anim id est laborum.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={toggle}>
+              Do Something
+            </Button>{' '}
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     </section>
-    // <UserProvider>
-    //   <UserContext.Consumer>
-    //     {({ label, min_length, max_length, default_value, placeholder, required }) => (
-
-    //     )}
-    //   </UserContext.Consumer>
-    // </UserProvider>
   )
 }
 

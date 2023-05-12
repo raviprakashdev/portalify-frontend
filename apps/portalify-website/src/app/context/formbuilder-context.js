@@ -17,9 +17,14 @@ import uuid from 'uuid/v4'
 export const UserContext = createContext()
 
 const FormBuilderContext = (props) => {
+  //--------------------------
+  const [elementType, setElementType] = useState(-1)
+  console.log('elementTypeValue===> in contect API:', elementType)
+  const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : '')
+
   const [userData, setUserData] = useState({
     // label: '',
-    // default_value: '',
+    default_value: `${date}`,
   })
 
   const updateUserData = (newData) => {
@@ -28,15 +33,6 @@ const FormBuilderContext = (props) => {
       ...newData,
     }))
   }
-
-  const initializeUserData = (attributes) => {
-    return attributes.reduce((acc, curr) => {
-      acc[curr] = ''
-      return acc
-    }, {})
-  }
-
-  const initialUserData = initializeUserData(['label', 'default_value'])
 
   console.log('user data: ', userData)
 
@@ -50,22 +46,21 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Single Line',
           icon: singleLine_icon,
-          htmlContent: `<label for='htmlContent'>Sample Label </label><input id='htmlContent' type='text'/>`,
-          label: '',
+          htmlContent: `<label for='htmlContent'>Sample Label</label>   <input id='htmlContent' type='text'/>`,
         },
         {
           index: 2,
           id: uuid(),
           name: 'Text Area',
           icon: textArea_icon,
-          htmlContent: `<label for='htmlContent'>Sample Label </label> <input id='htmlContent' type='textarea'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label</label>   <input id='htmlContent' type='textarea'/>`,
         },
         {
           index: 3,
           id: uuid(),
           name: 'Number',
           icon: number_icon,
-          htmlContent: `<label for='htmlContent'>Sample Label </label> <input id='htmlContent' type='number'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label</label>   <input id='htmlContent' type='number'/>`,
         },
       ],
     },
@@ -77,14 +72,14 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Date',
           icon: date_icon,
-          htmlContent: `<input type='date'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input type='date'/>`,
         },
         {
           index: 5,
           id: uuid(),
           name: 'Date & Time',
           icon: dateAndTime_icon,
-          htmlContent: `<input type='datetime-local'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input type='datetime-local'/>`,
         },
       ],
     },
@@ -132,16 +127,16 @@ const FormBuilderContext = (props) => {
         {
           index: 10,
           id: uuid(),
-          name: 'Image',
+          name: 'Image Selector',
           icon: image_icon,
-          htmlContent: `<label>Upload A Photo:<input type="file" accept="image/*"></label>`,
+          htmlContent: `<label>Upload A Photo:   <input type="file" accept="image/*"></label>`,
         },
         {
           index: 11,
           id: uuid(),
           name: 'Attachment',
           icon: attachment_icon,
-          htmlContent: `<label >Upload An Attachment:<input type='file'></type></label>`,
+          htmlContent: `<label >Upload An Attachment:   <input type='file'></type></label>`,
         },
       ],
     },
@@ -157,6 +152,25 @@ const FormBuilderContext = (props) => {
         },
       ],
     },
+    {
+      type: 'Form Properties',
+      elements: [
+        {
+          index: 13,
+          id: uuid(),
+          name: 'Name',
+          icon: singleLine_icon,
+          htmlContent: `</h1>Sample Name </h1>`,
+        },
+        {
+          index: 14,
+          id: uuid(),
+          name: 'Button',
+          icon: textArea_icon,
+          htmlContent: `<input id='htmlContent' type='button' value='Sample Text'/>`,
+        },
+      ],
+    },
   ]
   //--------------------------
   const [state, setState] = useState({
@@ -169,14 +183,10 @@ const FormBuilderContext = (props) => {
   //--------------------------
   const [selectedElement, setSelectedElement] = useState([])
 
-  //--------------------------
-  const [elementType, setElementType] = useState(-1)
-
   //---------------------------
   return (
     <UserContext.Provider
       value={{
-        ...initialUserData,
         ...userData,
         updateUserData,
         elementList,
@@ -186,7 +196,7 @@ const FormBuilderContext = (props) => {
         state,
         setState,
         elementType,
-        setElementType
+        setElementType,
       }}
     >
       {props.children}
