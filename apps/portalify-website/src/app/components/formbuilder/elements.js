@@ -1,127 +1,14 @@
-import React, { useState } from 'react'
-import attachment_icon from '../../assets/icons/elements_icon/attachment.png'
-import checkbox_icon from '../../assets/icons/elements_icon/checkbox.png'
-import date_icon from '../../assets/icons/elements_icon/date.png'
-import dateAndTime_icon from '../../assets/icons/elements_icon/dateAndTime.png'
-import divider_icon from '../../assets/icons/elements_icon/divider.png'
-import dropdown_icon from '../../assets/icons/elements_icon/dropdown.png'
-import number_icon from '../../assets/icons/elements_icon/number.png'
-import singleLine_icon from '../../assets/icons/elements_icon/singleLine.png'
-import switch_icon from '../../assets/icons/elements_icon/switch.png'
-import textArea_icon from '../../assets/icons/elements_icon/textArea.png'
-import radioButton_icon from '../../assets/icons/elements_icon/radioButton.png'
-import image_icon from '../../assets/icons/elements_icon/image.png'
+import React, { useState, useContext } from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import uuid from 'uuid/v4'
-
+import { UserContext } from '../../context/formbuilder-context'
 
 import styled from 'styled-components'
 
 const Elements = (props) => {
-  const elementList = [
-    {
-      type: 'Text Elements',
-      elements: [
-        {
-          index: 1,
-          id: uuid(),
-          name: 'Single Line',
-          icon: singleLine_icon,
-        },
-        {
-          index: 2,
-          id: uuid(),
-          name: 'Text Area',
-          icon: textArea_icon,
-        },
-        {
-          index: 3,
-          id: uuid(),
-          name: 'Number',
-          icon: number_icon,
-        },
-      ],
-    },
-    {
-      type: 'Date Elements',
-      elements: [
-        {
-          index: 4,
-          id: uuid(),
-          name: 'Date',
-          icon: date_icon,
-        },
-        {
-          index: 5,
-          id: uuid(),
-          name: 'Date & Time',
-          icon: dateAndTime_icon,
-        },
-      ],
-    },
+  const { elementList, allElements } = useContext(UserContext)
 
-    {
-      type: 'Multi Elements',
-      elements: [
-        { index: 6, id: uuid(), name: 'Dropdown', icon: dropdown_icon },
-        {
-          index: 7,
-          id: uuid(),
-          name: 'Radio Button',
-          icon: radioButton_icon,
-        },
-        {
-          index: 8,
-          id: uuid(),
-          name: 'Checkbox',
-          icon: checkbox_icon,
-        },
-        {
-          index: 9,
-          id: uuid(),
-          name: 'Switch',
-          icon: switch_icon,
-        },
-      ],
-    },
+  // const allElements = props.allElements
 
-    {
-      type: 'Media Elements',
-      elements: [
-        {
-          index: 10,
-          id: uuid(),
-          name: 'Image',
-          icon: image_icon,
-        },
-        {
-          index: 11,
-          id: uuid(),
-          name: 'Attachment',
-          icon: attachment_icon,
-        },
-      ],
-    },
-    {
-      type: 'Other Elements',
-      elements: [
-        {
-          index: 12,
-          id: uuid(),
-          name: 'Divider',
-          icon: divider_icon,
-        },
-      ],
-    },
-  ]
-  const allElements = props.allElements
-
-  // elementList.forEach((category) => {
-  //   category.elements.forEach((element) => {
-  //     allElements.push(element)
-  //   })
-  // })
-  //console.log({ allElements })
   const Item = styled.div``
   const List = styled.div``
 
@@ -208,9 +95,7 @@ const Elements = (props) => {
   })
 
   return (
-    
-
-      <div>
+    <div>
       <div className="search-header">
         <input type="text" value={searchQuery} placeholder="Search" onChange={handleSearchInputChange} />
       </div>
@@ -221,9 +106,7 @@ const Elements = (props) => {
           </Kiosk>
         )}
       </Droppable>
-      </div>
-      
-    
+    </div>
   )
 }
 

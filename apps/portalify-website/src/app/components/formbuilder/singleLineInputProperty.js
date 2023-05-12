@@ -21,7 +21,6 @@ const SingleLineInputProperty = ({ Notice }) => {
     setElementType,
   } = useContext(UserContext)
 
-
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
     var index = -1
@@ -100,15 +99,24 @@ const SingleLineInputProperty = ({ Notice }) => {
     <div>
       <form>
         {elementType === -1 ? (
-  
           <Notice>Select An Element</Notice>
-
         ) : (
           <>
-            <div className="input-text">
-              LABEL VALUE <div>{elementType}</div>
-              <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
-            </div>
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 7 ||
+            elementType === 8 ||
+            elementType === 9 ||
+            elementType === 10 ||
+            elementType === 11 ? (
+              <div className="input-text">
+                LABEL VALUE
+                <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
+              </div>
+            ) : null}
 
             {elementType === 3 ? (
               <>
@@ -170,16 +178,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               </div>
             )}
 
-            <div className="input-text">
-              PLACEHOLDER
-              <input
-                type="text"
-                placeholder="Enter Placeholder Value"
-                value={placeholder}
-                onChange={inputEvent}
-                name="placeholder"
-              />
-            </div>
+            {elementType === 1 || elementType === 2 || elementType === 3 || elementType === 4 || elementType === 5 ? (
+              <div className="input-text">
+                PLACEHOLDER
+                <input
+                  type="text"
+                  placeholder="Enter Placeholder Value"
+                  value={placeholder}
+                  onChange={inputEvent}
+                  name="placeholder"
+                />
+              </div>
+            ) : null}
 
             <div className="input-text d-flex align-items-center">
               Required:
