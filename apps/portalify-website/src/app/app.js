@@ -1,51 +1,49 @@
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'font-awesome/css/font-awesome.min.css'
-import './styles/style.css'
-import { Button } from 'reactstrap'
-import ReactDOM from 'react-dom/client'
-import { Route, Routes } from 'react-router-dom'
-import SigninScreen from './pages/SigninScreen'
-import SignInForm from './components/forms/SignInForm'
-import RegisterForm1 from './components/forms/RegisterForm1'
-import RegisterForm2 from './components/forms/RegisterForm2'
-import WelcomeScreen from './pages/WelcomeScreen'
-import ConfirmAuthScreen from './pages/ConfirmAuthScreen'
-import ForgotPassword from './components/forms/ForgotPassword'
-import DashboardScreen from './pages/DashboardScreen'
-import Leads from './components/dashboard/leads'
-import Mail from './components/dashboard/mail'
-import Dashboard from './components/dashboard/dashboard'
-import FormBuilderScreen from './pages/FormBuilderScreen'
-import FormBuilderContext from './context/formbuilder-context'
+import NxWelcome from './nx-welcome';
 
+import { Route, Routes, Link } from 'react-router-dom';
 export function App() {
   return (
-    <div>
-      {/* <SigninScreen form={SignInForm}/> */}
-      {/* <SigninScreen form={RegisterForm1}/> */}
-      {/* <SigninScreen form={RegisterForm2}/> */}
-      {/* <WelcomeScreen/> */}
-      {/* <ConfirmAuthScreen/> */}
-      {/* <ForgotPassword/> */}
-      {/* <SigninScreen form={ForgotPassword}/> */}
+    <>
+      <NxWelcome title="portalify-website" />
+      <div />
 
-      {/* <DashboardScreen>
-        <Routes>
-          <Route path="/" element={<Leads />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/leads" element={<Leads />} />
-          <Route path="/mail" element={<Mail />} />
-        </Routes>
-      </DashboardScreen> */}
-
-
-
-      <FormBuilderContext>
-        <FormBuilderScreen />
-        </FormBuilderContext>
-      
-     
-    </div>
-  )
+      {/* START: routes */}
+      {/* These routes and navigation have been generated for you */}
+      {/* Feel free to move and update them to fit your needs */}
+      <br />
+      <hr />
+      <br />
+      <div role="navigation">
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/page-2">Page 2</Link>
+          </li>
+        </ul>
+      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              This is the generated root route.{' '}
+              <Link to="/page-2">Click here for page 2.</Link>
+            </div>
+          }
+        />
+        <Route
+          path="/page-2"
+          element={
+            <div>
+              <Link to="/">Click here to go back to root page.</Link>
+            </div>
+          }
+        />
+      </Routes>
+      {/* END: routes */}
+    </>
+  );
 }
-export default App
+export default App;
