@@ -160,7 +160,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Name',
           icon: singleLine_icon,
-          htmlContent: `</h1>Sample Name </h1>`,
+          htmlContent: `<h1 id='htmlContent'> Sample Name </h1>`,
         },
         {
           index: 14,

@@ -7,6 +7,7 @@ const SingleLineInputProperty = ({ Notice }) => {
     label,
     min_length,
     max_length,
+    form_name,
     default_value,
     placeholder,
     required,
@@ -66,6 +67,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               })
             }
             break
+            case 'form_name':
+            {
+              const myInput = newHtmlContent.querySelector("h1")
+              myInput.textContent = value
+
+              setState((prevState) => {
+                const updatedArray = [...prevState[key]]
+                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
+                return { ...prevState, [key]: updatedArray }
+              })
+            }
+            break
           case 'placeholder':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
@@ -97,6 +110,7 @@ const SingleLineInputProperty = ({ Notice }) => {
 
   return (
     <div>
+  {elementType}
       <form>
         {elementType === -1 ? (
           <Notice>Select An Element</Notice>
@@ -143,6 +157,21 @@ const SingleLineInputProperty = ({ Notice }) => {
               </>
             ) : null}
 
+            {elementType === 13 ? (
+              
+                
+                <div className="input-text">
+                  Name
+                  <input
+                    type="text"
+                    placeholder="Enter Form Name"
+                    value={form_name}
+                    onChange={inputEvent}
+                    name="form_name"
+                  />
+                </div>
+            ) : null}
+
             {elementType === 3 ? (
               <div className="input-text">
                 DEFAULT VALUE
@@ -165,7 +194,14 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ) : (
+            ) : elementType === 1 ||
+            elementType === 2 ||
+            elementType === 6 ||
+            elementType === 7 ||
+            elementType === 8 ||
+            elementType === 9 ||
+            elementType === 10 ||
+            elementType === 11?(
               <div className="input-text">
                 DEFAULT VALUE
                 <input
@@ -176,7 +212,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            )}
+            ):null}
 
             {elementType === 1 || elementType === 2 || elementType === 3 || elementType === 4 || elementType === 5 ? (
               <div className="input-text">
