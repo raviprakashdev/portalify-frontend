@@ -34,7 +34,7 @@ const FormBuilderScreen = () => {
    * Moves an item from one list to another list.
    */
   const copy = (source, destination, droppableSource, droppableDestination) => {
-    console.log('==> dest', destination)
+    // console.log('==> dest', destination)
 
     const sourceClone = Array.from(source)
     const destClone = Array.from(destination)
@@ -136,7 +136,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    console.log('state check', state)
+    // console.log('state check', state)
 
     // dropped outside the list
     if (!destination) {
@@ -172,38 +172,68 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
+    
   }
 
   const getElementType = () => {
     //getting selected element type
+    
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
     const dataArray = state[key]
     if (key in state && Array.isArray(state[key])) {
+
       index = dataArray.findIndex((obj) => obj.id === idToFind)
-      setElementType(state[key][index].index)
+      setElementType(state[key][index]?.index)
     }
   }
 
   const handleElementDelete = (elementId, parentId) => {
     //getting selected element type
-    var indexToDelete = -1
-    const key = parentId
-    const idToFind = elementId
-    const dataArray = [...state[key]]
-    var newState = state
-    if (key in state && Array.isArray(state[key])) {
-      indexToDelete = dataArray.findIndex((obj) => obj.id === idToFind)
-      console.log('INDEX ON DELETE===>', indexToDelete)
-    }
+    // console.log('elementId>>>', elementId)
+    // console.log('parentId>>>', parentId)
+    // console.log('state>>>', state)
+    setState((current) => {
+      // 👇️ create copy of state object
+      const copy = { ...current }
 
-    if (indexToDelete !== -1) {
-      dataArray.splice(indexToDelete, 1)
-      //newState[key]=dataArray;
-      console.log('data after DELETE===>', dataArray)
-      //setState(newState);
-    }
+      var indexToDelete = -1
+      // 👇️ remove salary key from object
+      // console.log('copy[parentId]', copy[parentId])
+      // if (parentId in state && Array.isArray(state[parentId])) {
+      //   indexToDelete = copy[parentId].findIndex((obj) => obj.id === elementId)
+      //   console.log('INDEX ON DELETE===>', indexToDelete)
+      // }
+      const index = copy[parentId].findIndex(object => {
+        return object.id === elementId;
+      });
+      
+      // console.log(index); // 👉️ 1
+
+      // delete copy[parentId];
+      copy[parentId].splice(index, 1)
+
+      return copy
+    })
+
+    // var indexToDelete = -1
+    // const key = parentId
+    // const idToFind = elementId
+    // const dataArray = [...state[key]]
+    // var newState = state
+    // if (key in state && Array.isArray(state[key])) {
+    //   indexToDelete = dataArray.findIndex((obj) => obj.id === idToFind)
+    //   // console.log('INDEX ON DELETE===>', indexToDelete)
+    // }
+
+    // if (indexToDelete !== -1) {
+    //   dataArray.splice(indexToDelete, 1)
+    //   // newState[key]=dataArray;
+    //   // console.log('state after DELETE===>', key,newState[key])
+    //   // console.log('data after DELETE===>', dataArray)
+    //   //setState(newState);
+    // }
   }
 
   useEffect(() => {
@@ -233,8 +263,8 @@ const FormBuilderScreen = () => {
                 </Button>
 
                 {Object.keys(state).map((list, i) => {
-                  console.log('==> list', list)
-                  console.log('==> state', state)
+                  // console.log('==> list', list)
+                  // console.log('==> state', state)
                   return (
                     <Droppable key="allElements" droppableId={list}>
                       {(provided, snapshot) => (
@@ -253,6 +283,7 @@ const FormBuilderScreen = () => {
                                     isDragging={snapshot.isDragging}
                                     style={provided.draggableProps.style}
                                     onClick={() => handleElementClick(item.id, list)}
+                                    className="element-box"
                                   >
                                     <div
                                       className="cross_icon"
@@ -261,15 +292,8 @@ const FormBuilderScreen = () => {
                                     >
                                       <img src={cross_icon} alt={cross_icon} width="13" height="13" />
                                     </div>
-                                    <Handle {...provided.dragHandleProps}>
-                                      <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <path
-                                          fill="currentColor"
-                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                        />
-                                      </svg>
-                                    </Handle>
-                                    {console.log('item: ' + item.id)}
+                                   
+                                    {/* {console.log('item: ' + item.id)} */}
                                     <div
                                       key={item.id}
                                       style={{
@@ -280,6 +304,14 @@ const FormBuilderScreen = () => {
                                         __html: item.htmlContent,
                                       }}
                                     ></div>
+                                     <Handle {...provided.dragHandleProps} className="reorder-handle">
+                                      <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <path
+                                          fill="currentColor"
+                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                        />
+                                      </svg>
+                                    </Handle>
                                   </Item>
                                 )}
                               </Draggable>

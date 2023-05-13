@@ -33,7 +33,7 @@ const SingleLineInputProperty = ({ Notice }) => {
       if (index !== -1) {
         const oldHtmlContent = state[key][index].htmlContent
 
-        console.log('old html==>', oldHtmlContent)
+        // console.log('old html==>', oldHtmlContent)
 
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
@@ -95,14 +95,14 @@ const SingleLineInputProperty = ({ Notice }) => {
             break
         }
       } else {
-        console.log(`Object with id '${idToFind}' not found in data.`)
+        // console.log(`Object with id '${idToFind}' not found in data.`)
 
-        console.log('testing picking old html from state==> ', state[key][index].htmlContent)
+        // console.log('testing picking old html from state==> ', state[key][index].htmlContent)
       }
 
       //---------------------------------------------------------------------------------------------------------------------
     } else {
-      console.log(`Invalid key '${key}' or array not found.`)
+      // console.log(`Invalid key '${key}' or array not found.`)
     }
   }
 

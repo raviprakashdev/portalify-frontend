@@ -668,4 +668,30 @@ span {
 .dropable-box{
   min-height: 50px;
   border: 1px dashed black;
+  background-color: white !important;
 }
+.elementList{
+  height: 70vh;
+    overflow: auto;
+}
+.reorder-handle ,.cross_icon{
+  display: none;
+}
+.element-box:hover .reorder-handle{
+  display: block;
+}
+.element-box:hover .cross_icon{
+  display: block;
+}
+
+.element-box{
+  /* margin: 0 !important; */
+  padding: 3px !important;
+  /* pointer-events: visible !important; */
+  /* border: none !important; */
+  border:1px solid white !important;
+}
+.element-box:hover {
+  border:1px solid #ddd !important;
+}
+

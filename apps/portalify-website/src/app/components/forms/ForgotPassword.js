@@ -18,7 +18,7 @@ const ForgotPassword = () => {
   }
 
   const submitForm = (e) => {
-    console.log(inputtext)
+    // console.log(inputtext)
     alert('form submitted')
   }
 
