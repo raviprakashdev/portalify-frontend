@@ -172,6 +172,7 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
+    
   }
 
   const getElementType = () => {
@@ -282,6 +283,7 @@ const FormBuilderScreen = () => {
                                     isDragging={snapshot.isDragging}
                                     style={provided.draggableProps.style}
                                     onClick={() => handleElementClick(item.id, list)}
+                                    className="element-box"
                                   >
                                     <div
                                       className="cross_icon"
@@ -290,14 +292,7 @@ const FormBuilderScreen = () => {
                                     >
                                       <img src={cross_icon} alt={cross_icon} width="13" height="13" />
                                     </div>
-                                    <Handle {...provided.dragHandleProps}>
-                                      <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <path
-                                          fill="currentColor"
-                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                        />
-                                      </svg>
-                                    </Handle>
+                                   
                                     {/* {console.log('item: ' + item.id)} */}
                                     <div
                                       key={item.id}
@@ -309,6 +304,14 @@ const FormBuilderScreen = () => {
                                         __html: item.htmlContent,
                                       }}
                                     ></div>
+                                     <Handle {...provided.dragHandleProps} className="reorder-handle">
+                                      <svg width="24" height="24" viewBox="0 0 24 24">
+                                        <path
+                                          fill="currentColor"
+                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                        />
+                                      </svg>
+                                    </Handle>
                                   </Item>
                                 )}
                               </Draggable>

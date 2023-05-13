@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "apps/portalify-website/public",
+        "outputPath": "dist/apps/portalify-website",
         "index": "apps/portalify-website/src/index.html",
         "baseHref": "/",
         "main": "apps/portalify-website/src/main.js",
