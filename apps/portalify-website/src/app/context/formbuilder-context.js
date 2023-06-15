@@ -19,6 +19,8 @@ export const UserContext = createContext()
 const FormBuilderContext = (props) => {
   //--------------------------
   const [elementType, setElementType] = useState(-1)
+
+  const [elementTypeName, setElementTypeName] = useState(null)
   // console.log('elementTypeValue===> in contect API:', elementType)
   const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : '')
 
@@ -197,6 +199,8 @@ const FormBuilderContext = (props) => {
         setState,
         elementType,
         setElementType,
+        elementTypeName,
+        setElementTypeName,
       }}
     >
       {props.children}

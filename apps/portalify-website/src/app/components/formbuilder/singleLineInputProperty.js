@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../context/formbuilder-context'
 
@@ -20,7 +20,9 @@ const SingleLineInputProperty = ({ Notice }) => {
     setState,
     elementType,
     setElementType,
+    elementTypeName,
   } = useContext(UserContext)
+
 
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
@@ -33,13 +35,13 @@ const SingleLineInputProperty = ({ Notice }) => {
       if (index !== -1) {
         const oldHtmlContent = state[key][index].htmlContent
 
-        // console.log('old html==>', oldHtmlContent)
+        //console.log('old html==>', oldHtmlContent)
 
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
         //------------------------------------updating the element attribute-----------------------------------------------------
-
+      
         const { name, value } = event.target
         updateUserData({ [name]: value })
         switch (name) {
@@ -91,6 +93,27 @@ const SingleLineInputProperty = ({ Notice }) => {
               })
             }
             break
+          case 'required':
+            {
+             
+              const myInput = newHtmlContent.getElementById('htmlContent')
+              if (myInput) {
+
+                const newIsRequired = event.target.checked;
+                if (newIsRequired) {
+                  myInput.setAttribute('required', '');
+                } else {
+                  myInput.removeAttribute('required');
+                }
+              }
+
+              setState((prevState) => {
+                const updatedArray = [...prevState[key]]
+                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
+                return { ...prevState, [key]: updatedArray }
+              })
+            }
+            break
           default:
             break
         }
@@ -106,11 +129,13 @@ const SingleLineInputProperty = ({ Notice }) => {
     }
   }
 
+
+
   //--------------------------------------------------------------------------------------------------------------
 
   return (
-    <div>
-  {elementType}
+    <div> 
+    {elementTypeName != null?(<p>Selected: {elementTypeName}</p>):null}
       <form>
         {elementType === -1 ? (
           <Notice>Select An Element</Notice>

@@ -14,7 +14,7 @@ import cross_icon from '../assets/icons/cross_icon.png'
 // a little function to help us with reordering the result
 
 const FormBuilderScreen = () => {
-  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, setElementType } =
+  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, setElementType, elementType, setElementTypeName } =
     useContext(UserContext)
 
   elementList.forEach((category) => {
@@ -136,7 +136,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    // console.log('state check', state)
+     console.log('state check', state)
 
     // dropped outside the list
     if (!destination) {
@@ -186,6 +186,7 @@ const FormBuilderScreen = () => {
 
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       setElementType(state[key][index]?.index)
+      setElementTypeName(state[key][index]?.name)
     }
   }
 
@@ -194,11 +195,10 @@ const FormBuilderScreen = () => {
     // console.log('elementId>>>', elementId)
     // console.log('parentId>>>', parentId)
     // console.log('state>>>', state)
+    
     setState((current) => {
       // 👇️ create copy of state object
       const copy = { ...current }
-
-      var indexToDelete = -1
       // 👇️ remove salary key from object
       // console.log('copy[parentId]', copy[parentId])
       // if (parentId in state && Array.isArray(state[parentId])) {
@@ -216,29 +216,16 @@ const FormBuilderScreen = () => {
 
       return copy
     })
+    setElementType(-1);
 
-    // var indexToDelete = -1
-    // const key = parentId
-    // const idToFind = elementId
-    // const dataArray = [...state[key]]
-    // var newState = state
-    // if (key in state && Array.isArray(state[key])) {
-    //   indexToDelete = dataArray.findIndex((obj) => obj.id === idToFind)
-    //   // console.log('INDEX ON DELETE===>', indexToDelete)
-    // }
-
-    // if (indexToDelete !== -1) {
-    //   dataArray.splice(indexToDelete, 1)
-    //   // newState[key]=dataArray;
-    //   // console.log('state after DELETE===>', key,newState[key])
-    //   // console.log('data after DELETE===>', dataArray)
-    //   //setState(newState);
-    // }
+    
   }
 
   useEffect(() => {
     getElementType()
   }, [selectedElement])
+
+  console.log(elementType);
 
   const [modal, setModal] = useState(false)
 
