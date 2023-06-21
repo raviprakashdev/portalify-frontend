@@ -358,7 +358,6 @@ span {
 .formbuilder-screen .container .inputProperties p {
   font-size: 25px;
   font-weight: 600;
-  margin-bottom: 28px;
 }
 
 .inputProperties {
@@ -379,10 +378,6 @@ span {
   margin-top: 16px;
 }
 
-.inputProperties div:nth-last-child(2) input {
-  width: auto;
-  margin: 0px 0px 0px 8px;
-}
 
 .inputProperties .input-text {
   font-weight: 600;
@@ -390,15 +385,6 @@ span {
   color: #000000;
 }
 
-.inputProperties .buttons {
-  margin-top: 143px;
-  display: flex;
-  justify-content: center;
-}
-
-.inputProperties .buttons button:first-child {
-  margin-right: 19px;
-}
 
 /*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
 
@@ -406,7 +392,7 @@ span {
   border: 2px solid #e0e0e0;
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
   min-height: 100vh;
-  padding: 34px 43px 34px 45px;
+  padding: 34px 3px 34px 10px;
 }
 
 .elementList .element_heading {

@@ -1,5 +1,4 @@
 import React, { useState, createContext } from 'react'
-//import {inputtext} from '../components/formbuilder/singleLineInputProperty';
 import attachment_icon from '../assets/icons/elements_icon/attachment.png'
 import checkbox_icon from '../assets/icons/elements_icon/checkbox.png'
 import date_icon from '../assets/icons/elements_icon/date.png'
@@ -22,11 +21,11 @@ const FormBuilderContext = (props) => {
 
   const [elementTypeName, setElementTypeName] = useState(null)
   // console.log('elementTypeValue===> in contect API:', elementType)
-  const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : '')
+  //const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : null)
 
   const [userData, setUserData] = useState({
     // label: '',
-    default_value: `${date}`,
+    //default_value: `${date}`,
   })
 
   const updateUserData = (newData) => {
@@ -74,14 +73,14 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Date',
           icon: date_icon,
-          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input type='date'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input id='htmlContent' type='date'/>`,
         },
         {
           index: 5,
           id: uuid(),
           name: 'Date & Time',
           icon: dateAndTime_icon,
-          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input type='datetime-local'/>`,
+          htmlContent: `<label for='htmlContent'>Sample Label  </label>   <input id='htmlContent' type='datetime-local'/>`,
         },
       ],
     },

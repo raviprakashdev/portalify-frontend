@@ -14,8 +14,17 @@ import cross_icon from '../assets/icons/cross_icon.png'
 // a little function to help us with reordering the result
 
 const FormBuilderScreen = () => {
-  const { elementList, allElements, selectedElement, setSelectedElement, state, setState, setElementType, elementType, setElementTypeName } =
-    useContext(UserContext)
+  const {
+    elementList,
+    allElements,
+    selectedElement,
+    setSelectedElement,
+    state,
+    setState,
+    setElementType,
+    elementType,
+    setElementTypeName,
+  } = useContext(UserContext)
 
   elementList.forEach((category) => {
     category.elements.forEach((element) => {
@@ -136,7 +145,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-     console.log('state check', state)
+    //console.log('state check', state)
 
     // dropped outside the list
     if (!destination) {
@@ -172,18 +181,16 @@ const FormBuilderScreen = () => {
 
   const handleElementClick = (elementid, listid) => {
     setSelectedElement([listid, elementid])
-    
   }
 
   const getElementType = () => {
     //getting selected element type
-    
+
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
     const dataArray = state[key]
     if (key in state && Array.isArray(state[key])) {
-
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       setElementType(state[key][index]?.index)
       setElementTypeName(state[key][index]?.name)
@@ -195,7 +202,7 @@ const FormBuilderScreen = () => {
     // console.log('elementId>>>', elementId)
     // console.log('parentId>>>', parentId)
     // console.log('state>>>', state)
-    
+
     setState((current) => {
       // 👇️ create copy of state object
       const copy = { ...current }
@@ -205,10 +212,10 @@ const FormBuilderScreen = () => {
       //   indexToDelete = copy[parentId].findIndex((obj) => obj.id === elementId)
       //   console.log('INDEX ON DELETE===>', indexToDelete)
       // }
-      const index = copy[parentId].findIndex(object => {
-        return object.id === elementId;
-      });
-      
+      const index = copy[parentId].findIndex((object) => {
+        return object.id === elementId
+      })
+
       // console.log(index); // 👉️ 1
 
       // delete copy[parentId];
@@ -216,16 +223,14 @@ const FormBuilderScreen = () => {
 
       return copy
     })
-    setElementType(-1);
-
-    
+    setElementType(-1)
   }
 
   useEffect(() => {
     getElementType()
   }, [selectedElement])
 
-  console.log(elementType);
+  //console.log(elementType)
 
   const [modal, setModal] = useState(false)
 
@@ -242,12 +247,42 @@ const FormBuilderScreen = () => {
             </div>
             <div className="col-6">
               <Content>
+
+              <div className='d-flex justify-content-between'>
                 <Button onClick={addList}>
                   <svg width="24" height="24" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
                   </svg>
                   <ButtonText>Add List</ButtonText>
                 </Button>
+
+                
+                  <Button color="danger" onClick={toggle}>
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                    </svg>
+                    <ButtonText>Preview</ButtonText>
+                  </Button>
+                  </div>
+                  <Modal isOpen={modal} toggle={toggle}>
+                    <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                    <ModalBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
+                      in culpa qui officia deserunt mollit anim id est laborum.
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="primary" onClick={toggle}>
+                        Do Something
+                      </Button>{' '}
+                      <Button color="secondary" onClick={toggle}>
+                        Cancel
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
+              
 
                 {Object.keys(state).map((list, i) => {
                   // console.log('==> list', list)
@@ -279,7 +314,7 @@ const FormBuilderScreen = () => {
                                     >
                                       <img src={cross_icon} alt={cross_icon} width="13" height="13" />
                                     </div>
-                                   
+
                                     {/* {console.log('item: ' + item.id)} */}
                                     <div
                                       key={item.id}
@@ -291,7 +326,7 @@ const FormBuilderScreen = () => {
                                         __html: item.htmlContent,
                                       }}
                                     ></div>
-                                     <Handle {...provided.dragHandleProps} className="reorder-handle">
+                                    <Handle {...provided.dragHandleProps} className="reorder-handle">
                                       <svg width="24" height="24" viewBox="0 0 24 24">
                                         <path
                                           fill="currentColor"
@@ -319,29 +354,6 @@ const FormBuilderScreen = () => {
             </div>
           </div>
         </DragDropContext>
-      </div>
-      <div>
-        <Button color="danger" onClick={toggle}>
-          Click Me
-        </Button>
-        <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={toggle}>
-              Do Something
-            </Button>{' '}
-            <Button color="secondary" onClick={toggle}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
       </div>
     </section>
   )

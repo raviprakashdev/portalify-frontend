@@ -23,7 +23,6 @@ const SingleLineInputProperty = ({ Notice }) => {
     elementTypeName,
   } = useContext(UserContext)
 
-
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
     var index = -1
@@ -41,7 +40,7 @@ const SingleLineInputProperty = ({ Notice }) => {
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
         //------------------------------------updating the element attribute-----------------------------------------------------
-      
+
         const { name, value } = event.target
         updateUserData({ [name]: value })
         switch (name) {
@@ -69,9 +68,9 @@ const SingleLineInputProperty = ({ Notice }) => {
               })
             }
             break
-            case 'form_name':
+          case 'form_name':
             {
-              const myInput = newHtmlContent.querySelector("h1")
+              const myInput = newHtmlContent.querySelector('h1')
               myInput.textContent = value
 
               setState((prevState) => {
@@ -95,15 +94,13 @@ const SingleLineInputProperty = ({ Notice }) => {
             break
           case 'required':
             {
-             
               const myInput = newHtmlContent.getElementById('htmlContent')
               if (myInput) {
-
-                const newIsRequired = event.target.checked;
+                const newIsRequired = event.target.checked
                 if (newIsRequired) {
-                  myInput.setAttribute('required', '');
+                  myInput.setAttribute('required', '')
                 } else {
-                  myInput.removeAttribute('required');
+                  myInput.removeAttribute('required')
                 }
               }
 
@@ -119,7 +116,6 @@ const SingleLineInputProperty = ({ Notice }) => {
         }
       } else {
         // console.log(`Object with id '${idToFind}' not found in data.`)
-
         // console.log('testing picking old html from state==> ', state[key][index].htmlContent)
       }
 
@@ -129,15 +125,17 @@ const SingleLineInputProperty = ({ Notice }) => {
     }
   }
 
-
-
   //--------------------------------------------------------------------------------------------------------------
 
   return (
-    <div> 
-    {elementTypeName != null?(<p>Selected: {elementTypeName}</p>):null}
+    <div>
+      {elementTypeName != null ? (
+        <div className="input-text" style={{ marginBottom: 20 }}>
+          Selected: {elementTypeName}{' '}
+        </div>
+      ) : null}
       <form>
-        {elementType === -1 ? (
+        {elementType === -1 || elementType === undefined ? (
           <Notice>Select An Element</Notice>
         ) : (
           <>
@@ -183,18 +181,16 @@ const SingleLineInputProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 13 ? (
-              
-                
-                <div className="input-text">
-                  Name
-                  <input
-                    type="text"
-                    placeholder="Enter Form Name"
-                    value={form_name}
-                    onChange={inputEvent}
-                    name="form_name"
-                  />
-                </div>
+              <div className="input-text">
+                NAME
+                <input
+                  type="text"
+                  placeholder="Enter Form Name"
+                  value={form_name}
+                  onChange={inputEvent}
+                  name="form_name"
+                />
+              </div>
             ) : null}
 
             {elementType === 3 ? (
@@ -208,7 +204,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ) : elementType === 4 || elementType === 5 ? (
+            ) : elementType === 4? (
               <div className="input-text">
                 DEFAULT VALUE
                 <input
@@ -219,14 +215,25 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ) : elementType === 1 ||
-            elementType === 2 ||
-            elementType === 6 ||
-            elementType === 7 ||
-            elementType === 8 ||
-            elementType === 9 ||
-            elementType === 10 ||
-            elementType === 11?(
+            ): elementType === 5 ? (
+              <div className="input-text">
+                DEFAULT VALUE
+                <input
+                  type="datetime-local"
+                  placeholder="Enter Default Value"
+                  value={default_value}
+                  onChange={inputEvent}
+                  name="default_value"
+                />
+              </div>): elementType === 1 ||
+              elementType === 2 ||
+              elementType === 6 ||
+              elementType === 7 ||
+              elementType === 8 ||
+              elementType === 9 ||
+              elementType === 10 ||
+              elementType === 11 ||
+              elementType === 14 ? (
               <div className="input-text">
                 DEFAULT VALUE
                 <input
@@ -237,7 +244,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ):null}
+            ) : null}
 
             {elementType === 1 || elementType === 2 || elementType === 3 || elementType === 4 || elementType === 5 ? (
               <div className="input-text">
@@ -252,19 +259,21 @@ const SingleLineInputProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            <div className="input-text d-flex align-items-center">
-              Required:
-              <input type="checkbox" value={required} onChange={inputEvent} name="required" />
-            </div>
+            {elementType === 12 || elementType === 13 || elementType === 14 ? null : (
+              <div className="input-text d-flex align-items-baseline">
+                Required:
+                <input type="checkbox" value={required} onChange={inputEvent} name="required" />
+              </div>
+            )}
 
-            <div className="buttons">
+            {/* <div className="buttons">
               <button className="primary-blue-text-white-button" type="clear">
                 Clear
               </button>
               <button className="primary-white-text-gray-button" type="submit">
                 Done
               </button>
-            </div>
+            </div> */}
           </>
         )}
       </form>
