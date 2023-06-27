@@ -10,7 +10,8 @@ import singleLine_icon from '../assets/icons/elements_icon/singleLine.png'
 import switch_icon from '../assets/icons/elements_icon/switch.png'
 import textArea_icon from '../assets/icons/elements_icon/textArea.png'
 import radioButton_icon from '../assets/icons/elements_icon/radioButton.png'
-import image_icon from '../assets/icons/elements_icon/image.png'
+import imageselector_icon from '../assets/icons/elements_icon/image selector.png'
+import image from '../assets/icons/elements_icon/image.png'
 import uuid from 'uuid/v4'
 
 export const UserContext = createContext()
@@ -36,6 +37,11 @@ const FormBuilderContext = (props) => {
   }
 
   // console.log('user data: ', userData)
+
+  //--------------------------
+  let sampleimage = require('../../app/assets/formimage/sampleImage.jpg')
+
+  const [uploadedImage, setUploadedImage] = useState(sampleimage)
 
   //--------------------------
   const elementList = [
@@ -129,7 +135,7 @@ const FormBuilderContext = (props) => {
           index: 10,
           id: uuid(),
           name: 'Image Selector',
-          icon: image_icon,
+          icon: imageselector_icon,
           htmlContent: `<label>Upload A Photo:   <input type="file" accept="image/*"></label>`,
         },
         {
@@ -170,6 +176,13 @@ const FormBuilderContext = (props) => {
           icon: textArea_icon,
           htmlContent: `<input id='htmlContent' type='button' value='Sample Text'/>`,
         },
+        {
+          index: 15,
+          id: uuid(),
+          name: 'Image',
+          icon: image,
+          htmlContent: `<img id="uploadedImage" src="${uploadedImage}" alt="image uploaded" width="153" height="153" />`,
+        },
       ],
     },
   ]
@@ -200,6 +213,8 @@ const FormBuilderContext = (props) => {
         setElementType,
         elementTypeName,
         setElementTypeName,
+        uploadedImage,
+        setUploadedImage,
       }}
     >
       {props.children}

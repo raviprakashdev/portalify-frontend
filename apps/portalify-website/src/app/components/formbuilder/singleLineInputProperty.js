@@ -21,6 +21,8 @@ const SingleLineInputProperty = ({ Notice }) => {
     elementType,
     setElementType,
     elementTypeName,
+    uploadedImage,
+    setUploadedImage,
   } = useContext(UserContext)
 
   const inputEvent = (event) => {
@@ -90,6 +92,25 @@ const SingleLineInputProperty = ({ Notice }) => {
                 updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
                 return { ...prevState, [key]: updatedArray }
               })
+            }
+            break
+          case 'image':
+            {
+              const myInput = newHtmlContent.getElementById('uploadedImage')
+              if (myInput) {
+                const file = event.target.files[0]
+                if (file) {
+                  setUploadedImage(URL.createObjectURL(file))
+                }
+              }
+
+              setState((prevState) => {
+                const updatedArray = [...prevState[key]]
+                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
+                return { ...prevState, [key]: updatedArray }
+              })
+
+              console.log('image==>', uploadedImage)
             }
             break
           case 'required':
@@ -193,6 +214,13 @@ const SingleLineInputProperty = ({ Notice }) => {
               </div>
             ) : null}
 
+            {elementType === 15 ? (
+              <div className="input-text">
+                UPLOAD IMAGE
+                <input type="file" accept="image/*" value={form_name} onChange={inputEvent} name="image" />
+              </div>
+            ) : null}
+
             {elementType === 3 ? (
               <div className="input-text">
                 DEFAULT VALUE
@@ -204,7 +232,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ) : elementType === 4? (
+            ) : elementType === 4 ? (
               <div className="input-text">
                 DEFAULT VALUE
                 <input
@@ -215,7 +243,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ): elementType === 5 ? (
+            ) : elementType === 5 ? (
               <div className="input-text">
                 DEFAULT VALUE
                 <input
@@ -225,7 +253,8 @@ const SingleLineInputProperty = ({ Notice }) => {
                   onChange={inputEvent}
                   name="default_value"
                 />
-              </div>): elementType === 1 ||
+              </div>
+            ) : elementType === 1 ||
               elementType === 2 ||
               elementType === 6 ||
               elementType === 7 ||
