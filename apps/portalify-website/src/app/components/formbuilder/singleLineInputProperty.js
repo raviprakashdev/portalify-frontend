@@ -101,6 +101,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                 const file = event.target.files[0]
                 if (file) {
                   setUploadedImage(URL.createObjectURL(file))
+                  myInput.setAttribute('src', uploadedImage);
                 }
               }
 
@@ -110,7 +111,6 @@ const SingleLineInputProperty = ({ Notice }) => {
                 return { ...prevState, [key]: updatedArray }
               })
 
-              console.log('image==>', uploadedImage)
             }
             break
           case 'required':
@@ -145,6 +145,17 @@ const SingleLineInputProperty = ({ Notice }) => {
       // console.log(`Invalid key '${key}' or array not found.`)
     }
   }
+
+
+  useEffect(() => {
+    const myInput = document.getElementById('uploadedImage');
+    if (myInput) {
+      myInput.setAttribute('src', uploadedImage);
+    }
+
+    console.log("image==>", uploadedImage)
+    console.log('state check', state)
+  }, [uploadedImage]);
 
   //--------------------------------------------------------------------------------------------------------------
 

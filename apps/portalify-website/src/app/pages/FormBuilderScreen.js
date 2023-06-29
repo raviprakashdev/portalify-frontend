@@ -145,7 +145,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    //console.log('state check', state)
+    console.log('state check', state)
 
     // dropped outside the list
     if (!destination) {
@@ -247,42 +247,42 @@ const FormBuilderScreen = () => {
             </div>
             <div className="col-6">
               <Content>
+                <div className="d-flex justify-content-between">
+                  <Button onClick={addList}>
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+                    </svg>
+                    <ButtonText>Add List</ButtonText>
+                  </Button>
 
-              <div className='d-flex justify-content-between'>
-                <Button onClick={addList}>
-                  <svg width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
-                  </svg>
-                  <ButtonText>Add List</ButtonText>
-                </Button>
-
-                
                   <Button color="danger" onClick={toggle}>
                     <svg width="24" height="24" viewBox="0 0 24 24">
-                      <path fill="currentColor" d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z" />
+                      <path
+                        fill="currentColor"
+                        d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"
+                      />
                     </svg>
                     <ButtonText>Preview</ButtonText>
                   </Button>
-                  </div>
-                  <Modal isOpen={modal} toggle={toggle}>
-                    <ModalHeader toggle={toggle}>Modal title</ModalHeader>
-                    <ModalBody>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                      in culpa qui officia deserunt mollit anim id est laborum.
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="primary" onClick={toggle}>
-                        Do Something
-                      </Button>{' '}
-                      <Button color="secondary" onClick={toggle}>
-                        Cancel
-                      </Button>
-                    </ModalFooter>
-                  </Modal>
-              
+                </div>
+                <Modal isOpen={modal} toggle={toggle}>
+                  <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                  <ModalBody>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                    culpa qui officia deserunt mollit anim id est laborum.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={toggle}>
+                      Do Something
+                    </Button>{' '}
+                    <Button color="secondary" onClick={toggle}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </Modal>
 
                 {Object.keys(state).map((list, i) => {
                   // console.log('==> list', list)

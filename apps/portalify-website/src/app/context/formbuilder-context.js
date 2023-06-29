@@ -181,7 +181,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Image',
           icon: image,
-          htmlContent: `<img id="uploadedImage" src="${uploadedImage}" alt="image uploaded" width="153" height="153" />`,
+          htmlContent: `<img id="uploadedImage" src="${uploadedImage}" alt="image uploaded" width="30%" class="img-fluid" />`,
         },
       ],
     },
