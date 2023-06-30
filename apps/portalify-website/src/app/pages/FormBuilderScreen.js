@@ -145,7 +145,7 @@ const FormBuilderScreen = () => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result
-    console.log('state check', state)
+    //console.log('state check', state)
 
     // dropped outside the list
     if (!destination) {
@@ -266,13 +266,20 @@ const FormBuilderScreen = () => {
                   </Button>
                 </div>
                 <Modal isOpen={modal} toggle={toggle}>
-                  <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+                  <ModalHeader toggle={toggle}>Form Preview</ModalHeader>
                   <ModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
+                    {Object.keys(state).map((key) => {
+                      const elements = state[key]
+                      console.log('element==>', elements)
+                      return (
+                        <form key={key} style={{ border: '3px solid grey' }}>
+                          <h4>Form Key: {key}</h4>
+                          {elements.map((element, index) => {
+                            return <div key={index} dangerouslySetInnerHTML={{ __html: element.htmlContent }} />
+                          })}
+                        </form>
+                      )
+                    })}
                   </ModalBody>
                   <ModalFooter>
                     <Button color="primary" onClick={toggle}>

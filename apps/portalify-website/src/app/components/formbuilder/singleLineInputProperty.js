@@ -271,8 +271,6 @@ const SingleLineInputProperty = ({ Notice }) => {
               elementType === 7 ||
               elementType === 8 ||
               elementType === 9 ||
-              elementType === 10 ||
-              elementType === 11 ||
               elementType === 14 ? (
               <div className="input-text">
                 DEFAULT VALUE
