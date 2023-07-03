@@ -39,9 +39,6 @@ const FormBuilderContext = (props) => {
   // console.log('user data: ', userData)
 
   //--------------------------
-  let sampleimage = require('../../app/assets/formimage/sampleImage.jpg')
-
-  const [uploadedImage, setUploadedImage] = useState(sampleimage)
 
   //--------------------------
   const elementList = [
@@ -155,7 +152,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Divider',
           icon: divider_icon,
-          htmlContent: `<hr style="height:2px;border-width:10;color:black;background-color:black;width:100%">`,
+          htmlContent: `<hr id='htmlContent' style="height:2px;border-width:0px;color:black;background-color:black;width:100%">`,
         },
       ],
     },
@@ -181,7 +178,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Image',
           icon: image,
-          htmlContent: `<img id="uploadedImage" src="${uploadedImage}" alt="image uploaded" width="30%" class="img-fluid" />`,
+          htmlContent: `<img id="uploadedImage" src=${require('../../app/assets/formimage/sampleImage.jpg')} alt="image uploaded" width="30%" class="img-fluid" />`,
         },
       ],
     },
@@ -213,8 +210,6 @@ const FormBuilderContext = (props) => {
         setElementType,
         elementTypeName,
         setElementTypeName,
-        uploadedImage,
-        setUploadedImage,
       }}
     >
       {props.children}

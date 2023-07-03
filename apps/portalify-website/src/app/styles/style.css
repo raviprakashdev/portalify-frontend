@@ -356,15 +356,17 @@ span {
 /*---------- FormBuilderScreen RightSide: InputProperties Styling starts ----------*/
 
 .formbuilder-screen .container .inputProperties p {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 600;
 }
 
 .inputProperties {
   border: 2px solid #e0e0e0;
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
-  min-height: 100vh;
+  height: 70vh;
   padding: 37px 41px 34px 24px;
+  overflow: auto;
+  min-height: 100vh;
 }
 
 .inputProperties input {
@@ -379,13 +381,11 @@ span {
   margin-top: 16px;
 }
 
-
 .inputProperties .input-text {
   font-weight: 600;
   font-size: 15px;
   color: #000000;
 }
-
 
 /*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
 
@@ -394,6 +394,8 @@ span {
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
   min-height: 100vh;
   padding: 34px 3px 34px 10px;
+  height: 70vh;
+  overflow: auto;
 }
 
 .elementList .element_heading {
@@ -652,33 +654,29 @@ span {
 .bar > li:last-of-type:after {
   top: -50%;
 }
-.dropable-box{
+.dropable-box {
   min-height: 50px;
   border: 1px dashed black;
   background-color: white !important;
 }
-.elementList{
-  height: 70vh;
-    overflow: auto;
-}
-.reorder-handle ,.cross_icon{
+.reorder-handle,
+.cross_icon {
   display: none;
 }
-.element-box:hover .reorder-handle{
+.element-box:hover .reorder-handle {
   display: block;
 }
-.element-box:hover .cross_icon{
+.element-box:hover .cross_icon {
   display: block;
 }
 
-.element-box{
+.element-box {
   /* margin: 0 !important; */
   padding: 3px !important;
   /* pointer-events: visible !important; */
   /* border: none !important; */
-  border:1px solid white !important;
+  border: 1px solid white !important;
 }
 .element-box:hover {
-  border:1px solid #ddd !important;
+  border: 1px solid #ddd !important;
 }
-

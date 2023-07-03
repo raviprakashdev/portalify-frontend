@@ -10,6 +10,7 @@ import { useContext, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import cross_icon from '../assets/icons/cross_icon.png'
+import StylingProperty from '../components/formbuilder/stylingProperty'
 
 // a little function to help us with reordering the result
 
@@ -358,6 +359,7 @@ const FormBuilderScreen = () => {
             </div>
             <div className="col-3 inputProperties">
               <p>INPUT PROPERTIES</p> <SingleLineInputProperty Notice={Notice} />
+              <p>STYLING PROPERTIES</p> <StylingProperty Notice={Notice} />
             </div>
           </div>
         </DragDropContext>

@@ -15,7 +15,6 @@ const SingleLineInputProperty = ({ Notice }) => {
     elementList,
     allElements,
     selectedElement,
-    setSelectedElement,
     state,
     setState,
     elementType,
@@ -100,8 +99,7 @@ const SingleLineInputProperty = ({ Notice }) => {
               if (myInput) {
                 const file = event.target.files[0]
                 if (file) {
-                  setUploadedImage(URL.createObjectURL(file))
-                  myInput.setAttribute('src', uploadedImage);
+                  myInput.setAttribute('src', URL.createObjectURL(file))
                 }
               }
 
@@ -110,7 +108,6 @@ const SingleLineInputProperty = ({ Notice }) => {
                 updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
                 return { ...prevState, [key]: updatedArray }
               })
-
             }
             break
           case 'required':
@@ -146,24 +143,13 @@ const SingleLineInputProperty = ({ Notice }) => {
     }
   }
 
-
-  useEffect(() => {
-    const myInput = document.getElementById('uploadedImage');
-    if (myInput) {
-      myInput.setAttribute('src', uploadedImage);
-    }
-
-    console.log("image==>", uploadedImage)
-    console.log('state check', state)
-  }, [uploadedImage]);
-
   //--------------------------------------------------------------------------------------------------------------
 
   return (
-    <div>
+    <div className=' '>
       {elementTypeName != null ? (
         <div className="input-text" style={{ marginBottom: 20 }}>
-          Selected: {elementTypeName}{' '}
+          <Notice>Selected: {elementTypeName} </Notice>
         </div>
       ) : null}
       <form>
