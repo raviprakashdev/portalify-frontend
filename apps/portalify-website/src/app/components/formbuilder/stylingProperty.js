@@ -154,13 +154,17 @@ const StylingProperty = ({ Notice }) => {
   return (
     <div>
       {elementTypeName != null ? (
-        <div className="input-text" style={{ marginBottom: 20 }}>
-          <Notice>Selected: {elementTypeName} </Notice>
+        <div className="input-text">
+          <Notice>
+          {/* Selected: {elementTypeName}  */}
+          </Notice>
         </div>
       ) : null}
       <form>
         {elementType === -1 || elementType === undefined ? (
-          <Notice>Select An Element</Notice>
+          <Notice>
+          {/* Select An Element */}
+          </Notice>
         ) : (
           <>
             {elementType === 12 ? (
