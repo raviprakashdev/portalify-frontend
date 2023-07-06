@@ -266,7 +266,7 @@ const FormBuilderScreen = () => {
                     <ButtonText>Preview</ButtonText>
                   </Button>
                 </div>
-                <Modal isOpen={modal} toggle={toggle}>
+                <Modal isOpen={modal} toggle={toggle} className="preview-modal">
                   <ModalHeader toggle={toggle}>Form Preview</ModalHeader>
                   <ModalBody>
                     {Object.keys(state).map((key) => {

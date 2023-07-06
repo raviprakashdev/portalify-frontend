@@ -387,6 +387,12 @@ span {
   color: #000000;
 }
 
+.preview-modal{
+  min-width: 90vw ;
+  min-height: 90vh;
+}
+
+
 /*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
 
 .elementList {

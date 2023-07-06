@@ -152,7 +152,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Divider',
           icon: divider_icon,
-          htmlContent: `<hr id='htmlContent' style="height:2px;border-width:0px;color:black;background-color:black;width:100%">`,
+          htmlContent: `<hr id='htmlContent' style="height:2px;border-width:0px;background-color:black;width:100%">`,
         },
       ],
     },
