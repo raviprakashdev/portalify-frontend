@@ -178,7 +178,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Image',
           icon: image,
-          htmlContent: `<img id="uploadedImage" src=${require('../../app/assets/formimage/sampleImage.jpg')} alt="image uploaded" width="30%" class="img-fluid" />`,
+          htmlContent: `<img id="htmlContent" src=${require('../../app/assets/formimage/sampleImage.jpg')} alt="image uploaded" width="30%" class="htmlContent" />`,
         },
       ],
     },

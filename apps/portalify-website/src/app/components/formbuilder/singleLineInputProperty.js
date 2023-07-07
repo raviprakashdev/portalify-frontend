@@ -95,7 +95,7 @@ const SingleLineInputProperty = ({ Notice }) => {
             break
           case 'image':
             {
-              const myInput = newHtmlContent.getElementById('uploadedImage')
+              const myInput = newHtmlContent.getElementById('htmlContent')
               if (myInput) {
                 const file = event.target.files[0]
                 if (file) {
