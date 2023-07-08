@@ -65,16 +65,40 @@ const StylingProperty = ({ Notice }) => {
           case 'align':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
+              myInput.style.display = 'block'
+              const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
+              if (myInput1) {
+                myInput1.style.display = 'block'
+              }
 
               switch (value) {
                 case 'left':
+                  myInput.style.marginRight = 'auto'
+                  myInput.style.marginLeft = '0'
                   myInput.style.textAlign = 'left'
+                  if (myInput1) {
+                    myInput1.style.marginRight = 'auto'
+                    myInput1.style.marginLeft = '0'
+                    myInput1.style.textAlign = 'left'
+                  }
                   break
                 case 'center':
+                  myInput.style.margin = 'auto'
                   myInput.style.textAlign = 'center'
+                  if (myInput1) {
+                    myInput1.style.margin = 'auto'
+                    myInput1.style.textAlign = 'center'
+                  }
                   break
                 case 'right':
+                  myInput.style.marginLeft = 'auto'
+                  myInput.style.marginRight = '0'
                   myInput.style.textAlign = 'right'
+                  if (myInput1) {
+                    myInput1.style.marginLeft = 'auto'
+                    myInput1.style.marginRight = '0'
+                    myInput1.style.textAlign = 'right'
+                  }
                   break
                 default:
                   break
@@ -89,45 +113,18 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'alignImage':
-            {
-              const myInput = newHtmlContent.getElementById('htmlContent')
-
-              switch (value) {
-                case 'left':
-                  myInput.style.float = 'left'
-                  break
-                case 'center':
-                  myInput.style.float = 'center'
-                  break
-                case 'right':
-                  myInput.style.float = 'right'
-                  break
-                default:
-                  break
-              }
-              setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
-                  htmlContent: newHtmlContent.documentElement.innerHTML,
-                }
-                return { ...prevState, [key]: updatedArray }
-              })
-            }
-            break
-            case 'fontStyle':
+          case 'fontStyle':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               switch (value) {
                 case 'bold':
-                  myInput.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold';
+                  myInput.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold'
                   break
                 case 'italic':
-                  myInput.style.fontStyle = myInput.fontStyle === 'italic' ? 'normal' : 'italic';
+                  myInput.style.fontStyle = myInput.fontStyle === 'italic' ? 'normal' : 'italic'
                   break
                 case 'underline':
-                  myInput.style.textDecoration = myInput.textDecoration === 'underline' ? 'none' : 'underline';
+                  myInput.style.textDecoration = myInput.textDecoration === 'underline' ? 'none' : 'underline'
                   break
                 default:
                   break
@@ -142,7 +139,7 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'font':
+          case 'font':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
 
@@ -213,7 +210,7 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-             case 'padding':
+          case 'padding':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               myInput.style.padding = value
@@ -228,10 +225,14 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'fontSize':
+          case 'fontSize':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               myInput.style.fontSize = value
+              const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
+              if (myInput1) {
+                myInput1.style.fontSize = value
+              }
 
               setState((prevState) => {
                 const updatedArray = [...prevState[key]]
@@ -243,7 +244,7 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'width':
+          case 'width':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               myInput.style.width = value
@@ -258,7 +259,7 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'height':
+          case 'height':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               myInput.style.height = value
@@ -273,21 +274,21 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'borderRadius':
-              {
-                const myInput = newHtmlContent.getElementById('htmlContent')
-                myInput.style.borderRadius = value+"%"
-  
-                setState((prevState) => {
-                  const updatedArray = [...prevState[key]]
-                  updatedArray[index] = {
-                    ...updatedArray[index],
-                    htmlContent: newHtmlContent.documentElement.innerHTML,
-                  }
-                  return { ...prevState, [key]: updatedArray }
-                })
-              }
-              break
+          case 'borderRadius':
+            {
+              const myInput = newHtmlContent.getElementById('htmlContent')
+              myInput.style.borderRadius = value + '%'
+
+              setState((prevState) => {
+                const updatedArray = [...prevState[key]]
+                updatedArray[index] = {
+                  ...updatedArray[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return { ...prevState, [key]: updatedArray }
+              })
+            }
+            break
           default:
             break
         }
@@ -412,7 +413,11 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-             {elementType === 13 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||elementType === 13 ? (
               <div className="input-text">
                 FONT SIZE
                 <input
@@ -425,7 +430,6 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-
             {elementType === 12 || elementType === 13 || elementType === 14 ? (
               <div className="input-text">
                 COLOR
@@ -433,7 +437,7 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {elementType === 13 ||elementType === 14? (
+            {elementType === 13 || elementType === 14 ? (
               <div className="input-text">
                 BACKGROUND COLOR
                 <ChromePicker onChange={setbgColor} onChangeComplete={bgcolorInputEvent} color={bgcolor} disableAlpha />
@@ -464,21 +468,17 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {elementType === 13 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 13 ||
+            elementType === 14 ||
+            elementType === 15 ? (
               <div className="input-text">
                 ALIGN
                 <select name="align" onChange={inputEvent}>
-                  <option value="left">Left</option>
-                  <option value="center">Center</option>
-                  <option value="right">Right</option>
-                </select>
-              </div>
-            ) : null}
-
-            {elementType === 14 || elementType === 15 ? (
-              <div className="input-text">
-                ALIGN
-                <select name="alignImage" onChange={inputEvent}>
                   <option value="left">Left</option>
                   <option value="center">Center</option>
                   <option value="right">Right</option>
@@ -534,7 +534,14 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            { elementType === 13 || elementType === 14 || elementType === 15 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 13 ||
+            elementType === 14 ||
+            elementType === 15 ? (
               <div className="input-text">
                 PADDING
                 <input
@@ -547,7 +554,15 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {elementType === 12 || elementType === 13 ||elementType === 14 ||elementType === 15 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 12 ||
+            elementType === 13 ||
+            elementType === 14 ||
+            elementType === 15 ? (
               <div className="input-text">
                 MARGIN
                 <input

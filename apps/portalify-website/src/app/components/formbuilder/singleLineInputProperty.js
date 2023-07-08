@@ -146,7 +146,7 @@ const SingleLineInputProperty = ({ Notice }) => {
   //--------------------------------------------------------------------------------------------------------------
 
   return (
-    <div className=' '>
+    <div className=" ">
       {elementTypeName != null ? (
         <div className="input-text" style={{ marginBottom: 20 }}>
           <Notice>Selected: {elementTypeName} </Notice>
@@ -170,51 +170,6 @@ const SingleLineInputProperty = ({ Notice }) => {
               <div className="input-text">
                 LABEL VALUE
                 <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
-              </div>
-            ) : null}
-
-            {elementType === 3 ? (
-              <>
-                <div className="input-text">
-                  MIN LENGTH
-                  <input
-                    type="text"
-                    placeholder="Enter Minimum Length"
-                    value={min_length}
-                    onChange={inputEvent}
-                    name="min_length"
-                  />
-                </div>
-                <div className="input-text">
-                  MAX LENGTH
-                  <input
-                    type="text"
-                    placeholder="Enter Maximum Length"
-                    value={max_length}
-                    onChange={inputEvent}
-                    name="max_length"
-                  />
-                </div>
-              </>
-            ) : null}
-
-            {elementType === 13 ? (
-              <div className="input-text">
-                NAME
-                <input
-                  type="text"
-                  placeholder="Enter Form Name"
-                  value={form_name}
-                  onChange={inputEvent}
-                  name="form_name"
-                />
-              </div>
-            ) : null}
-
-            {elementType === 15 ? (
-              <div className="input-text">
-                UPLOAD IMAGE
-                <input type="file" accept="image/*" value={form_name} onChange={inputEvent} name="image" />
               </div>
             ) : null}
 
@@ -267,6 +222,50 @@ const SingleLineInputProperty = ({ Notice }) => {
                   onChange={inputEvent}
                   name="default_value"
                 />
+              </div>
+            ) : null}
+            {elementType === 3 ? (
+              <>
+                <div className="input-text">
+                  MIN LENGTH
+                  <input
+                    type="text"
+                    placeholder="Enter Minimum Length"
+                    value={min_length}
+                    onChange={inputEvent}
+                    name="min_length"
+                  />
+                </div>
+                <div className="input-text">
+                  MAX LENGTH
+                  <input
+                    type="text"
+                    placeholder="Enter Maximum Length"
+                    value={max_length}
+                    onChange={inputEvent}
+                    name="max_length"
+                  />
+                </div>
+              </>
+            ) : null}
+
+            {elementType === 13 ? (
+              <div className="input-text">
+                NAME
+                <input
+                  type="text"
+                  placeholder="Enter Form Name"
+                  value={form_name}
+                  onChange={inputEvent}
+                  name="form_name"
+                />
+              </div>
+            ) : null}
+
+            {elementType === 15 ? (
+              <div className="input-text">
+                UPLOAD IMAGE
+                <input type="file" accept="image/*" value={form_name} onChange={inputEvent} name="image" />
               </div>
             ) : null}
 
