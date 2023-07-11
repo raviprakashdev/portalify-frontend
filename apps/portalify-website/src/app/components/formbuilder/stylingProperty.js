@@ -26,6 +26,7 @@ const StylingProperty = ({ Notice }) => {
 
   const [color, setColor] = useState('#121212')
   const [bgcolor, setbgColor] = useState('#f9000000')
+  const [globalBgcolor, setglobalBgColor] = useState('#f9000000')
 
   const inputEvent = (event) => {
     //console.log('event==>', event)
@@ -64,44 +65,52 @@ const StylingProperty = ({ Notice }) => {
             break
           case 'align':
             {
-              const myInput = newHtmlContent.getElementById('htmlContent')
-              myInput.style.display = 'block'
-              const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
-              if (myInput1) {
-                myInput1.style.display = 'block'
-              }
+              const myInput2 = newHtmlContent.getElementById('htmlContentParent')
 
-              switch (value) {
-                case 'left':
-                  myInput.style.marginRight = 'auto'
-                  myInput.style.marginLeft = '0'
-                  myInput.style.textAlign = 'left'
-                  if (myInput1) {
-                    myInput1.style.marginRight = 'auto'
-                    myInput1.style.marginLeft = '0'
-                    myInput1.style.textAlign = 'left'
-                  }
-                  break
-                case 'center':
-                  myInput.style.margin = 'auto'
-                  myInput.style.textAlign = 'center'
-                  if (myInput1) {
-                    myInput1.style.margin = 'auto'
-                    myInput1.style.textAlign = 'center'
-                  }
-                  break
-                case 'right':
-                  myInput.style.marginLeft = 'auto'
-                  myInput.style.marginRight = '0'
-                  myInput.style.textAlign = 'right'
-                  if (myInput1) {
-                    myInput1.style.marginLeft = 'auto'
-                    myInput1.style.marginRight = '0'
-                    myInput1.style.textAlign = 'right'
-                  }
-                  break
-                default:
-                  break
+              if (myInput2) {
+                myInput2.style.display = 'block'
+                switch (value) {
+                  case 'left':
+                    myInput2.style.marginRight = 'auto'
+                    myInput2.style.marginLeft = '0'
+                    myInput2.style.textAlign = 'left'
+                    break
+                  case 'center':
+                    myInput2.style.margin = 'auto'
+                    myInput2.style.textAlign = 'center'
+                    break
+                  case 'right':
+                    myInput2.style.marginLeft = 'auto'
+                    myInput2.style.marginRight = '0'
+                    myInput2.style.textAlign = 'right'
+
+                    break
+                  default:
+                    break
+                }
+              } else {
+                const myInput = newHtmlContent.getElementById('htmlContent')
+                myInput.style.display = 'block'
+
+                switch (value) {
+                  case 'left':
+                    myInput.style.marginRight = 'auto'
+                    myInput.style.marginLeft = '0'
+                    myInput.style.textAlign = 'left'
+                    break
+                  case 'center':
+                    myInput.style.margin = 'auto'
+                    myInput.style.textAlign = 'center'
+                    break
+                  case 'right':
+                    myInput.style.marginLeft = 'auto'
+                    myInput.style.marginRight = '0'
+                    myInput.style.textAlign = 'right'
+
+                    break
+                  default:
+                    break
+                }
               }
               setState((prevState) => {
                 const updatedArray = [...prevState[key]]
@@ -115,16 +124,29 @@ const StylingProperty = ({ Notice }) => {
             break
           case 'fontStyle':
             {
+              const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
               const myInput = newHtmlContent.getElementById('htmlContent')
               switch (value) {
                 case 'bold':
+                  if(myInput1)
+                  {
+                    myInput1.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold'
+                  }
                   myInput.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold'
                   break
                 case 'italic':
-                  myInput.style.fontStyle = myInput.fontStyle === 'italic' ? 'normal' : 'italic'
+                  if(myInput1)
+                  {
+                    myInput1.style.fontStyle = myInput.style.fontStyle === 'italic' ? 'normal' : 'italic'
+                  }
+                  myInput.style.fontStyle = myInput.style.fontStyle === 'italic' ? 'normal' : 'italic'
                   break
                 case 'underline':
-                  myInput.style.textDecoration = myInput.textDecoration === 'underline' ? 'none' : 'underline'
+                  if(myInput1)
+                  {
+                    myInput1.style.textDecoration = myInput.style.textDecoration === 'underline' ? 'none' : 'underline'
+                  }
+                  myInput.style.textDecoration = myInput.style.textDecoration === 'underline' ? 'none' : 'underline'
                   break
                 default:
                   break
@@ -141,21 +163,35 @@ const StylingProperty = ({ Notice }) => {
             break
           case 'font':
             {
+
+              console.log("state==>", state)
+              const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
+
               const myInput = newHtmlContent.getElementById('htmlContent')
 
               switch (value) {
                 case 'Courier':
                   myInput.style.fontFamily = 'Courier'
+                  if (myInput1) {
+                    myInput1.style.fontFamily = 'Courier'
+                  }
                   break
                 case 'Helvetica':
                   myInput.style.fontFamily = 'Helvetica'
+                  if (myInput1) {
+                    myInput1.style.fontFamily = 'Helvetica'
+                  }
                   break
                 case 'Times-Roman':
                   myInput.style.fontFamily = 'Times-Roman'
+                  if (myInput1) {
+                    myInput1.style.fontFamily = 'Times-Roman'
+                  }
                   break
                 default:
                   break
               }
+
               setState((prevState) => {
                 const updatedArray = [...prevState[key]]
                 updatedArray[index] = {
@@ -320,10 +356,17 @@ const StylingProperty = ({ Notice }) => {
         //------------------------------------updating the element attribute-----------------------------------------------------
 
         //console.log('color==>', color)
-        const myInput = newHtmlContent.getElementById('htmlContent')
-        myInput.style.color = color.hex
-        //myInput.style.backgroundColor = color.hex
-
+        const myInput2 = newHtmlContent.getElementById('htmlContentParent')
+        if (myInput2) {
+          const myInput2 = newHtmlContent.getElementById('htmlContentParent')
+          myInput2.style.color = color.hex
+          const myInput = newHtmlContent.getElementById('htmlContent')
+          myInput.style.color = color.hex
+        } else {
+          const myInput = newHtmlContent.getElementById('htmlContent')
+          myInput.style.color = color.hex
+          //myInput.style.backgroundColor = color.hex
+        }
         setState((prevState) => {
           const updatedArray = [...prevState[key]]
           updatedArray[index] = {
@@ -388,6 +431,50 @@ const StylingProperty = ({ Notice }) => {
     }
   }
 
+
+   //-----------------------------------------bgcontent color picker input-----------------------------------------------------------------
+   const globalBgcolorInputEvent = (color, event) => {
+    //console.log('event==>', event)
+    //---------------------------------------getting old html from selected element---------------------------------------------
+    var index = -1
+    const key = selectedElement[0]
+    const idToFind = selectedElement[1]
+    const dataArray = state[key]
+    if (key in state && Array.isArray(state[key])) {
+      index = dataArray.findIndex((obj) => obj.id === idToFind)
+      if (index !== -1) {
+        const oldHtmlContent = state[key][index].htmlContent
+        const parser = new DOMParser()
+        const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
+
+        //------------------------------------updating the element attribute-----------------------------------------------------
+
+        //console.log('color==>', color)
+        const myInput = newHtmlContent.getElementById('globalStyling')
+        //myInput.style.color = color.hex
+        myInput.style.backgroundColor = color.hex
+
+        setState((prevState) => {
+          const updatedArray = [...prevState[key]]
+          updatedArray[index] = {
+            ...updatedArray[index],
+            htmlContent: newHtmlContent.documentElement.innerHTML,
+          }
+          return { ...prevState, [key]: updatedArray }
+        })
+
+        console.log('new html==>', newHtmlContent)
+      } else {
+        // console.log(`Object with id '${idToFind}' not found in data.`)
+        // console.log('testing picking old html from state==> ', state[key][index].htmlContent)
+      }
+
+      //---------------------------------------------------------------------------------------------------------------------
+    } else {
+      // console.log(`Invalid key '${key}' or array not found.`)
+    }
+  }
+
   //--------------------------------------------------------------------------------------------------------------
 
   return (
@@ -402,7 +489,12 @@ const StylingProperty = ({ Notice }) => {
           <Notice>{/* Select An Element */}</Notice>
         ) : (
           <>
-            {elementType === 13 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 13 ? (
               <div className="input-text">
                 FONT STYLE
                 <select name="fontStyle" onChange={inputEvent}>
@@ -417,7 +509,8 @@ const StylingProperty = ({ Notice }) => {
             elementType === 2 ||
             elementType === 3 ||
             elementType === 4 ||
-            elementType === 5 ||elementType === 13 ? (
+            elementType === 5 ||
+            elementType === 13 ? (
               <div className="input-text">
                 FONT SIZE
                 <input
@@ -430,7 +523,14 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {elementType === 12 || elementType === 13 || elementType === 14 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 12 ||
+            elementType === 13 ||
+            elementType === 14 ? (
               <div className="input-text">
                 COLOR
                 <ChromePicker onChange={setColor} onChangeComplete={colorInputEvent} color={color} disableAlpha />
@@ -444,7 +544,12 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {elementType === 13 ? (
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 13 ? (
               <div className="input-text">
                 FONT
                 <select name="font" onChange={inputEvent}>
@@ -574,6 +679,12 @@ const StylingProperty = ({ Notice }) => {
                 />
               </div>
             ) : null}
+
+            
+              {/* <div className="input-text">
+                GLOBAL BACKGROUND COLOR
+                <ChromePicker onChange={setglobalBgColor} onChangeComplete={globalBgcolorInputEvent} color={globalBgcolor} disableAlpha />
+              </div> */}
           </>
         )}
       </form>

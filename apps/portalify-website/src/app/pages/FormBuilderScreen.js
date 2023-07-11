@@ -274,10 +274,12 @@ const FormBuilderScreen = () => {
                       console.log('element==>', elements)
                       return (
                         <form key={key} style={{ border: '3px solid grey' }}>
+                        <div id='globalStyling'>
                           <h4>Form Key: {key}</h4>
                           {elements.map((element, index) => {
                             return <div key={index} dangerouslySetInnerHTML={{ __html: element.htmlContent }} />
                           })}
+                          </div>
                         </form>
                       )
                     })}
@@ -296,6 +298,7 @@ const FormBuilderScreen = () => {
                   // console.log('==> list', list)
                   // console.log('==> state', state)
                   return (
+                    <div id='globalStyling'>
                     <Droppable key="allElements" droppableId={list}>
                       {(provided, snapshot) => (
                         <Container
@@ -353,6 +356,7 @@ const FormBuilderScreen = () => {
                         </Container>
                       )}
                     </Droppable>
+                    </div>
                   )
                 })}
               </Content>
