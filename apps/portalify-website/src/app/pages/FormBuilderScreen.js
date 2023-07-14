@@ -237,6 +237,28 @@ const FormBuilderScreen = () => {
 
   const toggle = () => setModal(!modal)
 
+  //---------------------------------setting modal Size--------------------------------
+  const [modalSize, setModalSize] = useState({ minWidth: '90vw', minHeight: '90vh' })
+  const [activeButton, setActiveButton] = useState('laptop')
+  const handleSizeChange = (device) => {
+    let minWidth = '90vw'
+    let minHeight = '90vh'
+
+    if (device === 'phone') {
+      minWidth = '30vw'
+      minHeight = '30vh'
+    } else if (device === 'tablet') {
+      minWidth = '60vw'
+      minHeight = '60vh'
+    } else if (device === 'laptop') {
+      minWidth = '90vw'
+      minHeight = '90vh'
+    }
+
+    setModalSize({ minWidth, minHeight })
+    setActiveButton(device)
+  }
+
   return (
     <section className="formbuilder-screen">
       <div className="container">
@@ -248,13 +270,13 @@ const FormBuilderScreen = () => {
             </div>
             <div className="col-6">
               <Content>
-                <div className="d-flex justify-content-between">
-                  <Button onClick={addList}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  {/* <Button onClick={addList}>
                     <svg width="24" height="24" viewBox="0 0 24 24">
                       <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
                     </svg>
                     <ButtonText>Add List</ButtonText>
-                  </Button>
+                  </Button> */}
 
                   <Button color="danger" onClick={toggle}>
                     <svg width="24" height="24" viewBox="0 0 24 24">
@@ -266,19 +288,64 @@ const FormBuilderScreen = () => {
                     <ButtonText>Preview</ButtonText>
                   </Button>
                 </div>
-                <Modal isOpen={modal} toggle={toggle} className="preview-modal">
-                  <ModalHeader toggle={toggle}>Form Preview</ModalHeader>
+                <Modal isOpen={modal} toggle={toggle} className="preview-modal" style={modalSize}>
+                  <ModalHeader toggle={toggle}>
+                    <div className="d-flex  align-items-center">
+                      Form Preview
+                      <div className="d-flex justify-content-between">
+                        <Button
+                          className={activeButton === 'phone' ? 'activeModalSize' : ''}
+                          onClick={() => handleSizeChange('phone')}
+                        >
+                          <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path
+                              fill="currentColor"
+                              d="M8 2C6.34315 2 5 3.34315 5 5V19C5 20.6569 6.34315 22 8 22H16C17.6569 22 19 20.6569 19 19V5C19 3.34315 17.6569 2 16 2H8ZM7 5C7 4.44772 7.44772 4 8 4H16C16.5523 4 17 4.44772 17 5V19C17 19.5523 16.5523 20 16 20H8C7.44772 20 7 19.5523 7 19V5ZM10 17C9.44772 17 9 17.4477 9 18C9 18.5523 9.44772 19 10 19H14C14.5523 19 15 18.5523 15 18C15 17.4477 14.5523 17 14 17H10Z"
+                            />
+                          </svg>
+                        </Button>
+                        <Button
+                          className={activeButton === 'tablet' ? 'activeModalSize' : ''}
+                          onClick={() => handleSizeChange('tablet')}
+                        >
+                          <svg width="24" height="24" viewBox="0 0 30 30">
+                            <path
+                              fill="currentColor"
+                              d="M23.001 4h-15c-1.105 0-2.001 0.896-2.001 2v20c0 1.104 0.896 2 2.001 2h15c1.104 0 1.999-0.896 1.999-2v-20c0-1.104-0.895-2-1.999-2zM15.5 27c-0.552 0-0.999-0.447-0.999-1s0.447-1 0.999-1c0.553 0 1.001 0.447 1.001 1s-0.448 1-1.001 1zM22.991 23.938h-15.026v-17.912h15.026v17.912z"
+                            />
+                          </svg>
+                        </Button>
+                        <Button
+                          className={activeButton === 'laptop' ? 'activeModalSize' : ''}
+                          onClick={() => handleSizeChange('laptop')}
+                        >
+                          <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path
+                              fill="currentColor"
+                              d="M22,15H21V5a2,2,0,0,0-2-2H5A2,2,0,0,0,3,5V15H2a1,1,0,0,0-1,1,5.006,5.006,0,0,0,5,5H18a5.006,5.006,0,0,0,5-5A1,1,0,0,0,22,15ZM5,5H19V15H5ZM18,19H6a3.006,3.006,0,0,1-2.829-2H20.829A3.006,3.006,0,0,1,18,19Z"
+                            />{' '}
+                          </svg>
+                        </Button>
+                      </div>
+                    </div>
+                  </ModalHeader>
                   <ModalBody>
                     {Object.keys(state).map((key) => {
                       const elements = state[key]
-                      console.log('element==>', elements)
+                      //console.log('element==>', elements)
                       return (
                         <form key={key} style={{ border: '3px solid grey' }}>
-                        <div id='globalStyling'>
-                          <h4>Form Key: {key}</h4>
-                          {elements.map((element, index) => {
-                            return <div key={index} dangerouslySetInnerHTML={{ __html: element.htmlContent }} />
-                          })}
+                          <div id="globalStyling" style={{ padding: '8px' }}>
+                            {/* <h4>Form Key: {key}</h4> */}
+                            {elements.map((element, index) => {
+                              return (
+                                <div
+                                  style={{ padding: '3px' }}
+                                  key={index}
+                                  dangerouslySetInnerHTML={{ __html: element.htmlContent }}
+                                />
+                              )
+                            })}
                           </div>
                         </form>
                       )
@@ -298,64 +365,64 @@ const FormBuilderScreen = () => {
                   // console.log('==> list', list)
                   // console.log('==> state', state)
                   return (
-                    <div id='globalStyling'>
-                    <Droppable key="allElements" droppableId={list}>
-                      {(provided, snapshot) => (
-                        <Container
-                          ref={provided.innerRef}
-                          isDraggingOver={snapshot.isDraggingOver}
-                          className="dropable-box"
-                        >
-                          {state[list].length ? (
-                            state[list].map((item, index) => (
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
-                                {(provided, snapshot) => (
-                                  <Item
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    isDragging={snapshot.isDragging}
-                                    style={provided.draggableProps.style}
-                                    onClick={() => handleElementClick(item.id, list)}
-                                    className="element-box"
-                                  >
-                                    <div
-                                      className="cross_icon"
-                                      onClick={() => handleElementDelete(item.id, list)}
-                                      style={{ position: 'absolute', top: -10, right: -5 }}
+                    <div id="globalStyling">
+                      <Droppable key="allElements" droppableId={list}>
+                        {(provided, snapshot) => (
+                          <Container
+                            ref={provided.innerRef}
+                            isDraggingOver={snapshot.isDraggingOver}
+                            className="dropable-box"
+                          >
+                            {state[list].length ? (
+                              state[list].map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                  {(provided, snapshot) => (
+                                    <Item
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      isDragging={snapshot.isDragging}
+                                      style={provided.draggableProps.style}
+                                      onClick={() => handleElementClick(item.id, list)}
+                                      className="element-box"
                                     >
-                                      <img src={cross_icon} alt={cross_icon} width="13" height="13" />
-                                    </div>
+                                      <div
+                                        className="cross_icon"
+                                        onClick={() => handleElementDelete(item.id, list)}
+                                        style={{ position: 'absolute', top: -10, right: -5 }}
+                                      >
+                                        <img src={cross_icon} alt={cross_icon} width="13" height="13" />
+                                      </div>
 
-                                    {/* {console.log('item: ' + item.id)} */}
-                                    <div
-                                      key={item.id}
-                                      style={{
-                                        backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
-                                        width: '100%',
-                                      }}
-                                      dangerouslySetInnerHTML={{
-                                        __html: item.htmlContent,
-                                      }}
-                                    ></div>
-                                    <Handle {...provided.dragHandleProps} className="reorder-handle">
-                                      <svg width="24" height="24" viewBox="0 0 24 24">
-                                        <path
-                                          fill="currentColor"
-                                          d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                        />
-                                      </svg>
-                                    </Handle>
-                                  </Item>
-                                )}
-                              </Draggable>
-                            ))
-                          ) : (
-                            <Notice>Drop items here</Notice>
-                          )}
-                          {provided.placeholder}
-                        </Container>
-                      )}
-                    </Droppable>
+                                      {/* {console.log('item: ' + item.id)} */}
+                                      <div
+                                        key={item.id}
+                                        style={{
+                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                          width: '100%',
+                                        }}
+                                        dangerouslySetInnerHTML={{
+                                          __html: item.htmlContent,
+                                        }}
+                                      ></div>
+                                      <Handle {...provided.dragHandleProps} className="reorder-handle">
+                                        <svg width="24" height="24" viewBox="0 0 24 24">
+                                          <path
+                                            fill="currentColor"
+                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                          />
+                                        </svg>
+                                      </Handle>
+                                    </Item>
+                                  )}
+                                </Draggable>
+                              ))
+                            ) : (
+                              <Notice>Drop items here</Notice>
+                            )}
+                            {provided.placeholder}
+                          </Container>
+                        )}
+                      </Droppable>
                     </div>
                   )
                 })}

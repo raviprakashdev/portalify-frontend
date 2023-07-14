@@ -57,7 +57,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Text Area',
           icon: textArea_icon,
-          htmlContent: `<div id='htmlContentParent'><label id='htmlContentLabel' for='htmlContent'>Sample Label</label>   <input id='htmlContent' type='textarea'/></div>`,
+          htmlContent: `<div id='htmlContentParent'><label id='htmlContentLabel' for='htmlContent'>Sample Label</label> <textarea id='htmlContent'/> </textarea> </div>`,
         },
         {
           index: 3,
@@ -171,7 +171,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Button',
           icon: textArea_icon,
-          htmlContent: `<input id='htmlContent' type='button' value='Sample Text'/>`,
+          htmlContent: `<input id='htmlContent' style="border:none;" type='button' value='Sample Text'/>`,
         },
         {
           index: 15,
@@ -185,8 +185,17 @@ const FormBuilderContext = (props) => {
   ]
   //--------------------------
   const [state, setState] = useState({
-    [uuid()]: [],
+    [uuid()]: []
+    
   })
+
+
+  // const [state, setState] = useState({
+  //   [uuid()]: {
+  //     htmlContent: "<div id='globalstyling'></div>",
+  //     children: []
+  //   }
+  // })
 
   //--------------------------
   const allElements = []

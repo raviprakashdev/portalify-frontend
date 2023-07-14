@@ -516,7 +516,7 @@ const StylingProperty = ({ Notice }) => {
                 <input
                   type="number"
                   placeholder="Enter Font Size Value"
-                  defaultValue={0}
+                  defaultValue={16}
                   onChange={inputEvent}
                   name="fontSize"
                 />
@@ -597,7 +597,7 @@ const StylingProperty = ({ Notice }) => {
                 <input
                   type="number"
                   placeholder="Enter Image Width Value"
-                  defaultValue={0}
+                  defaultValue={100}
                   onChange={inputEvent}
                   name="width"
                 />
@@ -610,7 +610,7 @@ const StylingProperty = ({ Notice }) => {
                 <input
                   type="number"
                   placeholder="Enter Image Height Value"
-                  defaultValue={0}
+                  defaultValue={100}
                   onChange={inputEvent}
                   name="height"
                 />
@@ -652,7 +652,7 @@ const StylingProperty = ({ Notice }) => {
                 <input
                   type="number"
                   placeholder="Enter Padding Value"
-                  defaultValue={0}
+                  defaultValue={3}
                   onChange={inputEvent}
                   name="padding"
                 />

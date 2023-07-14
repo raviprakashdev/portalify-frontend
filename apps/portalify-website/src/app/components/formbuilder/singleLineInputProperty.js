@@ -24,6 +24,8 @@ const SingleLineInputProperty = ({ Notice }) => {
     setUploadedImage,
   } = useContext(UserContext)
 
+  const [hideLabel, setHideLabel] = useState(false);
+
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
     var index = -1
@@ -62,6 +64,30 @@ const SingleLineInputProperty = ({ Notice }) => {
               const myInput = newHtmlContent.querySelector("label[for='htmlContent']")
               myInput.textContent = value
 
+              setState((prevState) => {
+                const updatedArray = [...prevState[key]]
+                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
+                return { ...prevState, [key]: updatedArray }
+              })
+            }
+            break
+            case 'hideLabel':
+            {
+
+
+              setHideLabel(event.target.checked);
+              const myInput = newHtmlContent.querySelector("label[for='htmlContent']")
+              
+
+              if(event.target.checked){
+                myInput.textContent = ' '
+
+              }
+              else{
+                myInput.textContent = value
+                
+              }
+              
               setState((prevState) => {
                 const updatedArray = [...prevState[key]]
                 updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
@@ -169,7 +195,23 @@ const SingleLineInputProperty = ({ Notice }) => {
             elementType === 11 ? (
               <div className="input-text">
                 LABEL VALUE
-                <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} name="label" />
+                <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} disabled={hideLabel} name="label" />
+              </div>
+            ) : null}
+
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 7 ||
+            elementType === 8 ||
+            elementType === 9 ||
+            elementType === 10 ||
+            elementType === 11 ? (
+              <div className="input-text d-flex align-items-baseline">
+                Hide Label:
+                <input type="checkbox" value={label} onChange={inputEvent} checked={hideLabel} name="hideLabel" />
               </div>
             ) : null}
 

@@ -392,6 +392,11 @@ span {
   min-height: 90vh;
 }
 
+.activeModalSize
+{
+  background-color: #e0e0e0 !important;
+}
+
 
 /*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
 
