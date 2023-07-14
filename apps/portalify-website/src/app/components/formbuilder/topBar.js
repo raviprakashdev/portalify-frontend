@@ -30,7 +30,7 @@ const TopBar = () => {
   ]
 
   return (
-    <div className="row top-bar align-items-center">
+    <div className="row top-bar align-items-center m-0">
       <div className="col-2">
         <div className="logo">
           {' '}
