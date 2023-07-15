@@ -313,7 +313,7 @@ const StylingProperty = ({ Notice }) => {
           case 'borderRadius':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
-              myInput.style.borderRadius = value + '%'
+              myInput.style.borderRadius = value + 'px'
 
               setState((prevState) => {
                 const updatedArray = [...prevState[key]]

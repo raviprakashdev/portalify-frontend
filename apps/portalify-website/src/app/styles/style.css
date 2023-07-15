@@ -366,7 +366,7 @@ span {
   height: 70vh;
   padding: 37px 41px 34px 24px;
   overflow: auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 90px);
 }
 
 .inputProperties input {
@@ -387,8 +387,8 @@ span {
   color: #000000;
 }
 
-.preview-modal{
-  min-width: 90vw ;
+.preview-modal {
+  min-width: 90vw;
   min-height: 90vh;
 }
 
@@ -403,8 +403,8 @@ span {
 .elementList {
   border: 2px solid #e0e0e0;
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
-  min-height: 100vh;
-  padding: 34px 3px 34px 10px;
+  min-height: calc(100vh - 90px);
+  padding: 35px 20px;
   height: 70vh;
   overflow: auto;
 }
@@ -414,7 +414,7 @@ span {
   font-weight: 600;
   font-size: 15px;
   text-transform: uppercase;
-  margin: 15px 0px 31.44px 0px;
+  margin: 10px 0;
 }
 
 .elementList .element_group .element_name {
@@ -422,6 +422,25 @@ span {
   letter-spacing: 0.85px;
   font-weight: 500;
   font-size: 14px;
+}
+.element_group {
+  border: 1px dashed transparent;
+}
+.element_group:hover {
+  border: 1px dashed black;
+}
+
+.search-header input {
+  width: 100%;
+  padding: 5px;
+  border: 2px solid lightgray;
+  border-radius: 5px;
+}
+#globalStyling{
+  /* box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.5); */
+}
+.search-header {
+  margin-bottom: 25px;
 }
 
 .elementList .element_group {
@@ -432,7 +451,7 @@ span {
   gap: 10px;
   background: #f2f2f2;
   border-radius: 5px;
-  margin: 0px 22px 29px 0px;
+  margin: 10px 0;
 }
 
 .elementList .element_list {
@@ -673,6 +692,9 @@ span {
 .reorder-handle,
 .cross_icon {
   display: none;
+}
+.reorder-handle {
+  margin: auto;
 }
 .element-box:hover .reorder-handle {
   display: block;

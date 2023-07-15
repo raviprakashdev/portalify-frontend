@@ -261,13 +261,14 @@ const FormBuilderScreen = () => {
 
   return (
     <section className="formbuilder-screen">
-      <div className="container">
+      <div className="fluid-container">
         <TopBar />
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="row ">
+          <div className="row m-0" >
             <div className="col-3 elementList">
               <Elements dataElement={allElements} />
             </div>
+
             <div className="col-6">
               <Content>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
