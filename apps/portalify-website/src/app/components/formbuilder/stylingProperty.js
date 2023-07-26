@@ -26,7 +26,6 @@ const StylingProperty = ({ Notice }) => {
 
   const [color, setColor] = useState('#121212')
   const [bgcolor, setbgColor] = useState('#f9000000')
-  const [globalBgcolor, setglobalBgColor] = useState('#f9000000')
 
   const inputEvent = (event) => {
     //console.log('event==>', event)
@@ -34,18 +33,20 @@ const StylingProperty = ({ Notice }) => {
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       if (index !== -1) {
-        const oldHtmlContent = state[key][index].htmlContent
+        const oldHtmlContent = state[key].children[index].htmlContent
+
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
         //------------------------------------updating the element attribute-----------------------------------------------------
 
         const { name, value } = event.target
-        console.log('name==>', name)
+        //console.log('name==>', name)
         updateUserData({ [name]: value })
         switch (name) {
           case 'border':
@@ -54,12 +55,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.borderWidth = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -113,12 +120,18 @@ const StylingProperty = ({ Notice }) => {
                 }
               }
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -128,22 +141,19 @@ const StylingProperty = ({ Notice }) => {
               const myInput = newHtmlContent.getElementById('htmlContent')
               switch (value) {
                 case 'bold':
-                  if(myInput1)
-                  {
+                  if (myInput1) {
                     myInput1.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold'
                   }
                   myInput.style.fontWeight = myInput.style.fontWeight === 'bold' ? 'normal' : 'bold'
                   break
                 case 'italic':
-                  if(myInput1)
-                  {
+                  if (myInput1) {
                     myInput1.style.fontStyle = myInput.style.fontStyle === 'italic' ? 'normal' : 'italic'
                   }
                   myInput.style.fontStyle = myInput.style.fontStyle === 'italic' ? 'normal' : 'italic'
                   break
                 case 'underline':
-                  if(myInput1)
-                  {
+                  if (myInput1) {
                     myInput1.style.textDecoration = myInput.style.textDecoration === 'underline' ? 'none' : 'underline'
                   }
                   myInput.style.textDecoration = myInput.style.textDecoration === 'underline' ? 'none' : 'underline'
@@ -152,22 +162,27 @@ const StylingProperty = ({ Notice }) => {
                   break
               }
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
           case 'font':
             {
-
-              console.log("state==>", state)
               const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
 
               const myInput = newHtmlContent.getElementById('htmlContent')
+           
 
               switch (value) {
                 case 'Courier':
@@ -193,12 +208,18 @@ const StylingProperty = ({ Notice }) => {
               }
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -221,12 +242,18 @@ const StylingProperty = ({ Notice }) => {
                   break
               }
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -237,12 +264,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.marginBottom = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -252,12 +285,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.padding = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -271,12 +310,18 @@ const StylingProperty = ({ Notice }) => {
               }
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -286,12 +331,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.width = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -301,12 +352,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.height = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -316,12 +373,18 @@ const StylingProperty = ({ Notice }) => {
               myInput.style.borderRadius = value + 'px'
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = {
-                  ...updatedArray[index],
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
                   htmlContent: newHtmlContent.documentElement.innerHTML,
                 }
-                return { ...prevState, [key]: updatedArray }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -345,11 +408,13 @@ const StylingProperty = ({ Notice }) => {
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       if (index !== -1) {
-        const oldHtmlContent = state[key][index].htmlContent
+        const oldHtmlContent = state[key].children[index].htmlContent
+
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
@@ -368,12 +433,18 @@ const StylingProperty = ({ Notice }) => {
           //myInput.style.backgroundColor = color.hex
         }
         setState((prevState) => {
-          const updatedArray = [...prevState[key]]
-          updatedArray[index] = {
-            ...updatedArray[index],
+          const updatedChildren = [...prevState[key].children]
+          updatedChildren[index] = {
+            ...updatedChildren[index],
             htmlContent: newHtmlContent.documentElement.innerHTML,
           }
-          return { ...prevState, [key]: updatedArray }
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key],
+              children: updatedChildren,
+            },
+          }
         })
 
         console.log('new html==>', newHtmlContent)
@@ -395,11 +466,12 @@ const StylingProperty = ({ Notice }) => {
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       if (index !== -1) {
-        const oldHtmlContent = state[key][index].htmlContent
+        const oldHtmlContent = state[key].children[index].htmlContent
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
@@ -411,12 +483,18 @@ const StylingProperty = ({ Notice }) => {
         myInput.style.backgroundColor = color.hex
 
         setState((prevState) => {
-          const updatedArray = [...prevState[key]]
-          updatedArray[index] = {
-            ...updatedArray[index],
+          const updatedChildren = [...prevState[key].children]
+          updatedChildren[index] = {
+            ...updatedChildren[index],
             htmlContent: newHtmlContent.documentElement.innerHTML,
           }
-          return { ...prevState, [key]: updatedArray }
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key].children,
+              children: updatedChildren,
+            },
+          }
         })
 
         console.log('new html==>', newHtmlContent)
@@ -431,19 +509,19 @@ const StylingProperty = ({ Notice }) => {
     }
   }
 
-
-   //-----------------------------------------bgcontent color picker input-----------------------------------------------------------------
-   const globalBgcolorInputEvent = (color, event) => {
+  //-----------------------------------------bgcontent color picker input-----------------------------------------------------------------
+  const globalBgcolorInputEvent = (color, event) => {
     //console.log('event==>', event)
     //---------------------------------------getting old html from selected element---------------------------------------------
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       if (index !== -1) {
-        const oldHtmlContent = state[key][index].htmlContent
+        const oldHtmlContent = state[key].children[index].htmlContent
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
 
@@ -455,12 +533,18 @@ const StylingProperty = ({ Notice }) => {
         myInput.style.backgroundColor = color.hex
 
         setState((prevState) => {
-          const updatedArray = [...prevState[key]]
-          updatedArray[index] = {
-            ...updatedArray[index],
+          const updatedChildren = [...prevState[key].children]
+          updatedChildren[index] = {
+            ...updatedChildren[index],
             htmlContent: newHtmlContent.documentElement.innerHTML,
           }
-          return { ...prevState, [key]: updatedArray }
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key].children,
+              children: updatedChildren,
+            },
+          }
         })
 
         console.log('new html==>', newHtmlContent)
@@ -477,10 +561,92 @@ const StylingProperty = ({ Notice }) => {
 
   //--------------------------------------------------------------------------------------------------------------
 
+
+
+  //---------------------------------GLOBAL STYLING-----------------------------
+
+
+  const globalStyling = (event) => {
+    const { name, value } = event.target;
+    const [key, idToFind] = selectedElement;
+    const dataArray = state[key]?.htmlContent;
+  
+    if (dataArray) {
+      const oldHtmlContent = { ...dataArray };
+      switch (name) {
+        case 'margin':{
+          oldHtmlContent[name] = value + 'px';
+      const newHtmlContent = { ...oldHtmlContent };
+
+      // Update the state with the new HTML content
+      setState((prevState) => ({
+        ...prevState,
+        [key]: {
+          ...prevState[key],
+          htmlContent: newHtmlContent,
+        },
+      }));
+        }
+        break
+
+        case 'padding':{
+          oldHtmlContent[name] = value + 'px';
+      const newHtmlContent = { ...oldHtmlContent };
+
+      // Update the state with the new HTML content
+      setState((prevState) => ({
+        ...prevState,
+        [key]: {
+          ...prevState[key],
+          htmlContent: newHtmlContent,
+        },
+      }));
+        }
+        break
+        case 'border':
+          {
+
+            oldHtmlContent[name] = value + 'px solid #828282';
+            const newHtmlContent = { ...oldHtmlContent };
+      
+            // Update the state with the new HTML content
+            setState((prevState) => ({
+              ...prevState,
+              [key]: {
+                ...prevState[key],
+                htmlContent: newHtmlContent,
+              },
+            }));
+          }
+          break
+          case 'border-radius':
+          {
+
+            oldHtmlContent[name] = value + 'px';
+            const newHtmlContent = { ...oldHtmlContent };
+      
+            // Update the state with the new HTML content
+            setState((prevState) => ({
+              ...prevState,
+              [key]: {
+                ...prevState[key],
+                htmlContent: newHtmlContent,
+              },
+            }));
+          }
+          break
+        default:
+          break;
+
+      }
+  
+    }
+  };
+
   return (
     <div>
       {elementTypeName != null ? (
-        <div className="input-text">
+        <div className="input-text d-flex flex-column">
           <Notice>{/* Selected: {elementTypeName}  */}</Notice>
         </div>
       ) : null}
@@ -495,7 +661,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 4 ||
             elementType === 5 ||
             elementType === 13 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 FONT STYLE
                 <select name="fontStyle" onChange={inputEvent}>
                   <option value="bold">Bold</option>
@@ -511,7 +677,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 4 ||
             elementType === 5 ||
             elementType === 13 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 FONT SIZE
                 <input
                   type="number"
@@ -531,14 +697,14 @@ const StylingProperty = ({ Notice }) => {
             elementType === 12 ||
             elementType === 13 ||
             elementType === 14 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 COLOR
                 <ChromePicker onChange={setColor} onChangeComplete={colorInputEvent} color={color} disableAlpha />
               </div>
             ) : null}
 
             {elementType === 13 || elementType === 14 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 BACKGROUND COLOR
                 <ChromePicker onChange={setbgColor} onChangeComplete={bgcolorInputEvent} color={bgcolor} disableAlpha />
               </div>
@@ -550,7 +716,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 4 ||
             elementType === 5 ||
             elementType === 13 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 FONT
                 <select name="font" onChange={inputEvent}>
                   <option value="Courier">Courier</option>
@@ -561,7 +727,7 @@ const StylingProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 12 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 BORDER
                 <input
                   type="number"
@@ -581,7 +747,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 13 ||
             elementType === 14 ||
             elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 ALIGN
                 <select name="align" onChange={inputEvent}>
                   <option value="left">Left</option>
@@ -592,7 +758,7 @@ const StylingProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 IMAGE WIDTH
                 <input
                   type="number"
@@ -605,7 +771,7 @@ const StylingProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 IMAGE HEIGHT
                 <input
                   type="number"
@@ -617,7 +783,7 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
             {elementType === 14 || elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 BORDER RADIUS
                 <input
                   type="number"
@@ -629,7 +795,7 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
             {elementType === 12 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 TYPE
                 <select name="type" onChange={inputEvent}>
                   <option value="solid">Solid</option>
@@ -647,7 +813,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 13 ||
             elementType === 14 ||
             elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 PADDING
                 <input
                   type="number"
@@ -668,7 +834,7 @@ const StylingProperty = ({ Notice }) => {
             elementType === 13 ||
             elementType === 14 ||
             elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 MARGIN
                 <input
                   type="number"
@@ -680,11 +846,10 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            
-              {/* <div className="input-text">
-                GLOBAL BACKGROUND COLOR
-                <ChromePicker onChange={setglobalBgColor} onChangeComplete={globalBgcolorInputEvent} color={globalBgcolor} disableAlpha />
-              </div> */}
+           
+              
+
+              
           </>
         )}
       </form>

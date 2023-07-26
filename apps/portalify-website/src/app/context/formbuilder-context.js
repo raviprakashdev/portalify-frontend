@@ -184,18 +184,19 @@ const FormBuilderContext = (props) => {
     },
   ]
   //--------------------------
-  const [state, setState] = useState({
-    [uuid()]: []
-    
-  })
-
-
   // const [state, setState] = useState({
-  //   [uuid()]: {
-  //     htmlContent: "<div id='globalstyling'></div>",
-  //     children: []
-  //   }
+  //   [uuid()]: []
+
   // })
+
+  const [state, setState] = useState({
+    [uuid()]: {
+      htmlContent: {
+        padding: '8px',
+      },
+      children: [],
+    },
+  })
 
   //--------------------------
   const allElements = []

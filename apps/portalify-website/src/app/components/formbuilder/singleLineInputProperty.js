@@ -24,24 +24,22 @@ const SingleLineInputProperty = ({ Notice }) => {
     setUploadedImage,
   } = useContext(UserContext)
 
-  const [hideLabel, setHideLabel] = useState(false);
+  const [hideLabel, setHideLabel] = useState(false)
 
   const inputEvent = (event) => {
     //---------------------------------------getting old html from selected element---------------------------------------------
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
       if (index !== -1) {
-        const oldHtmlContent = state[key][index].htmlContent
-
-        //console.log('old html==>', oldHtmlContent)
+        const oldHtmlContent = state[key].children[index].htmlContent
 
         const parser = new DOMParser()
         const newHtmlContent = parser.parseFromString(oldHtmlContent, 'text/html')
-
         //------------------------------------updating the element attribute-----------------------------------------------------
 
         const { name, value } = event.target
@@ -53,9 +51,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               myInput.setAttribute('value', value)
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -65,33 +72,45 @@ const SingleLineInputProperty = ({ Notice }) => {
               myInput.textContent = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
-            case 'hideLabel':
+          case 'hideLabel':
             {
-
-
-              setHideLabel(event.target.checked);
+              setHideLabel(event.target.checked)
               const myInput = newHtmlContent.querySelector("label[for='htmlContent']")
-              
 
-              if(event.target.checked){
+              if (event.target.checked) {
                 myInput.textContent = ' '
-
-              }
-              else{
+              } else {
                 myInput.textContent = value
-                
               }
-              
+
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -101,9 +120,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               myInput.textContent = value
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -113,9 +141,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               myInput.setAttribute('placeholder', value)
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -130,9 +167,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               }
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -149,9 +195,18 @@ const SingleLineInputProperty = ({ Notice }) => {
               }
 
               setState((prevState) => {
-                const updatedArray = [...prevState[key]]
-                updatedArray[index] = { ...updatedArray[index], htmlContent: newHtmlContent.documentElement.innerHTML }
-                return { ...prevState, [key]: updatedArray }
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
               })
             }
             break
@@ -193,9 +248,16 @@ const SingleLineInputProperty = ({ Notice }) => {
             elementType === 9 ||
             elementType === 10 ||
             elementType === 11 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 LABEL VALUE
-                <input type="text" placeholder="Enter Label" value={label} onChange={inputEvent} disabled={hideLabel} name="label" />
+                <input
+                  type="text"
+                  placeholder="Enter Label"
+                  value={label}
+                  onChange={inputEvent}
+                  disabled={hideLabel}
+                  name="label"
+                />
               </div>
             ) : null}
 
@@ -210,13 +272,13 @@ const SingleLineInputProperty = ({ Notice }) => {
             elementType === 10 ||
             elementType === 11 ? (
               <div className="input-text d-flex align-items-baseline">
-                Hide Label:
-                <input type="checkbox" value={label} onChange={inputEvent} checked={hideLabel} name="hideLabel" />
+                Hide Label: 
+                <input type="checkbox" value={label} onChange={inputEvent} checked={hideLabel} name="hideLabel" style={{marginLeft:'10px'}} />
               </div>
             ) : null}
 
             {elementType === 3 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 DEFAULT VALUE
                 <input
                   type="number"
@@ -227,7 +289,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                 />
               </div>
             ) : elementType === 4 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 DEFAULT VALUE
                 <input
                   type="date"
@@ -238,7 +300,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                 />
               </div>
             ) : elementType === 5 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 DEFAULT VALUE
                 <input
                   type="datetime-local"
@@ -255,7 +317,7 @@ const SingleLineInputProperty = ({ Notice }) => {
               elementType === 8 ||
               elementType === 9 ||
               elementType === 14 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 DEFAULT VALUE
                 <input
                   type="text"
@@ -268,7 +330,7 @@ const SingleLineInputProperty = ({ Notice }) => {
             ) : null}
             {elementType === 3 ? (
               <>
-                <div className="input-text">
+                <div className="input-text d-flex flex-column">
                   MIN LENGTH
                   <input
                     type="text"
@@ -278,7 +340,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                     name="min_length"
                   />
                 </div>
-                <div className="input-text">
+                <div className="input-text d-flex flex-column">
                   MAX LENGTH
                   <input
                     type="text"
@@ -292,7 +354,7 @@ const SingleLineInputProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 13 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 NAME
                 <input
                   type="text"
@@ -305,14 +367,14 @@ const SingleLineInputProperty = ({ Notice }) => {
             ) : null}
 
             {elementType === 15 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 UPLOAD IMAGE
                 <input type="file" accept="image/*" value={form_name} onChange={inputEvent} name="image" />
               </div>
             ) : null}
 
             {elementType === 1 || elementType === 2 || elementType === 3 || elementType === 4 || elementType === 5 ? (
-              <div className="input-text">
+              <div className="input-text d-flex flex-column">
                 PLACEHOLDER
                 <input
                   type="text"
@@ -327,7 +389,7 @@ const SingleLineInputProperty = ({ Notice }) => {
             {elementType === 12 || elementType === 13 || elementType === 14 ? null : (
               <div className="input-text d-flex align-items-baseline">
                 Required:
-                <input type="checkbox" value={required} onChange={inputEvent} name="required" />
+                <input type="checkbox" value={required} onChange={inputEvent} name="required" style={{marginLeft:'10px'}} />
               </div>
             )}
 

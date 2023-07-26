@@ -363,8 +363,8 @@ span {
 .inputProperties {
   border: 2px solid #e0e0e0;
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
-  height: 70vh;
-  padding: 37px 41px 34px 24px;
+  height: 100vh;
+  padding:35px 20px;
   overflow: auto;
   min-height: calc(100vh - 90px);
 }
@@ -376,8 +376,6 @@ span {
   font-size: 18px;
   color: #828282;
   margin-bottom: 37px;
-  margin-right: 60%;
-  width: 100%;
   margin-top: 16px;
 }
 
@@ -385,6 +383,13 @@ span {
   font-weight: 600;
   font-size: 15px;
   color: #000000;
+}
+
+
+
+#rc-editable-input-1
+{
+  margin:0 !important;
 }
 
 .preview-modal {
@@ -397,6 +402,10 @@ span {
   background-color: #e0e0e0 !important;
 }
 
+.modal-title{
+  width: 100%;
+}
+
 
 /*---------- FormBuilderScreen LeftSide: ElementList Styling starts ----------*/
 
@@ -405,7 +414,7 @@ span {
   box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.1);
   min-height: calc(100vh - 90px);
   padding: 35px 20px;
-  height: 70vh;
+  height: 100vh;
   overflow: auto;
 }
 
@@ -436,9 +445,7 @@ span {
   border: 2px solid lightgray;
   border-radius: 5px;
 }
-#globalStyling{
-  /* box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.5); */
-}
+
 .search-header {
   margin-bottom: 25px;
 }
@@ -687,8 +694,9 @@ span {
 .dropable-box {
   min-height: 50px;
   border: 1px dashed black;
-  background-color: white !important;
+  background-color: rgba(255, 255, 255, 0) !important;
 }
+
 .reorder-handle,
 .cross_icon {
   display: none;
@@ -708,8 +716,56 @@ span {
   padding: 3px !important;
   /* pointer-events: visible !important; */
   /* border: none !important; */
-  border: 1px solid white !important;
+  background-color: rgba(255, 255, 255, 0) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0) !important;
 }
 .element-box:hover {
   border: 1px solid #ddd !important;
+}
+
+
+/* Tab Container */
+
+ 
+ 
+.Tabs ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+.react-tabs__tab--selected {
+  background: #e0e0e0;
+}
+ 
+.react-tabs__tab:hover {
+  background: rgba(50, 224, 196, 0.15);
+}
+ 
+.react-tabs__tab{
+  padding: 5px 22px;
+  border: 2px solid lightgray;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.react-tabs__tab:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+ 
+.react-tabs__tab:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+}
+ 
+.react-tabs__tab-panel {
+  display: none;
+  margin-top: 10px;
+}
+ 
+.react-tabs__tab-panel--selected {
+  display: block;
 }

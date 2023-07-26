@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import cross_icon from '../assets/icons/cross_icon.png'
 import StylingProperty from '../components/formbuilder/stylingProperty'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import GlobalProperty from '../components/formbuilder/globalProperty'
 
 // a little function to help us with reordering the result
 
@@ -98,15 +100,15 @@ const FormBuilderScreen = () => {
   const List = styled.div`
     border: 1px ${(props) => (props.isDraggingOver ? 'dashed #000' : 'solid #ddd')};
     background: #fff;
-    padding: 0.5rem 0.5rem 0;
+    ${'' /* padding: 0.5rem 0.5rem 0; */}
     border-radius: 3px;
     flex: 0 0 150px;
     font-family: sans-serif;
   `
 
   const Container = styled(List)`
-    margin: 0.5rem 0.5rem 1.5rem;
-    background: #ccc;
+    ${'' /* margin: 0.5rem 0.5rem 1.5rem; */}
+    background: #fff0;
   `
 
   const Notice = styled.div`
@@ -140,9 +142,15 @@ const FormBuilderScreen = () => {
     margin: 0 1rem;
   `
 
-  const [stateData, setStateData] = useState({
-    [uuid()]: [],
-  })
+  // const [stateData, setStateData] = useState({
+  //   [uuid()]: {
+  //     htmlContent: {
+  //       padding: '30px',
+  //       backgroundColor: 'lightblue',
+  //     },
+  //     children: [],
+  //   },
+  // })
 
   const onDragEnd = (result) => {
     const { source, destination } = result
@@ -155,18 +163,49 @@ const FormBuilderScreen = () => {
 
     switch (source.droppableId) {
       case destination.droppableId:
-        setState({
-          [destination.droppableId]: reorder(state[source.droppableId], source.index, destination.index),
+        setState((prevState) => {
+          const updatedState = {
+            ...prevState,
+            [destination.droppableId]: {
+              htmlContent: prevState[destination.droppableId].htmlContent,
+              children: reorder(prevState[destination.droppableId].children, source.index, destination.index),
+            },
+          }
+          return updatedState
         })
         break
       case 'allElements':
-        setState({
-          ...state,
-          [destination.droppableId]: copy(allElements, state[destination.droppableId], source, destination),
+        setState((prevState) => {
+          const updatedState = {
+            ...prevState,
+            [destination.droppableId]: {
+              htmlContent: prevState[destination.droppableId].htmlContent,
+              children: copy(allElements, prevState[destination.droppableId].children, source, destination),
+            },
+          }
+          return updatedState
         })
         break
       default:
-        setState(move(state[source.droppableId], state[destination.droppableId], source, destination))
+        setState((prevState) => {
+          const updatedState = {
+            ...prevState,
+            [source.droppableId]: {
+              htmlContent: prevState[source.droppableId].htmlContent,
+              children: [],
+            },
+            [destination.droppableId]: {
+              htmlContent: prevState[destination.droppableId].htmlContent,
+              children: move(
+                prevState[source.droppableId].children,
+                prevState[destination.droppableId].children,
+                source,
+                destination,
+              ),
+            },
+          }
+          return updatedState
+        })
         break
     }
   }
@@ -174,7 +213,13 @@ const FormBuilderScreen = () => {
   const addList = (e) => {
     setState({
       ...state,
-      [uuid()]: [],
+      [uuid()]: {
+        htmlContent: {
+          padding: '30px',
+          backgroundColor: 'lightblue',
+        },
+        children: [],
+      },
     })
   }
 
@@ -185,16 +230,20 @@ const FormBuilderScreen = () => {
   }
 
   const getElementType = () => {
-    //getting selected element type
+    // Getting selected element type
+    const selectedElementId = selectedElement[1]
+    const elementKeys = Object.keys(state)
 
-    var index = -1
-    const key = selectedElement[0]
-    const idToFind = selectedElement[1]
-    const dataArray = state[key]
-    if (key in state && Array.isArray(state[key])) {
-      index = dataArray.findIndex((obj) => obj.id === idToFind)
-      setElementType(state[key][index]?.index)
-      setElementTypeName(state[key][index]?.name)
+    for (const key of elementKeys) {
+      const dataArray = state[key]?.children
+      if (dataArray && Array.isArray(dataArray)) {
+        const index = dataArray.findIndex((obj) => obj.id === selectedElementId)
+        if (index !== -1) {
+          setElementType(dataArray[index]?.index)
+          setElementTypeName(dataArray[index]?.name)
+          break
+        }
+      }
     }
   }
 
@@ -213,14 +262,14 @@ const FormBuilderScreen = () => {
       //   indexToDelete = copy[parentId].findIndex((obj) => obj.id === elementId)
       //   console.log('INDEX ON DELETE===>', indexToDelete)
       // }
-      const index = copy[parentId].findIndex((object) => {
+      const index = copy[parentId]?.children.findIndex((object) => {
         return object.id === elementId
       })
 
       // console.log(index); // 👉️ 1
 
       // delete copy[parentId];
-      copy[parentId].splice(index, 1)
+      copy[parentId].children.splice(index, 1)
 
       return copy
     })
@@ -229,6 +278,8 @@ const FormBuilderScreen = () => {
 
   useEffect(() => {
     getElementType()
+
+    console.log('selected element==>', selectedElement)
   }, [selectedElement])
 
   //console.log(elementType)
@@ -264,7 +315,7 @@ const FormBuilderScreen = () => {
       <div className="fluid-container">
         <TopBar />
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="row m-0" >
+          <div className="row m-0">
             <div className="col-3 elementList">
               <Elements dataElement={allElements} />
             </div>
@@ -291,7 +342,7 @@ const FormBuilderScreen = () => {
                 </div>
                 <Modal isOpen={modal} toggle={toggle} className="preview-modal" style={modalSize}>
                   <ModalHeader toggle={toggle}>
-                    <div className="d-flex  align-items-center">
+                    <div className="d-flex  align-items-center justify-content-between">
                       Form Preview
                       <div className="d-flex justify-content-between">
                         <Button
@@ -332,12 +383,13 @@ const FormBuilderScreen = () => {
                   </ModalHeader>
                   <ModalBody>
                     {Object.keys(state).map((key) => {
-                      const elements = state[key]
-                      //console.log('element==>', elements)
+                      const elements = state[key]?.children
+                      const globalStyling = state[key]?.htmlContent
+                      // console.log('statekey==>', state[key])
+                      // console.log('globalStyling==>', globalStyling)
                       return (
-                        <form key={key} style={{ border: '3px solid grey' }}>
-                          <div id="globalStyling" style={{ padding: '8px' }}>
-                            {/* <h4>Form Key: {key}</h4> */}
+                        <form key={key}>
+                          <div key={key} id="globalStyling" style={globalStyling}>
                             {elements.map((element, index) => {
                               return (
                                 <div
@@ -353,9 +405,7 @@ const FormBuilderScreen = () => {
                     })}
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="primary" onClick={toggle}>
-                      Do Something
-                    </Button>{' '}
+                   {' '}
                     <Button color="secondary" onClick={toggle}>
                       Cancel
                     </Button>
@@ -363,75 +413,89 @@ const FormBuilderScreen = () => {
                 </Modal>
 
                 {Object.keys(state).map((list, i) => {
-                  // console.log('==> list', list)
-                  // console.log('==> state', state)
+                  //console.log('==> list', list)
+                  //console.log('==> state', state)
+                  const globalStyling = state[list]?.htmlContent
                   return (
-                    <div id="globalStyling">
-                      <Droppable key="allElements" droppableId={list}>
-                        {(provided, snapshot) => (
+                    <Droppable key="allElements" droppableId={list}>
+                      {(provided, snapshot) => (
+                        <div key={list} id="globalStyling" style={globalStyling}>
                           <Container
                             ref={provided.innerRef}
                             isDraggingOver={snapshot.isDraggingOver}
                             className="dropable-box"
                           >
-                            {state[list].length ? (
-                              state[list].map((item, index) => (
-                                <Draggable key={item.id} draggableId={item.id} index={index}>
-                                  {(provided, snapshot) => (
-                                    <Item
-                                      ref={provided.innerRef}
-                                      {...provided.draggableProps}
-                                      isDragging={snapshot.isDragging}
-                                      style={provided.draggableProps.style}
-                                      onClick={() => handleElementClick(item.id, list)}
-                                      className="element-box"
-                                    >
-                                      <div
-                                        className="cross_icon"
-                                        onClick={() => handleElementDelete(item.id, list)}
-                                        style={{ position: 'absolute', top: -10, right: -5 }}
+                            {state[list].children.length ? (
+                              state[list].children.map((item, index) => (
+                                <div>
+                                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                                    {(provided, snapshot) => (
+                                      <Item
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        isDragging={snapshot.isDragging}
+                                        style={provided.draggableProps.style}
+                                        onClick={() => handleElementClick(item.id, list)}
+                                        className="element-box"
                                       >
-                                        <img src={cross_icon} alt={cross_icon} width="13" height="13" />
-                                      </div>
+                                        <div
+                                          className="cross_icon"
+                                          onClick={() => handleElementDelete(item.id, list)}
+                                          style={{ position: 'absolute', top: -10, right: -5 }}
+                                        >
+                                          <img src={cross_icon} alt={cross_icon} width="13" height="13" />
+                                        </div>
 
-                                      {/* {console.log('item: ' + item.id)} */}
-                                      <div
-                                        key={item.id}
-                                        style={{
-                                          backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
-                                          width: '100%',
-                                        }}
-                                        dangerouslySetInnerHTML={{
-                                          __html: item.htmlContent,
-                                        }}
-                                      ></div>
-                                      <Handle {...provided.dragHandleProps} className="reorder-handle">
-                                        <svg width="24" height="24" viewBox="0 0 24 24">
-                                          <path
-                                            fill="currentColor"
-                                            d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                          />
-                                        </svg>
-                                      </Handle>
-                                    </Item>
-                                  )}
-                                </Draggable>
+                                        <div
+                                          key={item.id}
+                                          style={{
+                                            backgroundColor: selectedElement === item.id ? 'yellow' : 'transparent',
+                                            width: '100%',
+                                          }}
+                                          dangerouslySetInnerHTML={{
+                                            __html: item.htmlContent,
+                                          }}
+                                        ></div>
+                                        <Handle {...provided.dragHandleProps} className="reorder-handle">
+                                          <svg width="24" height="24" viewBox="0 0 24 24">
+                                            <path
+                                              fill="currentColor"
+                                              d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                            />
+                                          </svg>
+                                        </Handle>
+                                      </Item>
+                                    )}
+                                  </Draggable>
+                                </div>
                               ))
                             ) : (
                               <Notice>Drop items here</Notice>
                             )}
                             {provided.placeholder}
                           </Container>
-                        )}
-                      </Droppable>
-                    </div>
+                        </div>
+                      )}
+                    </Droppable>
                   )
                 })}
               </Content>
             </div>
+
             <div className="col-3 inputProperties">
-              <p>INPUT PROPERTIES</p> <SingleLineInputProperty Notice={Notice} />
-              <p>STYLING PROPERTIES</p> <StylingProperty Notice={Notice} />
+              <Tabs className="Tabs">
+                <TabList className=" d-flex">
+                  <Tab>Element Styling</Tab>
+                  <Tab>Global Styling</Tab>
+                </TabList>
+                <TabPanel>
+                  <p>INPUT PROPERTIES</p> <SingleLineInputProperty Notice={Notice} />
+                  <p>STYLING PROPERTIES</p> <StylingProperty Notice={Notice} />
+                </TabPanel>
+                <TabPanel>
+                  <p>GLOBAL STYLING</p> <GlobalProperty Notice={Notice} />
+                </TabPanel>
+              </Tabs>
             </div>
           </div>
         </DragDropContext>
