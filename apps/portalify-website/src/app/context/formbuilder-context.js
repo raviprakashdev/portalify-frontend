@@ -110,7 +110,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Checkbox',
           icon: checkbox_icon,
-          htmlContent: `<label><input type='checkbox' value='sample'/> Sample </label>`,
+          htmlContent: `<h1 id='htmlContentHeading'> Add Question </h1> <div id="htmlContentContainer"><div id=1 className='htmlContentParent'><input id='htmlContent' type='checkbox' value='sample'/> <label id='htmlContentLabel' for='htmlContent' > Sample </label> </div></div>`,
         },
         {
           index: 9,

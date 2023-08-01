@@ -182,7 +182,7 @@ const StylingProperty = ({ Notice }) => {
               const myInput1 = newHtmlContent.getElementById('htmlContentLabel')
 
               const myInput = newHtmlContent.getElementById('htmlContent')
-           
+              console.log(state);
 
               switch (value) {
                 case 'Courier':

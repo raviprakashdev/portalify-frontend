@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../context/formbuilder-context'
+import uuid from 'uuid/v4'
 
 const SingleLineInputProperty = ({ Notice }) => {
   const {
@@ -69,6 +70,29 @@ const SingleLineInputProperty = ({ Notice }) => {
           case 'label':
             {
               const myInput = newHtmlContent.querySelector("label[for='htmlContent']")
+              myInput.textContent = value
+
+              setState((prevState) => {
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
+              })
+            }
+            break
+            case 'checkbox-label':
+            {
+              const parentId = event.target.id;
+              const myInput = newHtmlContent.querySelector(`[id='${parentId}'] label[for='htmlContent']`);
+              
               myInput.textContent = value
 
               setState((prevState) => {
@@ -224,6 +248,84 @@ const SingleLineInputProperty = ({ Notice }) => {
     }
   }
 
+  const inputBoxArr = [
+    {
+      type: 'text',
+      placeholder: 'Enter Label',
+      onChange: { inputEvent },
+      name: 'checkbox-label',
+      id: 1,
+      value: ` `,
+    },
+  ]
+
+  //----------------------for multiElement numbers-------------------------
+  const [inputBox, setInputBox] = useState(inputBoxArr)
+  const addCheckboxInput = (e) => {
+    e.preventDefault()
+    
+    setInputBox((s) => {
+      const addId = uuid()
+      addInState(addId)
+      return [
+        ...s,
+        {
+          type: 'text',
+          placeholder: 'Enter Label',
+          onChange: { inputEvent },
+          name: 'checkbox-label',
+          id: addId ,
+          value: ' ',
+        },
+      ]
+    })
+  }
+
+  const addInState = (id) => {
+    const newCheckbox = `<div id=${id} className='htmlContentParent'><input id='htmlContent' type='checkbox' value='sample'/>  <label id='htmlContentLabel' for='htmlContent'> Sample </label></div>`;
+    var index = -1
+    const key = selectedElement[0]
+    const idToFind = selectedElement[1]
+    const dataArray = state[key]?.children
+
+    if (key in state && Array.isArray(state[key].children)) {
+      index = dataArray.findIndex((obj) => obj.id === idToFind)
+      if (index !== -1) {
+        const oldHtmlContent = state[key].children[index].htmlContent
+       
+
+        setState((prevState) => {
+
+//  const targetIndex = oldHtmlContent.indexOf('</div>', oldHtmlContent.indexOf('htmlContentContainer') + 'htmlContentContainer'.length) + '</div>'.length;
+//   const newContent = oldHtmlContent.slice(0, targetIndex) + newCheckbox + oldHtmlContent.slice(targetIndex);
+ 
+const targetIndex = oldHtmlContent.lastIndexOf('</div>'); // Find the index of the last occurrence of '</div>'
+const newContent = oldHtmlContent.slice(0, targetIndex) + newCheckbox + oldHtmlContent.slice(targetIndex);
+
+
+      const parser = new DOMParser()
+      const newHtmlContent = parser.parseFromString(newContent, 'text/html')
+      
+
+      console.log("newcheckbox content==>", newHtmlContent);
+          const updatedChildren = [...prevState[key].children]
+          updatedChildren[index] = {
+            ...updatedChildren[index],
+            htmlContent: newHtmlContent.documentElement.innerHTML,
+          }
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key],
+              children: updatedChildren,
+            },
+          }
+        })
+        
+      }
+    }
+  }
+
   //--------------------------------------------------------------------------------------------------------------
 
   return (
@@ -244,7 +346,6 @@ const SingleLineInputProperty = ({ Notice }) => {
             elementType === 4 ||
             elementType === 5 ||
             elementType === 7 ||
-            elementType === 8 ||
             elementType === 9 ||
             elementType === 10 ||
             elementType === 11 ? (
@@ -259,6 +360,23 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="label"
                 />
               </div>
+            ) : elementType === 8 ? (
+              <div className="input-text d-flex flex-column">
+                LABEL VALUE
+                {inputBox.map((item, i) => {
+                  return (
+                    <input
+                      onChange={inputEvent}
+                      value={label}
+                      placeholder={item.placeholder}
+                      id={item.id}
+                      type={item.type}
+                      name={item.name}
+                    />
+                  )
+                })}
+                <button onClick={addCheckboxInput}>Add Checkbox</button>
+              </div>
             ) : null}
 
             {elementType === 1 ||
@@ -267,13 +385,19 @@ const SingleLineInputProperty = ({ Notice }) => {
             elementType === 4 ||
             elementType === 5 ||
             elementType === 7 ||
-            elementType === 8 ||
             elementType === 9 ||
             elementType === 10 ||
             elementType === 11 ? (
               <div className="input-text d-flex align-items-baseline">
-                Hide Label: 
-                <input type="checkbox" value={label} onChange={inputEvent} checked={hideLabel} name="hideLabel" style={{marginLeft:'10px'}} />
+                Hide Label:
+                <input
+                  type="checkbox"
+                  value={label}
+                  onChange={inputEvent}
+                  checked={hideLabel}
+                  name="hideLabel"
+                  style={{ marginLeft: '10px' }}
+                />
               </div>
             ) : null}
 
@@ -314,7 +438,6 @@ const SingleLineInputProperty = ({ Notice }) => {
               elementType === 2 ||
               elementType === 6 ||
               elementType === 7 ||
-              elementType === 8 ||
               elementType === 9 ||
               elementType === 14 ? (
               <div className="input-text d-flex flex-column">
@@ -389,7 +512,13 @@ const SingleLineInputProperty = ({ Notice }) => {
             {elementType === 12 || elementType === 13 || elementType === 14 ? null : (
               <div className="input-text d-flex align-items-baseline">
                 Required:
-                <input type="checkbox" value={required} onChange={inputEvent} name="required" style={{marginLeft:'10px'}} />
+                <input
+                  type="checkbox"
+                  value={required}
+                  onChange={inputEvent}
+                  name="required"
+                  style={{ marginLeft: '10px' }}
+                />
               </div>
             )}
 
