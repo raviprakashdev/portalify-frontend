@@ -215,8 +215,7 @@ const FormBuilderScreen = () => {
       ...state,
       [uuid()]: {
         htmlContent: {
-          padding: '30px',
-          backgroundColor: 'lightblue',
+          padding: '8px',
         },
         children: [],
       },

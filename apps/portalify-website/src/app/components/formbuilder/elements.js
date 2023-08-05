@@ -67,11 +67,15 @@ const Elements = (props) => {
                       >
                         {' '}
                         {/* {console.log(element)} */}
-                        <div key={element.id} className="element_group">
+                        <div
+                          key={element.id}
+                          className={`element_group ${element.index === 9 ? 'disabled_element tooltip' : ''}`}
+                        >
                           <div className="element_icon">
                             <img src={element.icon} alt={element.name} />
                           </div>
                           <div className="element_name">{element.name}</div>
+                          {element.index === 9 ? <span class="tooltiptext">Coming Soon</span>:null}
                         </div>
                       </Item>
                       {snapshot.isDragging && (

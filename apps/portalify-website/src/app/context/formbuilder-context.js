@@ -20,6 +20,9 @@ const FormBuilderContext = (props) => {
   //--------------------------
   const [elementType, setElementType] = useState(-1)
 
+  const [selectedElement, setSelectedElement] = useState([])
+
+
   const [elementTypeName, setElementTypeName] = useState(null)
   // console.log('elementTypeValue===> in contect API:', elementType)
   //const [date, setDate] = useState(elementType === 4 || elementType === 5 ? new Date().toISOString().slice(0, 10) : null)
@@ -103,7 +106,7 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Radio Button',
           icon: radioButton_icon,
-          htmlContent: `<label><input type='radio' value='sample'/> Sample </label>`,
+          htmlContent: `<h1 id='htmlContentHeading'> Add Question </h1> <div id="htmlContentContainer"><div id=1 className='htmlContentParent'><input id='htmlContent' type='radio' name="undefined" value='sample'/> <label id='htmlContentLabel' for='htmlContent' > Sample </label> </div></div>`,
         },
         {
           index: 8,
@@ -117,10 +120,10 @@ const FormBuilderContext = (props) => {
           id: uuid(),
           name: 'Switch',
           icon: switch_icon,
-          htmlContent: `<label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
+          htmlContent: `<div><label for="toggle-switch" style="display: inline-block; width: 50px; height: 25px; background-color: gray; border-radius: 25px; position: relative;">
           <input type="checkbox" id="toggle-switch" style="display: none;">
           <span class="slider" style="position: absolute; top: 2px; left: 2px; width: 21px; height: 21px; background-color: white; border-radius: 50%; transition: 0.2s;"></span>
-        </label>`,
+        </label></div>`,
         },
       ],
     },
@@ -202,7 +205,6 @@ const FormBuilderContext = (props) => {
   const allElements = []
 
   //--------------------------
-  const [selectedElement, setSelectedElement] = useState([])
 
   //---------------------------
   return (
