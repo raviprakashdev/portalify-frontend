@@ -88,18 +88,34 @@ const SingleLineInputProperty = ({ Notice }) => {
               })
             }
             break
-          case 'checkbox-label':
+          case 'multivalue-labels':
             {
               const parentId = event.target.id
 
+              //check and radio box
+              if (
+                newHtmlContent.querySelector(`[id='${parentId}'] label[for='htmlContent']`) ||
+                newHtmlContent.querySelector(`[id='${parentId}'] input[type]`)
+              ) {
+                const myInput = newHtmlContent.querySelector(`[id='${parentId}'] label[for='htmlContent']`)
+
+                myInput.textContent = value
+
+                const myInputValue = newHtmlContent.querySelector(`[id='${parentId}'] input[type]`)
+                myInputValue.setAttribute('value', value)
+              }
+
               
-              const myInput = newHtmlContent.querySelector(`[id='${parentId}'] label[for='htmlContent']`)
+              //dropbox
+              if ( newHtmlContent.querySelector(`option[id='${parentId}']`) ) 
+              {
+                
+                const myInput = newHtmlContent.querySelector(`option[id='${parentId}']`)
 
-              myInput.textContent = value
+                myInput.textContent = value
+                myInput.setAttribute('value', value)
 
-              const myInputValue = newHtmlContent.querySelector(`[id='${parentId}'] input[type]`)
-              myInputValue.setAttribute('value', value)
-
+              }
 
               setState((prevState) => {
                 const updatedChildren = [...prevState[key].children]
@@ -254,20 +270,17 @@ const SingleLineInputProperty = ({ Notice }) => {
     }
   }
 
-
-//---resetting inputboxes in multivalue to initial state on change of elements
-  useEffect(() => {
-    setInputBox(inputBoxArr)
-  }, [selectedElement]);
-
-
+  //---resetting inputboxes in multivalue to initial state on change of elements
+  // useEffect(() => {
+  //   setInputBox(inputBoxArr)
+  // }, [selectedElement])
 
   const inputBoxArr = [
     {
       type: 'text',
       placeholder: 'Enter Label',
       onChange: { inputEvent },
-      name: 'checkbox-label',
+      name: 'multivalue-labels',
       id: 1,
       value: ` `,
     },
@@ -284,6 +297,8 @@ const SingleLineInputProperty = ({ Notice }) => {
         addCheckboxInState(addId)
       } else if (elementType === 7) {
         addRadioInState(addId)
+      } else if (elementType === 6) {
+        addDropdownInState(addId)
       }
       return [
         ...s,
@@ -291,7 +306,7 @@ const SingleLineInputProperty = ({ Notice }) => {
           type: 'text',
           placeholder: 'Enter Label',
           onChange: { inputEvent },
-          name: 'checkbox-label',
+          name: 'multivalue-labels',
           id: addId,
           value: 'sample',
         },
@@ -299,12 +314,13 @@ const SingleLineInputProperty = ({ Notice }) => {
     })
   }
 
-  const addRadioInState = (id) => {
+  const addDropdownInState = (id) => {
     var index = -1
     const key = selectedElement[0]
     const idToFind = selectedElement[1]
     const dataArray = state[key]?.children
-    const newCheckbox = `<div id=${id} className='htmlContentParent'><input id='htmlContent' type='radio' name=${idToFind} value=' '/>  <label id='htmlContentLabel' for='htmlContent'> Sample </label></div>`
+
+    const newOption = `<option id=${id} value='sample'> Sample </option>`
 
     if (key in state && Array.isArray(state[key].children)) {
       index = dataArray.findIndex((obj) => obj.id === idToFind)
@@ -312,18 +328,19 @@ const SingleLineInputProperty = ({ Notice }) => {
         const oldHtmlContent = state[key].children[index].htmlContent
 
         setState((prevState) => {
-          const targetIndex = oldHtmlContent.lastIndexOf('</div>') // Find the index of the last occurrence of '</div>'
-          const newContent = oldHtmlContent.slice(0, targetIndex) + newCheckbox + oldHtmlContent.slice(targetIndex)
+          const selectEndIndex = oldHtmlContent.indexOf("</select>");
+          const newContent =   oldHtmlContent.slice(0, selectEndIndex) + newOption + oldHtmlContent.slice(selectEndIndex);
+
+
 
           const parser = new DOMParser()
           const newHtmlContent = parser.parseFromString(newContent, 'text/html')
 
-          const radioButton = newHtmlContent.querySelector('input[type="radio"][name="undefined"]')
+          const radioButton = newHtmlContent.querySelector('select[id="htmlContentContainer"][name="undefined"]')
           if (radioButton) {
             radioButton.setAttribute('name', idToFind)
           }
 
-          console.log('newcheckbox content==>', newHtmlContent)
           const updatedChildren = [...prevState[key].children]
           updatedChildren[index] = {
             ...updatedChildren[index],
@@ -339,7 +356,48 @@ const SingleLineInputProperty = ({ Notice }) => {
         })
       }
     }
-    console.log('arr==>', inputBox)
+    console.log(state[key]?.children);
+  }
+
+  const addRadioInState = (id) => {
+    var index = -1
+    const key = selectedElement[0]
+    const idToFind = selectedElement[1]
+    const dataArray = state[key]?.children
+    const newRadiobox = `<div id=${id} className='htmlContentParent'><input id='htmlContent' type='radio' name=${idToFind} value=' '/>  <label id='htmlContentLabel' for='htmlContent'> Sample </label></div>`
+
+    if (key in state && Array.isArray(state[key].children)) {
+      index = dataArray.findIndex((obj) => obj.id === idToFind)
+      if (index !== -1) {
+        const oldHtmlContent = state[key].children[index].htmlContent
+
+        setState((prevState) => {
+          const targetIndex = oldHtmlContent.lastIndexOf('</div>') // Find the index of the last occurrence of '</div>'
+          const newContent = oldHtmlContent.slice(0, targetIndex) + newRadiobox + oldHtmlContent.slice(targetIndex)
+
+          const parser = new DOMParser()
+          const newHtmlContent = parser.parseFromString(newContent, 'text/html')
+
+          const radioButton = newHtmlContent.querySelector('input[type="radio"][name="undefined"]')
+          if (radioButton) {
+            radioButton.setAttribute('name', idToFind)
+          }
+
+          const updatedChildren = [...prevState[key].children]
+          updatedChildren[index] = {
+            ...updatedChildren[index],
+            htmlContent: newHtmlContent.documentElement.innerHTML,
+          }
+          return {
+            ...prevState,
+            [key]: {
+              ...prevState[key],
+              children: updatedChildren,
+            },
+          }
+        })
+      }
+    }
   }
 
   const addCheckboxInState = (id) => {
@@ -364,7 +422,6 @@ const SingleLineInputProperty = ({ Notice }) => {
           const parser = new DOMParser()
           const newHtmlContent = parser.parseFromString(newContent, 'text/html')
 
-          console.log('newcheckbox content==>', newHtmlContent)
           const updatedChildren = [...prevState[key].children]
           updatedChildren[index] = {
             ...updatedChildren[index],
@@ -394,6 +451,20 @@ const SingleLineInputProperty = ({ Notice }) => {
             <div className="input-text" style={{ marginBottom: 20 }}>
               <Notice>Selected: {elementTypeName} </Notice>
             </div>
+
+            {elementType === 6 || elementType === 7 || elementType === 8 ? (
+              <div className="input-text d-flex flex-column">
+                HEADING
+                <input
+                  type="text"
+                  placeholder="Enter Form Name"
+                  value={form_name}
+                  onChange={inputEvent}
+                  name="form_name"
+                />
+              </div>
+            ) : null}
+
             {elementType === 1 ||
             elementType === 2 ||
             elementType === 3 ||
@@ -425,6 +496,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                       id={item.id}
                       type={item.type}
                       name={item.name}
+                      defaultValue="Sample"
                     />
                   )
                 })}
@@ -442,6 +514,25 @@ const SingleLineInputProperty = ({ Notice }) => {
                       id={item.id}
                       type={item.type}
                       name={item.name}
+                      defaultValue="Sample"
+                    />
+                  )
+                })}
+                <button onClick={(e) => addMultiValueInputs(e, elementType)}>Add Checkbox</button>
+              </div>
+            ) : elementType === 6 ? (
+              <div className="input-text d-flex flex-column">
+                LABEL VALUE
+                {inputBox.map((item, i) => {
+                  return (
+                    <input
+                      onChange={inputEvent}
+                      value={label}
+                      placeholder={item.placeholder}
+                      id={item.id}
+                      type={item.type}
+                      name={item.name}
+                      defaultValue="Sample"
                     />
                   )
                 })}
@@ -503,12 +594,7 @@ const SingleLineInputProperty = ({ Notice }) => {
                   name="default_value"
                 />
               </div>
-            ) : elementType === 1 ||
-              elementType === 2 ||
-              elementType === 6 ||
-              elementType === 7 ||
-              elementType === 9 ||
-              elementType === 14 ? (
+            ) : elementType === 1 || elementType === 2 || elementType === 9 || elementType === 14 ? (
               <div className="input-text d-flex flex-column">
                 DEFAULT VALUE
                 <input
