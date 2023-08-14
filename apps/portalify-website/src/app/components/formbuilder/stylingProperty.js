@@ -73,7 +73,6 @@ const StylingProperty = ({ Notice }) => {
             break
           case 'align':
             {
-
               const myInput = newHtmlContent.getElementById('htmlContent')
               const myInput1 = newHtmlContent.getElementById('htmlContentParent')
               const myInput2 = newHtmlContent.getElementById('htmlContentWhole')
@@ -143,8 +142,53 @@ const StylingProperty = ({ Notice }) => {
                 }
               }
 
+              setState((prevState) => {
+                const updatedChildren = [...prevState[key].children]
+                updatedChildren[index] = {
+                  ...updatedChildren[index],
+                  htmlContent: newHtmlContent.documentElement.innerHTML,
+                }
+                return {
+                  ...prevState,
+                  [key]: {
+                    ...prevState[key],
+                    children: updatedChildren,
+                  },
+                }
+              })
+            }
+            break
+          case 'flex-direction':
+            {
+              const myInput = newHtmlContent.getElementById('htmlContent')
+              const myInput1 = newHtmlContent.getElementById('htmlContentParent')
+              const myInput2 = newHtmlContent.getElementById('htmlContentContainer')
 
-             
+              //-----------check class nexting----possibally ruined from new structure-----//
+
+              switch (value) {
+                case 'flex-column':
+                  if (myInput2) {
+                    myInput2.style.display = 'flex'
+                    myInput2.style.flexDirection = 'column'
+                  } else if (myInput1) {
+                    myInput1.style.display = 'flex'
+                    myInput1.style.flexDirection = 'column'
+                  }
+                  break
+                case 'flex-row':
+                  if (myInput2) {
+                    myInput2.style.display = 'flex'
+                    myInput2.style.flexDirection = 'row'
+                  } else if (myInput1) {
+                    myInput1.style.display = 'flex'
+                    myInput1.style.flexDirection = 'row'
+                  }
+                  break
+                default:
+                  break
+              }
+
               setState((prevState) => {
                 const updatedChildren = [...prevState[key].children]
                 updatedChildren[index] = {
@@ -470,7 +514,7 @@ const StylingProperty = ({ Notice }) => {
               })
             }
             break
-            case 'padding_horizontal':
+          case 'padding_horizontal':
             {
               const myInput = newHtmlContent.getElementById('htmlContent')
               const myInput1 = newHtmlContent.getElementById('htmlContentParent')
@@ -822,23 +866,17 @@ const StylingProperty = ({ Notice }) => {
             elementType === 3 ||
             elementType === 4 ||
             elementType === 5 ||
-            elementType === 6 ||
             elementType === 7 ||
-            elementType === 8 ||
-            elementType === 13 ||
-            elementType === 14 ||
-            elementType === 15 ? (
+            elementType === 8 ? (
               <div className="input-text d-flex flex-column">
-                PADDING Vertical 
-                <input
-                  type="number"
-                  placeholder="Enter Padding Value"
-                  defaultValue={3}
-                  onChange={inputEvent}
-                  name="padding_vertical"
-                />
+                FLEX DIRECTION
+                <select name="flex-direction" onChange={inputEvent}>
+                  <option value="flex-column">Column</option>
+                  <option value="flex-row">Row</option>
+                </select>
               </div>
             ) : null}
+
             {elementType === 1 ||
             elementType === 2 ||
             elementType === 3 ||
@@ -851,7 +889,30 @@ const StylingProperty = ({ Notice }) => {
             elementType === 14 ||
             elementType === 15 ? (
               <div className="input-text d-flex flex-column">
-                PADDING Horizontal 
+                PADDING Vertical
+                <input
+                  type="number"
+                  placeholder="Enter Padding Value"
+                  defaultValue={3}
+                  onChange={inputEvent}
+                  name="padding_vertical"
+                />
+              </div>
+            ) : null}
+
+            {elementType === 1 ||
+            elementType === 2 ||
+            elementType === 3 ||
+            elementType === 4 ||
+            elementType === 5 ||
+            elementType === 6 ||
+            elementType === 7 ||
+            elementType === 8 ||
+            elementType === 13 ||
+            elementType === 14 ||
+            elementType === 15 ? (
+              <div className="input-text d-flex flex-column">
+                PADDING Horizontal
                 <input
                   type="number"
                   placeholder="Enter Padding Value"
@@ -886,8 +947,7 @@ const StylingProperty = ({ Notice }) => {
               </div>
             ) : null}
 
-            {
-              elementType === 1 ||
+            {elementType === 1 ||
             elementType === 2 ||
             elementType === 3 ||
             elementType === 4 ||
@@ -918,7 +978,7 @@ const StylingProperty = ({ Notice }) => {
 
             {elementType === 6 || elementType === 7 || elementType === 8 ? (
               <div className="input-text d-flex flex-column">
-              HEADING FONT STYLE
+                HEADING FONT STYLE
                 <select name="heading_fontStyle" onChange={inputEvent}>
                   <option value="bold">Bold</option>
                   <option value="italic">Italic</option>
@@ -929,7 +989,7 @@ const StylingProperty = ({ Notice }) => {
 
             {elementType === 6 || elementType === 7 || elementType === 8 ? (
               <div className="input-text d-flex flex-column">
-              HEADING FONT
+                HEADING FONT
                 <select name="heading_font" onChange={inputEvent}>
                   <option value="Helvetica">Helvetica</option>
                   <option value="Courier">Courier</option>
@@ -940,7 +1000,7 @@ const StylingProperty = ({ Notice }) => {
 
             {elementType === 6 || elementType === 7 || elementType === 8 ? (
               <div className="input-text d-flex flex-column">
-              HEADING FONT SIZE
+                HEADING FONT SIZE
                 <input
                   type="number"
                   placeholder="Enter Font Size Value"
@@ -953,7 +1013,7 @@ const StylingProperty = ({ Notice }) => {
 
             {elementType === 6 || elementType === 7 || elementType === 8 ? (
               <div className="input-text d-flex flex-column">
-              HEADING COLOR
+                HEADING COLOR
                 <ChromePicker
                   onChange={setHeading_color}
                   onChangeComplete={heading_colorInputEvent}
@@ -965,7 +1025,7 @@ const StylingProperty = ({ Notice }) => {
 
             {elementType === 6 || elementType === 7 || elementType === 8 || elementType === 13 || elementType === 14 ? (
               <div className="input-text d-flex flex-column">
-              HEADING BACKGROUND COLOR
+                HEADING BACKGROUND COLOR
                 <ChromePicker onChange={setbgColor} onChangeComplete={bgcolorInputEvent} color={bgcolor} disableAlpha />
               </div>
             ) : null}

@@ -372,7 +372,7 @@ const SingleLineInputProperty = ({ Notice }) => {
         const oldHtmlContent = state[key].children[index].htmlContent
 
         setState((prevState) => {
-          const targetIndex = oldHtmlContent.lastIndexOf('</div>') // Find the index of the last occurrence of '</div>'
+          const targetIndex = oldHtmlContent.lastIndexOf('</div></div>') // Find the index of the last occurrence of '</div>'
           const newContent = oldHtmlContent.slice(0, targetIndex) + newRadiobox + oldHtmlContent.slice(targetIndex)
 
           const parser = new DOMParser()
